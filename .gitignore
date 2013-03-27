@@ -16,3 +16,8 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+# Support local configs
+Gemfile.local
+Gemfile.lock
+config/config.rb
