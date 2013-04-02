@@ -21,3 +21,7 @@ doc/
 Gemfile.local
 Gemfile.lock
 config/config.rb
+
+# Ignore RubyMine editor files
+.idea
+
