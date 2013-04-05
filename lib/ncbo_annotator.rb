@@ -55,7 +55,7 @@ module Annotator
         redis = Redis.new
 
         if (!redis.exists(DICTHOLDER))
-          raise Exception, "The dictionary structure does not exist. Please run the dictionary population process."
+          create_term_cache()
         end
 
         all = redis.hgetall(DICTHOLDER)
@@ -74,15 +74,17 @@ module Annotator
       def create_term_entry(redis, acronym, resourceId, label, val)
         labelInt = Zlib::crc32(val)
         id = "#{IDPREFIX}#{labelInt}"
-        redis.hset(DICTHOLDER, id, val)
-        matches = redis.hget(id, resourceId)
         entry = "#{label},#{acronym}"
+        matches = redis.hget(id, resourceId)
 
-        if (matches.nil?)
+        if (matches.nil? || !redis.hexists(DICTHOLDER, id))
           redis.hset(id, resourceId, entry)
         elsif (!matches.include? entry)
           redis.hset(id, resourceId, "#{matches}:#{entry}")
         end
+
+        # populate dictionary structure
+        redis.hset(DICTHOLDER, id, val)
       end
     end
   end

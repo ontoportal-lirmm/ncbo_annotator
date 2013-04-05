@@ -5,7 +5,7 @@ LinkedData.config do |config|
   config.repository_folder     = "./test/data/ontology_files/repo"
   config.rest_url_prefix       = "http://data.bioontology.org/"
   config.enable_security       = false
-  config.mgrep_dictionary_file = "./test/data/dictionary.txt"
+  config.mgrep_dictionary_file = "./test/tmp/dictionary.txt"
 end
 
 #Linked data does not need to know about this.
