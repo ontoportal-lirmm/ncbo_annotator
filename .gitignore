@@ -27,3 +27,5 @@ config/config.rb
 
 
 *.swp
+
+.DS_Store
