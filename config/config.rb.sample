@@ -7,3 +7,7 @@ LinkedData.config do |config|
   config.enable_security       = false
   config.mgrep_dictionary_file = "./test/data/dictionary.txt"
 end
+
+#Linked data does not need to know about this.
+$MGREP_HOST = "bmir-dev1"
+$MGREP_PORT = 55555
