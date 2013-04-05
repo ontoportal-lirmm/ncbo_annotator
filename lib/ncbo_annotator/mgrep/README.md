@@ -19,7 +19,7 @@ The first parameter `text` is the text to be annotated. Internally it will be tr
 
 The second paramter `longword` is a boolean parameter. If `true` mgrep will match the longest occurrences ONLY, if `false` mgrep will match all occurrences.
 
-`client.annotate` returns an `AnnotatedText` object. This is essentially a collection of annotates. One can iterate over the mgrep annotations using `each`. 
+`client.annotate` returns an `AnnotatedText` object. This is essentially a collection of annotations. One can iterate over all annotations using `each`. 
 
 Each annotation is a `Struct` with the following fields:
 
