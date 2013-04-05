@@ -7,6 +7,7 @@
 require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
+require_relative 'ncbo_annotator/mgrep/mgrep'
 
 module Annotator
   module Models
