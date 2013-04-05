@@ -6,7 +6,7 @@ The class `Annotator::Mgrep::Client` encapsulates the interactions with mgrep. T
 client = Annotator::Mgrep::Client.new($MGREP_HOST,$MGREP_PORT)
 ```
 
-**Notice:** This client is not thread safe, one cannot get hold of a reference an use it in a multi-threaded environment. You can pipeline multiple annotation calls, that is safe.
+**Notice:** This client is not thread safe, one cannot get hold of a reference an use it in a multi-threaded environment. You can pipeline multiple annotation calls, that is safe. One could also instantiate multiple clients and make concurrent calls to a mgrep server.
 
 
 Once you have instantiated the client there is one main function to call when annotating text:
