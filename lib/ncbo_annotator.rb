@@ -7,6 +7,7 @@
 require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
+require_relative "../config/config.rb"
 require_relative 'ncbo_annotator/mgrep/mgrep'
 
 module Annotator
@@ -60,7 +61,7 @@ module Annotator
 
         all = redis.hgetall(DICTHOLDER)
         # Create dict file
-        outFile = File.new(LinkedData.settings.mgrep_dictionary_file, "w")
+        outFile = File.new($MGREP_DICTIONARY_FILE, "w")
 
         all.each do |key, val|
           realKey = key.sub /^#{IDPREFIX}/, ''
