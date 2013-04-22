@@ -79,6 +79,10 @@ module Annotator
         outFile.close
       end
 
+      def annotate(text)
+        return annotate_direct(text)
+      end
+
       def annotate_direct(text)
         redis = Redis.new
         client = Annotator::Mgrep::Client.new($MGREP_HOST, $MGREP_PORT)
