@@ -5,11 +5,11 @@ LinkedData.config do |config|
   config.repository_folder     = "./test/data/ontology_files/repo"
   config.rest_url_prefix       = "http://data.bioontology.org/"
   config.enable_security       = false
-  config.redis_host = "bmir-dev1"
+  config.redis_host = "localhost"
   config.redis_port = 6379
 end
 
 #Linked data does not need to know about this.
 $MGREP_DICTIONARY_FILE = "./test/tmp/dictionary.txt"
-$MGREP_HOST = "bmir-dev1"
+$MGREP_HOST = "localhost"
 $MGREP_PORT = 55555
