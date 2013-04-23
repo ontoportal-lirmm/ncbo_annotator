@@ -58,15 +58,15 @@ class TestAnnotator < TestCase
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
-    text = ""
+    text = []
     size = 0
 
     class_page.each do |cls|
       prefLabel = cls.prefLabel.value
-      text << ", #{prefLabel}"
+      text << "#{prefLabel}"
       size += 1
     end
-    text = text[2..-1]
+    text = text.join ", "
     annotations = annotator.annotate(text)
     direct = annotations[Annotator::Models::NcboAnnotator::DIRECT_ANNOTATIONS_LABEL]
     assert size >= direct.length
