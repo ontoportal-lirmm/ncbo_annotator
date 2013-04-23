@@ -70,7 +70,7 @@ module Annotator
 
         all = redis.hgetall(DICTHOLDER)
         # Create dict file
-        outFile = File.new($MGREP_DICTIONARY_FILE, "w")
+        outFile = File.new(Annotator.settings.mgrep_dictionary_file, "w")
 
         all.each do |key, val|
           realKey = key.sub /^#{IDPREFIX}/, ''
@@ -85,7 +85,7 @@ module Annotator
 
       def annotate_direct(text)
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
-        client = Annotator::Mgrep::Client.new($MGREP_HOST, $MGREP_PORT)
+        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, true)
         allAnnotations = []
 

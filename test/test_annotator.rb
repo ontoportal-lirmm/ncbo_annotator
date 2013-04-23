@@ -40,8 +40,8 @@ class TestAnnotator < TestCase
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
 
-    assert File.exists?($MGREP_DICTIONARY_FILE), "The dictionary file did not get created successfully"
-    lines = File.readlines($MGREP_DICTIONARY_FILE)
+    assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
+    lines = File.readlines(Annotator.settings.mgrep_dictionary_file)
 
     class_page.each do |cls|
       prefLabel = cls.prefLabel.value
@@ -57,7 +57,7 @@ class TestAnnotator < TestCase
     class_page = get_classes(ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
-    assert File.exists?($MGREP_DICTIONARY_FILE), "The dictionary file did not get created successfully"
+    assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
     text = ""
     size = 0
 
