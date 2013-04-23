@@ -8,7 +8,6 @@ require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
 require_relative 'annotation'
-require_relative "../config/config.rb"
 require_relative 'ncbo_annotator/mgrep/mgrep'
 
 module Annotator
