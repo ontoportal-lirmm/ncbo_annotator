@@ -20,11 +20,12 @@ module Annotator
       IDPREFIX = "term:"
       OCCURENCE_DELIM = "|"
       LABEL_DELIM = ","
+      DIRECT_ANNOTATIONS_LABEL = "directAnnotations"
 
       def create_term_cache_from_ontologies(ontologies)
         page = 1
         size = 2500
-        redis = Redis.new
+        redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
 
         # remove old dictionary structure
         redis.del(DICTHOLDER)
@@ -62,7 +63,7 @@ module Annotator
       end
 
       def generate_dictionary_file()
-        redis = Redis.new
+        redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
 
         if (!redis.exists(DICTHOLDER))
           create_term_cache()
@@ -84,7 +85,7 @@ module Annotator
       end
 
       def annotate_direct(text)
-        redis = Redis.new
+        redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new($MGREP_HOST, $MGREP_PORT)
         rawAnnotations = client.annotate(text, true)
         allAnnotations = []
@@ -108,7 +109,7 @@ module Annotator
             end
           end
         end
-        return { "directAnnoations" => allAnnotations }
+        return { "#{DIRECT_ANNOTATIONS_LABEL}" => allAnnotations }
       end
 
       def get_prefixed_id_from_value(val)
