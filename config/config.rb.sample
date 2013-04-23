@@ -9,7 +9,8 @@ LinkedData.config do |config|
   config.redis_port = 6379
 end
 
-#Linked data does not need to know about this.
-$MGREP_DICTIONARY_FILE = "./test/tmp/dictionary.txt"
-$MGREP_HOST = "localhost"
-$MGREP_PORT = 55555
+Annotator.config do |config|
+  config.mgrep_dictionary_file ||= "./test/tmp/dictionary.txt"
+  config.mgrep_host            ||= "localhost"
+  config.mgrep_port            ||= 55555
+end
