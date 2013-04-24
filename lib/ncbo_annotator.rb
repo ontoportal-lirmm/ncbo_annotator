@@ -29,7 +29,7 @@ module Annotator
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
 
         # Get logger
-        logger = Kernel.const_defined?("LOGGER") ? LOGGER : Logger.new(STDOUT)
+        logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
 
         # remove old dictionary structure
         redis.del(DICTHOLDER)
