@@ -16,7 +16,6 @@ class TestAnnotator < TestCase
     redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
     ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     class_page = get_classes(ontologies)
-
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.create_term_cache_from_ontologies(ontologies)
 
@@ -27,7 +26,7 @@ class TestAnnotator < TestCase
       resourceId = cls.resource_id.value
       prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
       assert redis.exists(prefixedId)
-      #assert redis.hexists(prefixedId, resourceId)
+      assert redis.hexists(prefixedId, resourceId)
       assert redis.hexists(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId)
       assert_equal redis.hget(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId), prefLabel
       assert !redis.hget(prefixedId, resourceId).empty?
@@ -39,7 +38,6 @@ class TestAnnotator < TestCase
     class_page = get_classes(ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
-
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
     lines = File.readlines(Annotator.settings.mgrep_dictionary_file)
 

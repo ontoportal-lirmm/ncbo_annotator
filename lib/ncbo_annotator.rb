@@ -9,6 +9,7 @@ require 'redis'
 require 'ontologies_linked_data'
 require_relative 'annotation'
 require_relative 'ncbo_annotator/mgrep/mgrep'
+require_relative 'ncbo_annotator/config'
 
 module Annotator
   module Models
@@ -79,11 +80,12 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text)
-        return annotate_direct(text)
+      def annotate(text, ontologies=[])
+        return annotate_direct(text, ontologies)
       end
 
-      def annotate_direct(text)
+      def annotate_direct(text, ontologies=[])
+        ontology_acronyms_as_resource_ids(ontologies)
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, true)
@@ -98,13 +100,16 @@ module Annotator
 
             allVals.each do |eachVal|
               typeAndOnt = eachVal.split(LABEL_DELIM)
+              ontResourceId = typeAndOnt[1]
 
-              annotatedClass = {
-                  "id" => key,
-                  "ontology" => typeAndOnt[1]
-              }
-              annotation = Annotation.new(ann.offset_from, ann.offset_to, typeAndOnt[0], annotatedClass)
-              allAnnotations.push(annotation)
+              if (ontologies.empty? || ontologies.include?(ontResourceId))
+                annotatedClass = {
+                    "id" => key,
+                    "ontology" => ontResourceId
+                }
+                annotation = Annotation.new(ann.offset_from, ann.offset_to, typeAndOnt[0], annotatedClass)
+                allAnnotations.push(annotation)
+              end
             end
           end
         end
@@ -117,6 +122,16 @@ module Annotator
       end
 
       private
+
+      def ontology_acronyms_as_resource_ids(ontologies)
+        url_prefix = LinkedData::Models::Ontology.resource_id_prefix
+
+        ontologies.each do |ont|
+          if !ont.match(/^#{url_prefix}/)
+             ont.insert(0, url_prefix)
+          end
+        end
+      end
 
       def create_term_entry(redis, ontResourceId, resourceId, label, val)
         # exclude single-character or empty/null values
