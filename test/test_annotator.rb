@@ -68,6 +68,42 @@ class TestAnnotator < TestCase
     annotations = annotator.annotate(text)
     direct = annotations[Annotator::Models::NcboAnnotator::DIRECT_ANNOTATIONS_LABEL]
     assert ((size <= direct.length) && direct.length > 0)
+    binding.pry
+  end
+
+  def test_annotate_hierarchy
+    ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
+    class_page = get_classes(ontologies)
+    text = "Aggregate Human Data Aggregate Human Data"
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text)
+    assert annotations.length == 1
+    assert annotations.first.class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+    assert annotations.first.class.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
+    assert annotations.first.annotations.length == 2
+    assert annotations.first.annotations.first[:from] = 1
+    assert annotations.first.annotations.first[:to] = 1+("Aggregate Human Data".length)
+
+    annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=1)
+    assert annotations.length == 1
+    assert annotations.first.class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+    assert annotations.first.class.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
+    assert annotations.first.annotations.length == 2
+    assert annotations.first.annotations.first[:from] = 1
+    assert annotations.first.annotations.first[:to] = 1+("Aggregate Human Data".length)
+
+    assert annotations.first.hierarchy.length == 1
+    assert annotations.first.hierarchy.first[:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
+    assert annotations.first.hierarchy.first[:distance] == 1
+
+    annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=3)
+    assert annotations.first.hierarchy.length == 3
+    assert annotations.first.hierarchy.first[:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
+    assert annotations.first.hierarchy.first[:distance] == 1
+    assert annotations.first.hierarchy[1][:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
+    assert annotations.first.hierarchy[1][:distance] == 2
+    assert annotations.first.hierarchy[2][:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource"
+    assert annotations.first.hierarchy[2][:distance] == 3
   end
 
   def get_classes(ontologies)
