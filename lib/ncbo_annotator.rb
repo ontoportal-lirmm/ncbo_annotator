@@ -44,8 +44,15 @@ module Annotator
 
           if (!last.nil?)
             begin
-              class_page = LinkedData::Models::Class.page submission: last, page: page, size: size,
-                                                          load_attrs: { prefLabel: true, synonym: true, definition: true }
+              begin
+                class_page = LinkedData::Models::Class.page submission: last, page: page, size: size,
+                                                            load_attrs: { prefLabel: true, synonym: true, definition: true }
+              rescue
+                # If page fails, skip to next ontology
+                page = nil
+                next
+              end
+              
               class_page.each do |cls|
                 prefLabel = cls.prefLabel.value rescue next # Skip classes with no prefLabel
                 resourceId = cls.resource_id.value
