@@ -49,6 +49,7 @@ module Annotator
                                                             load_attrs: { prefLabel: true, synonym: true, definition: true }
               rescue
                 # If page fails, skip to next ontology
+                logger.info("Failed caching classes for #{ont.acronym}"); logger.flush
                 page = nil
                 next
               end
