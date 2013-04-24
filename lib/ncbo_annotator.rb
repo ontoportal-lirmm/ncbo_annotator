@@ -7,6 +7,7 @@
 require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
+require 'logger'
 require_relative 'annotation'
 require_relative 'ncbo_annotator/mgrep/mgrep'
 require_relative 'ncbo_annotator/config'
@@ -26,6 +27,7 @@ module Annotator
         page = 1
         size = 2500
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
+        logger = LOGGER || Logger.new(STDOUT)
 
         # remove old dictionary structure
         redis.del(DICTHOLDER)
@@ -36,13 +38,14 @@ module Annotator
         ontologies.each do |ont|
           last = ont.latest_submission
           ontResourceId = ont.resource_id.value
+          logger.info("Caching classes from #{ont.acronym}"); logger.flush
 
           if (!last.nil?)
             begin
               class_page = LinkedData::Models::Class.page submission: last, page: page, size: size,
                                                           load_attrs: { prefLabel: true, synonym: true, definition: true }
               class_page.each do |cls|
-                prefLabel = cls.prefLabel.value
+                prefLabel = cls.prefLabel.value rescue next # Skip classes with no prefLabel
                 resourceId = cls.resource_id.value
                 synonyms = cls.synonym || []
 
