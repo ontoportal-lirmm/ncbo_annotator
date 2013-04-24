@@ -27,7 +27,9 @@ module Annotator
         page = 1
         size = 2500
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
-        logger = LOGGER || Logger.new(STDOUT)
+
+        # Get logger
+        logger = Kernel.const_defined?("LOGGER") ? LOGGER : Logger.new(STDOUT)
 
         # remove old dictionary structure
         redis.del(DICTHOLDER)
