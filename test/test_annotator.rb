@@ -67,7 +67,7 @@ class TestAnnotator < TestCase
     text = text.join ", "
     annotations = annotator.annotate(text)
     direct = annotations[Annotator::Models::NcboAnnotator::DIRECT_ANNOTATIONS_LABEL]
-    assert size >= direct.length
+    assert ((size >= direct.length) && direct.length > 0)
   end
 
   def get_classes(ontologies)
