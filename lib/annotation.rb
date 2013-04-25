@@ -1,7 +1,16 @@
 module Annotator
-
+  class HierarchyClass
+    include LinkedData::Hypermedia::Resource
+    attr_accessor :annotatedClass, :distance
+    embed :annotatedClass
+    def initialize(annotatedClass, distance)
+      @annotatedClass = annotatedClass; @distance = distance
+    end
+  end
+  
   class Annotation
     include LinkedData::Hypermedia::Resource
+
     MATCH_TYPES = {
       type_preferred_name: "PREF",
       type_synonym: "SYN"
