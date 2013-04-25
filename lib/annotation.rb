@@ -1,6 +1,7 @@
 module Annotator
 
   class Annotation
+    include LinkedData::Hypermedia::Resource
     MATCH_TYPES = {
       type_preferred_name: "PREF",
       type_synonym: "SYN"
