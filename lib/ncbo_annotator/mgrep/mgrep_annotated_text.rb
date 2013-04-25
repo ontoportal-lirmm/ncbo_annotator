@@ -40,6 +40,11 @@ module Annotator
           filtered_anns = @annotations.select {|a| a[2].to_i - a[1].to_i + 1 > min_length }
           @annotations = filtered_anns
         end
+
+        def filter_integers()
+          filtered_anns = @annotations.select {|a| !@text[a[1].to_i-1..a[2].to_i-1].numeric? }
+          @annotations = filtered_anns
+        end
     end
   end
 end
