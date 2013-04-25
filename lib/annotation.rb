@@ -36,7 +36,7 @@ module Annotator
       end
       parent_class = LinkedData::Models::Class.read_only(RDF::IRI.new(parent),{})
       parent_class.submissionAcronym = @cls.submissionAcronym
-      @hierarchy << { :cls => parent_class, distance: distance}
+      @hierarchy << HierarchyClass.new(parent_class, distance)
     end
 
   end
