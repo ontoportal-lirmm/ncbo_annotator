@@ -111,7 +111,6 @@ class TestAnnotator < TestCase
 
   def test_annotate_hierachy_terms_multiple
     ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
-    class_page = get_classes(ontologies)
     text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text,[],expand_hierachy_levels=5)
