@@ -1,16 +1,17 @@
 module Annotator
 
   class Annotation
+    include LinkedData::Hypermedia::Resource
     MATCH_TYPES = {
       type_preferred_name: "PREF",
       type_synonym: "SYN"
     }
-    attr_reader :class, :annotations, :hierarchy, :class
+    attr_reader :annotations, :hierarchy, :cls
 
     def initialize(class_id,ontology)
       # a list of [from, to, machType
-      @class = LinkedData::Models::Class.read_only(RDF::IRI.new(class_id),{})
-      @class.submissionAcronym = ontology
+      @cls = LinkedData::Models::Class.read_only(RDF::IRI.new(class_id),{})
+      @cls.submissionAcronym = ontology
       @hierarchy = []
       @annotations = []
     end
@@ -22,11 +23,11 @@ module Annotator
 
     def add_parent(parent, distance)
       @hierarchy.each do |x|
-        return if x[:class].resource_id.value == parent
+        return if x[:cls].resource_id.value == parent
       end
       parent_class = LinkedData::Models::Class.read_only(RDF::IRI.new(parent),{})
-      parent_class.submissionAcronym = @class.submissionAcronym
-      @hierarchy << { :class => parent_class, distance: distance}
+      parent_class.submissionAcronym = @cls.submissionAcronym
+      @hierarchy << { :cls => parent_class, distance: distance}
     end
 
   end

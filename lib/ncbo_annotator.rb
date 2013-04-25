@@ -143,10 +143,10 @@ module Annotator
           level_ids = []
           annotations.each do |k,a|
             if current_level == 1
-              level_ids << a.class.resource_id.value
+              level_ids << a.cls.resource_id.value
             else
               if a.hierarchy.last[:distance] == (current_level -1)
-                cls = a.hierarchy.last[:class]
+                cls = a.hierarchy.last[:cls]
                 level_ids << cls.resource_id.value
                 id_group = cls.submissionAcronym.first.value + cls.resource_id.value 
 
