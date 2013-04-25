@@ -98,7 +98,7 @@ module Annotator
 
       def annotate(text, ontologies=[],expand_hierachy_levels=0)
         annotations = annotate_direct(text, ontologies)
-        return annotations.values if expand_hierachy_levels == 0
+        return annotations.values if expand_hierachy_levels == 0 || annotations.length == 0
         hierarchy_annotations = []
         expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
         return annotations.values
@@ -224,6 +224,7 @@ module Annotator
         query = <<eos
 SELECT DISTINCT ?id ?parent ?graph WHERE { GRAPH ?graph { ?id <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?parent . }
 FILTER (#{filter_ids})
+FILTER (!isBlank(?parent))
 }
 eos
        return query
