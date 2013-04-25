@@ -21,7 +21,6 @@ module Annotator
       IDPREFIX = "term:"
       OCCURENCE_DELIM = "|"
       LABEL_DELIM = ","
-      DIRECT_ANNOTATIONS_LABEL = "directAnnotations"
 
       def create_term_cache_from_ontologies(ontologies)
         page = 1
@@ -93,8 +92,12 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[])
-        return annotate_direct(text, ontologies)
+      def annotate(text, ontologies=[],expand_hierachy_levels=0)
+        annotations = annotate_direct(text, ontologies)
+        return annotations.values if expand_hierachy_levels == 0
+        hierarchy_annotations = []
+        expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
+        return annotations.values
       end
 
       def annotate_direct(text, ontologies=[])
@@ -102,7 +105,7 @@ module Annotator
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, true)
-        allAnnotations = []
+        allAnnotations = {}
 
         rawAnnotations.each do |ann|
           id = get_prefixed_id(ann.string_id)
@@ -114,19 +117,63 @@ module Annotator
             allVals.each do |eachVal|
               typeAndOnt = eachVal.split(LABEL_DELIM)
               ontResourceId = typeAndOnt[1]
+              next if !ontologies.empty? && !ontologies.include?(ontResourceId)
 
-              if (ontologies.empty? || ontologies.include?(ontResourceId))
-                annotatedClass = {
-                    "id" => key,
-                    "ontology" => ontResourceId
-                }
-                annotation = Annotation.new(ann.offset_from, ann.offset_to, typeAndOnt[0], annotatedClass)
-                allAnnotations.push(annotation)
+              id_group = ontResourceId + key
+              unless allAnnotations.include?(id_group)
+                allAnnotations[id_group] = Annotation.new(key, ontResourceId)
               end
+              allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0])
             end
           end
         end
-        return { "#{DIRECT_ANNOTATIONS_LABEL}" => allAnnotations }
+        return allAnnotations
+      end
+
+      def expand_hierarchies(annotations, levels, ontologies)
+        current_level = 1
+
+        while current_level <= levels do
+
+          indirect = {}
+          level_ids = []
+          annotations.each do |k,a|
+            if current_level == 1
+              level_ids << a.class.resource_id.value
+            else
+              if a.hierarchy.last[:distance] == (current_level -1)
+                cls = a.hierarchy.last[:class]
+                level_ids << cls.resource_id.value
+                id_group = cls.submissionAcronym.first.value + cls.resource_id.value 
+
+                #this is to maintain the link from indirect parents
+                indirect[id_group] = !indirect[id_group] ? [k] : (indirect[id_group] << k)
+              end
+            end
+          end
+          return if level_ids.length == 0
+          query = hierarchy_query(level_ids)
+          Goo.store.query(query).each_solution do |sol|
+            id = sol.get(:id).value
+            parent = sol.get(:parent).value
+            ontology = sol.get(:graph).value
+            ontology = ontology[0..ontology.index("submissions")-2]
+            #
+            #TODO in next full parsing this can be removed
+            ontology["/metadata"] = ""
+            id_group = ontology + id
+            if annotations.include? id_group
+              annotations[id_group].add_parent(parent, current_level)
+            end
+            if indirect[id_group]
+              indirect[id_group].each do |k|
+                annotations[k].add_parent(parent, current_level)
+              end
+            end
+          end
+          current_level += 1
+        end
+
       end
 
       def get_prefixed_id_from_value(val)
@@ -166,6 +213,16 @@ module Annotator
 
       def get_prefixed_id(intId)
         return "#{IDPREFIX}#{intId}"
+      end
+
+      def hierarchy_query(class_ids)
+        filter_ids = class_ids.map { |id| "?id = <#{id}>" } .join " || "
+        query = <<eos
+SELECT DISTINCT ?id ?parent ?graph WHERE { GRAPH ?graph { ?id <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?parent . }
+FILTER (#{filter_ids})
+}
+eos
+       return query
       end
     end
   end

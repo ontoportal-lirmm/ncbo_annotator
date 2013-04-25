@@ -56,18 +56,100 @@ class TestAnnotator < TestCase
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
-    text = ""
+    text = []
     size = 0
 
     class_page.each do |cls|
       prefLabel = cls.prefLabel.value
-      text << ", #{prefLabel}"
+      text << "#{prefLabel}"
       size += 1
     end
-    text = text[2..-1]
-    annotations = annotator.annotate(text, [])
-    direct = annotations[Annotator::Models::NcboAnnotator::DIRECT_ANNOTATIONS_LABEL]
-    assert size >= direct.length
+    text = text.join ", "
+    annotations = annotator.annotate(text)
+    direct = annotations
+    assert ((size <= direct.length) && direct.length > 0)
+  end
+
+  def test_annotate_hierarchy
+    ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
+    class_page = get_classes(ontologies)
+    text = "Aggregate Human Data Aggregate Human Data"
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text)
+    assert annotations.length == 1
+    assert annotations.first.class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+    assert annotations.first.class.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
+    assert annotations.first.annotations.length == 2
+    assert annotations.first.annotations.first[:from] = 1
+    assert annotations.first.annotations.first[:to] = 1+("Aggregate Human Data".length)
+    assert annotations.first.annotations[1][:from] = 2 + ("Aggregate Human Data".length)
+    assert text[annotations.first.annotations.first[:from]-1,annotations.first.annotations.first[:to]-1] == "Aggregate Human Data"
+    assert annotations.first.annotations[1][:to] == (1 + ("Aggregate Human Data".length)) + ("Aggregate Human Data".length)
+    assert text[annotations.first.annotations[1][:from]-1,annotations.first.annotations[1][:to]-1] == "Aggregate Human Data"
+
+    annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=1)
+    assert annotations.length == 1
+    assert annotations.first.class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+    assert annotations.first.class.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
+    assert annotations.first.annotations.length == 2
+    assert annotations.first.annotations.first[:from] = 1
+    assert annotations.first.annotations.first[:to] = 1+("Aggregate Human Data".length)
+
+    assert annotations.first.hierarchy.length == 1
+    assert annotations.first.hierarchy.first[:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
+    assert annotations.first.hierarchy.first[:distance] == 1
+
+    annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=3)
+    assert annotations.first.hierarchy.length == 3
+    assert annotations.first.hierarchy.first[:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
+    assert annotations.first.hierarchy.first[:distance] == 1
+    assert annotations.first.hierarchy[1][:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
+    assert annotations.first.hierarchy[1][:distance] == 2
+    assert annotations.first.hierarchy[2][:class].resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource"
+    assert annotations.first.hierarchy[2][:distance] == 3
+  end
+
+  def test_annotate_hierachy_terms_multiple
+    ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
+    class_page = get_classes(ontologies)
+    text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text,[],expand_hierachy_levels=5)
+
+    assert annotations[0].annotations.length == 3
+    assert annotations[0].class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+    assert annotations[0].hierarchy.length == 4
+    hhh = annotations[0].hierarchy.sort {|x| x[:distance] }.map { |x| x[:class].resource_id.value }
+    assert hhh == ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
+ "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource",
+ "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data",
+ "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"]
+
+    assert annotations[1].annotations.length == 2
+    assert annotations[1].class.resource_id.value == "http://purl.obolibrary.org/obo/MCBCC_0000288#ChromosomalMutation"
+    hhh = annotations[1].hierarchy.sort {|x| x[:distance] }.map { |x| x[:class].resource_id.value }
+    hhh == ["http://purl.obolibrary.org/obo/MCBCC_0000287#GeneticVariation"]
+
+    assert annotations[2].annotations.length == 1
+    assert annotations[2].class.resource_id.value == "http://purl.obolibrary.org/obo/MCBCC_0000289#ChromosomalDeletion"
+    hhh = annotations[2].hierarchy.sort {|x| x[:distance] }.map { |x| x[:class].resource_id.value }
+    assert hhh == ["http://purl.obolibrary.org/obo/MCBCC_0000287#GeneticVariation",
+            "http://purl.obolibrary.org/obo/MCBCC_0000288#ChromosomalMutation"]
+
+    assert annotations[3].class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
+    hhh = annotations[3].hierarchy.sort {|x| x[:distance] }.map { |x| x[:class].resource_id.value }
+    assert hhh == ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
+ "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource"]
+
+    assert annotations[4].class.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Federal_Funding_Resource"
+    hhh = annotations[4].hierarchy.sort {|x| x[:distance] }.map { |x| x[:class].resource_id.value }
+    assert hhh == ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
+ "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Funding_Resource"]
+
+    assert annotations[5].class.resource_id.value == "http://purl.obolibrary.org/obo/MCBCC_0000275#ReceptorAntagonists"
+    hhh = annotations[5].hierarchy.sort {|x| x[:distance] }.map { |x| x[:class].resource_id.value }
+    assert hhh == ["http://purl.obolibrary.org/obo/MCBCC_0000256#ChemicalsAndDrugs"]
+
   end
 
   def get_classes(ontologies)
