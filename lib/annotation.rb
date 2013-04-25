@@ -15,12 +15,16 @@ module Annotator
       type_preferred_name: "PREF",
       type_synonym: "SYN"
     }
-    attr_reader :annotations, :hierarchy, :cls
+
+    attr_reader :annotations, :hierarchy, :annotatedClass
+    
+    # Support serializating from ontologies_linked_data and ontologies_api
+    embed :annotatedClass, :hierarchy
 
     def initialize(class_id,ontology)
       # a list of [from, to, machType
-      @cls = LinkedData::Models::Class.read_only(RDF::IRI.new(class_id),{})
-      @cls.submissionAcronym = ontology
+      @annotatedClass = LinkedData::Models::Class.read_only(RDF::IRI.new(class_id),{})
+      @annotatedClass.submissionAcronym = ontology
       @hierarchy = []
       @annotations = []
     end
@@ -32,10 +36,10 @@ module Annotator
 
     def add_parent(parent, distance)
       @hierarchy.each do |x|
-        return if x[:cls].resource_id.value == parent
+        return if x.annotatedClass.resource_id.value == parent
       end
       parent_class = LinkedData::Models::Class.read_only(RDF::IRI.new(parent),{})
-      parent_class.submissionAcronym = @cls.submissionAcronym
+      parent_class.submissionAcronym = @annotatedClass.submissionAcronym
       @hierarchy << HierarchyClass.new(parent_class, distance)
     end
 
