@@ -123,7 +123,7 @@ class TestAnnotator < TestCase
  "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource",
  "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data",
  "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"]
- binding.pry
+
     assert annotations[1].annotations.length == 2
     assert annotations[1].annotatedClass.resource_id.value == "http://purl.obolibrary.org/obo/MCBCC_0000288#ChromosomalMutation"
     hhh = annotations[1].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.resource_id.value }
