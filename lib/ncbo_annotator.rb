@@ -85,9 +85,13 @@ module Annotator
         # Create dict file
         outFile = File.new(Annotator.settings.mgrep_dictionary_file, "w")
 
+        prefix_remove = Regexp.new(/^#{IDPREFIX}/)
+        windows_linebreak_remove = Regexp.new(/\r\n/)
+        linebreak_remove = Regexp.new(/[\r\n]/)
         all.each do |key, val|
-          realKey = key.sub /^#{IDPREFIX}/, ''
-          outFile.puts("#{realKey}\t#{val}")
+          realKey = key.sub prefix_remove, ''
+          realVal = val.gsub(windows_linebreak_remove, ' ').gsub(linebreak_remove, ' ')
+          outFile.puts("#{realKey}\t#{realVal}")
         end
         outFile.close
       end
