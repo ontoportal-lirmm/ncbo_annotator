@@ -134,7 +134,7 @@ module Annotator
                 id_group = cls.submissionAcronym.first.value + cls.resource_id.value 
 
                 #this is to maintain the link from indirect parents
-                indirect[id_group] = k
+                indirect[id_group] = !indirect[id_group] ? [k] : (indirect[id_group] << k)
               end
             end
           end
@@ -151,8 +151,11 @@ module Annotator
             id_group = ontology + id
             if annotations.include? id_group
               annotations[id_group].add_parent(parent, current_level)
-            elsif indirect[id_group]
-              annotations[indirect[id_group]].add_parent(parent, current_level)
+            end
+            if indirect[id_group]
+              indirect[id_group].each do |k|
+                annotations[k].add_parent(parent, current_level)
+              end
             end
           end
           current_level += 1
