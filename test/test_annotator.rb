@@ -65,7 +65,7 @@ class TestAnnotator < TestCase
       size += 1
     end
     text = text.join ", "
-    annotations = annotator.annotate(text)
+    annotations = annotator.annotate(text, [], 0, true)
     direct = annotations
     assert ((size <= direct.length) && direct.length > 0)
   end

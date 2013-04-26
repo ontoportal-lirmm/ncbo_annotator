@@ -96,19 +96,20 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[],expand_hierachy_levels=0)
-        annotations = annotate_direct(text, ontologies)
+      def annotate(text, ontologies=[], expand_hierachy_levels=0, filter_integers=false)
+        annotations = annotate_direct(text, ontologies, filter_integers)
         return annotations.values if expand_hierachy_levels == 0
         hierarchy_annotations = []
         expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
         return annotations.values
       end
 
-      def annotate_direct(text, ontologies=[])
-        ontology_acronyms_as_resource_ids(ontologies)
+      def annotate_direct(text, ontologies=[], filter_integers=false)
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, true)
+        rawAnnotations.filter_integers() if filter_integers
+
         allAnnotations = {}
 
         rawAnnotations.each do |ann|
@@ -186,16 +187,6 @@ module Annotator
       end
 
       private
-
-      def ontology_acronyms_as_resource_ids(ontologies)
-        url_prefix = LinkedData::Models::Ontology.resource_id_prefix
-
-        ontologies.each do |ont|
-          if !ont.match(/^#{url_prefix}/)
-             ont.insert(0, url_prefix)
-          end
-        end
-      end
 
       def create_term_entry(redis, ontResourceId, resourceId, label, val)
         # exclude single-character or empty/null values
