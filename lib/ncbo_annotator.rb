@@ -96,9 +96,9 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[], expand_hierachy_levels=0, filter_integers=false)
+      def annotate(text, ontologies=[],expand_hierachy_levels=0, filter_integers=false)
         annotations = annotate_direct(text, ontologies, filter_integers)
-        return annotations.values if expand_hierachy_levels == 0
+        return annotations.values if expand_hierachy_levels == 0 || annotations.length == 0
         hierarchy_annotations = []
         expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
         return annotations.values
@@ -146,13 +146,15 @@ module Annotator
             if current_level == 1
               level_ids << a.annotatedClass.resource_id.value
             else
-              if a.hierarchy.last.distance == (current_level -1)
-                cls = a.hierarchy.last.annotatedClass
-                level_ids << cls.resource_id.value
-                id_group = cls.submissionAcronym.first.value + cls.resource_id.value 
+              if !a.hierarchy.last.nil?
+                if a.hierarchy.last.distance == (current_level -1)
+                  cls = a.hierarchy.last.annotatedClass
+                  level_ids << cls.resource_id.value
+                  id_group = cls.submissionAcronym.first.value + cls.resource_id.value
 
-                #this is to maintain the link from indirect parents
-                indirect[id_group] = !indirect[id_group] ? [k] : (indirect[id_group] << k)
+                  #this is to maintain the link from indirect parents
+                  indirect[id_group] = !indirect[id_group] ? [k] : (indirect[id_group] << k)
+                end
               end
             end
           end
@@ -215,6 +217,7 @@ module Annotator
         query = <<eos
 SELECT DISTINCT ?id ?parent ?graph WHERE { GRAPH ?graph { ?id <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?parent . }
 FILTER (#{filter_ids})
+FILTER (!isBlank(?parent)
 }
 eos
        return query

@@ -13,7 +13,15 @@ class TestAnnotator < TestCase
   end
 
   def test_create_term_cache
+
     redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
+
+    db_size = redis.dbsize
+    if db_size > 2000
+      puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
+      return
+    end
+
     ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     class_page = get_classes(ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
