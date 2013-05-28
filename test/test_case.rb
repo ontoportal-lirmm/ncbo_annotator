@@ -23,7 +23,39 @@ unless LinkedData.settings.goo_host.match(safe_host) && LinkedData.settings.sear
   $stdout.flush
 end
 
+require 'minitest/unit'
+MiniTest::Unit.autorun
+
+class AnnotatorUnit < MiniTest::Unit
+  def before_suites
+    # code to run before the very first test
+  end
+
+  def after_suites
+    # code to run after the very last test
+  end
+
+  def _run_suites(suites, type)
+    begin
+      before_suites
+      super(suites, type)
+    ensure
+      after_suites
+    end
+  end
+
+  def _run_suite(suite, type)
+    begin
+      suite.before_suite if suite.respond_to?(:before_suite)
+      super(suite, type)
+    ensure
+      suite.after_suite if suite.respond_to?(:after_suite)
+    end
+  end
+end
+MiniTest::Unit.runner = AnnotatorUnit.new
+
 ##
 # Base test class. Put shared test methods or setup here.
-class TestCase < Test::Unit::TestCase
+class TestCase < MiniTest::Unit::TestCase
 end

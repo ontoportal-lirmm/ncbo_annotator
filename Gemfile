@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'pry'
 gem 'redis'
+gem 'minitest', '< 5.0'
 gem 'sparql-client', :git => 'https://github.com/ncbo/sparql-client.git'
 
 # NCBO gems (can be from a local dev path or from rubygems/git)
