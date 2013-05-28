@@ -11,6 +11,7 @@ require 'logger'
 require_relative 'annotation'
 require_relative 'ncbo_annotator/mgrep/mgrep'
 require_relative 'ncbo_annotator/config'
+require_relative 'ncbo_annotator/monkeypatches'
 
 module Annotator
   module Models
