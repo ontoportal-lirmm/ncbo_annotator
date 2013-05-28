@@ -37,7 +37,7 @@ module Annotator
 
     def add_parent(parent, distance)
       @hierarchy.each do |x|
-        return if x.annotatedClass.resource_id.value == parent
+        return if x.annotatedClass.id.to_s == parent
       end
       parent_class = LinkedData::Models::Class.read_only(RDF::IRI.new(parent),{})
       parent_class.submissionAcronym = @annotatedClass.submissionAcronym

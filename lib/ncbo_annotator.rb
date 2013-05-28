@@ -39,7 +39,7 @@ module Annotator
 
         ontologies.each do |ont|
           last = ont.latest_submission
-          ontResourceId = ont.resource_id.value
+          ontResourceId = ont.id.to_s
           logger.info("Caching classes from #{ont.acronym}"); logger.flush
 
           if (!last.nil?)
@@ -56,7 +56,7 @@ module Annotator
               
               class_page.each do |cls|
                 prefLabel = cls.prefLabel.value rescue next # Skip classes with no prefLabel
-                resourceId = cls.resource_id.value
+                resourceId = cls.id.to_s
                 synonyms = cls.synonym || []
 
                 synonyms.each do |syn|
@@ -145,13 +145,13 @@ module Annotator
           level_ids = []
           annotations.each do |k,a|
             if current_level == 1
-              level_ids << a.annotatedClass.resource_id.value
+              level_ids << a.annotatedClass.id.to_s
             else
               if !a.hierarchy.last.nil?
                 if a.hierarchy.last.distance == (current_level -1)
                   cls = a.hierarchy.last.annotatedClass
-                  level_ids << cls.resource_id.value
-                  id_group = cls.submissionAcronym.first.value + cls.resource_id.value
+                  level_ids << cls.id.to_s
+                  id_group = cls.submissionAcronym.first.value + cls.id.to_s
 
                   #this is to maintain the link from indirect parents
                   indirect[id_group] = !indirect[id_group] ? [k] : (indirect[id_group] << k)
@@ -161,7 +161,7 @@ module Annotator
           end
           return if level_ids.length == 0
           query = hierarchy_query(level_ids)
-          Goo.store.query(query).each_solution do |sol|
+          Goo.sparql_query_client.query(query).each do |sol|
             id = sol.get(:id).value
             parent = sol.get(:parent).value
             ontology = sol.get(:graph).value
