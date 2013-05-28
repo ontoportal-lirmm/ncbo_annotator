@@ -21,10 +21,11 @@ module Annotator
     # Support serializating from ontologies_linked_data and ontologies_api
     embed :annotatedClass, :hierarchy
 
-    def initialize(class_id,ontology)
+    def initialize(class_id,ontology_id)
       # a list of [from, to, machType
-      @annotatedClass = LinkedData::Models::Class.read_only(RDF::IRI.new(class_id),{})
-      @annotatedClass.submissionAcronym = ontology
+      ontology = LinkedData::Models::Ontology.read_only(id: RDF::IRI.new(ontology_id), acronym: ontology_id.split("/").last)
+      submission = LinkedData::Models::OntologySubmission.read_only(id: RDF::IRI.new(ontology_id+"/submissions/latest"), ontology: ontology)
+      @annotatedClass = LinkedData::Models::Class.read_only(id: RDF::IRI.new(class_id), submission: submission)
       @hierarchy = []
       @annotations = []
     end
