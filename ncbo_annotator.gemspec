@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "ncbo_annotator"
   gem.require_paths = ["lib"]
 
-  gem.add_dependency("sparql_http")
   gem.add_dependency("ontologies_linked_data")
+  gem.add_dependency("goo")
   gem.add_dependency("redis")
 end
