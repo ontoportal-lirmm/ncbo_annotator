@@ -87,7 +87,7 @@ class TestAnnotator < TestCase
     annotations = annotator.annotate(text)
     assert annotations.length == 1
     assert annotations.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
-    assert annotations.first.annotatedClass.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
+    assert annotations.first.annotatedClass.submission.ontology.acronym == "BROTEST-0"
     assert annotations.first.annotations.length == 2
     assert annotations.first.annotations.first[:from] = 1
     assert annotations.first.annotations.first[:to] = 1+("Aggregate Human Data".length)
@@ -99,7 +99,7 @@ class TestAnnotator < TestCase
     annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=1)
     assert annotations.length == 1
     assert annotations.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
-    assert annotations.first.annotatedClass.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
+    assert annotations.first.annotatedClass.submission.ontology.acronym == "BROTEST-0"
     assert annotations.first.annotations.length == 2
     assert annotations.first.annotations.first[:from] = 1
     assert annotations.first.annotations.first[:to] = 1+("Aggregate Human Data".length)
