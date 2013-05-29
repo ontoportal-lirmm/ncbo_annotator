@@ -42,11 +42,15 @@ module Annotator
           ontResourceId = ont.id.to_s
           logger.info("Caching classes from #{ont.acronym}"); logger.flush
 
+          paging = LinkedData::Models::Class.in(last)
+                          .include(:prefLabel, :synonym, :definition)
+                          .page(1,size)
+
           if (!last.nil?)
             begin
+              class_page = nil
               begin
-                class_page = LinkedData::Models::Class.page submission: last, page: page, size: size,
-                                                            load_attrs: { prefLabel: true, synonym: true, definition: true }
+                class_page = paging.all 
               rescue
                 # If page fails, skip to next ontology
                 logger.info("Failed caching classes for #{ont.acronym}"); logger.flush
@@ -55,16 +59,20 @@ module Annotator
               end
               
               class_page.each do |cls|
-                prefLabel = cls.prefLabel.value rescue next # Skip classes with no prefLabel
+                prefLabel = cls.prefLabel
+                next if prefLabel.nil? # Skip classes with no prefLabel
                 resourceId = cls.id.to_s
                 synonyms = cls.synonym || []
 
                 synonyms.each do |syn|
-                  create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn.value)
+                  create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn)
                 end
                 create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_preferred_name], prefLabel)
               end
               page = class_page.next_page
+              if page
+                paging.page(page)
+              end
             end while !page.nil?
           end
         end
@@ -151,7 +159,7 @@ module Annotator
                 if a.hierarchy.last.distance == (current_level -1)
                   cls = a.hierarchy.last.annotatedClass
                   level_ids << cls.id.to_s
-                  id_group = cls.submissionAcronym.first.value + cls.id.to_s
+                  id_group = cls.submission.ontology.id.to_s + cls.id.to_s
 
                   #this is to maintain the link from indirect parents
                   indirect[id_group] = !indirect[id_group] ? [k] : (indirect[id_group] << k)
@@ -162,13 +170,10 @@ module Annotator
           return if level_ids.length == 0
           query = hierarchy_query(level_ids)
           Goo.sparql_query_client.query(query).each do |sol|
-            id = sol.get(:id).value
-            parent = sol.get(:parent).value
-            ontology = sol.get(:graph).value
+            id = sol[:id].to_s
+            parent = sol[:parent].to_s
+            ontology = sol[:graph].to_s
             ontology = ontology[0..ontology.index("submissions")-2]
-            #
-            #TODO in next full parsing this can be removed
-            ontology["/metadata"] = ""
             id_group = ontology + id
             if annotations.include? id_group
               annotations[id_group].add_parent(parent, current_level)
