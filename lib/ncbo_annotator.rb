@@ -239,15 +239,6 @@ module Annotator
         return semanticTypeCodes
       end
 
-      def add_semantic_type_entry(redis, resourceId, val, semanticTypeCodes)
-        id = get_prefixed_id_from_value(val)
-        matches = redis.hget(id, resourceId)
-
-        if (!matches.nil? && !semanticTypeCodes.empty?)
-          redis.hset(id, resourceId, "#{matches}#{DATA_TYPE_DELIM}#{semanticTypeCodes}")
-        end
-      end
-
       def get_prefixed_id(intId)
         return "#{IDPREFIX}#{intId}"
       end
