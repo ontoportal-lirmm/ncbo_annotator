@@ -73,7 +73,7 @@ class TestAnnotator < TestCase
       size += 1
     end
     text = text.join ", "
-    annotations = annotator.annotate(text, [], 0, true)
+    annotations = annotator.annotate(text, [], [], true, 0)
     direct = annotations
     assert ((size <= direct.length) && direct.length > 0)
   end
@@ -95,7 +95,7 @@ class TestAnnotator < TestCase
     assert annotations.first.annotations[1][:to] == (1 + ("Aggregate Human Data".length)) + ("Aggregate Human Data".length)
     assert text[annotations.first.annotations[1][:from]-1,annotations.first.annotations[1][:to]-1] == "Aggregate Human Data"
 
-    annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=1)
+    annotations = annotator.annotate(text, ontologies=[], semantic_types=[], false, expand_hierachy_levels=1)
     assert annotations.length == 1
     assert annotations.first.annotatedClass.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
     assert annotations.first.annotatedClass.submissionAcronym.first == "http://data.bioontology.org/ontologies/BROTEST"
@@ -107,7 +107,7 @@ class TestAnnotator < TestCase
     assert annotations.first.hierarchy.first.annotatedClass.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
     assert annotations.first.hierarchy.first.distance == 1
 
-    annotations = annotator.annotate(text,ontologies=[],expand_hierachy_levels=3)
+    annotations = annotator.annotate(text, ontologies=[], semantic_types=[], false, expand_hierachy_levels=3)
     assert annotations.first.hierarchy.length == 3
     assert annotations.first.hierarchy.first.annotatedClass.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
     assert annotations.first.hierarchy.first.distance == 1
@@ -121,7 +121,7 @@ class TestAnnotator < TestCase
     ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text,[],expand_hierachy_levels=5)
+    annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=5)
 
     assert annotations[0].annotations.length == 3
     assert annotations[0].annotatedClass.resource_id.value == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"

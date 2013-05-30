@@ -29,9 +29,9 @@ module Annotator
       @annotations = []
     end
 
-    def add_annotation(from, to, matchType) 
+    def add_annotation(from, to, matchType, text)
       raise ArgumentError, "Invalid annotation type: #{matchType}" unless MATCH_TYPES.values.include?(matchType)
-      @annotations << { from: from, to: to, matchType: matchType }
+      @annotations << { from: from, to: to, matchType: matchType, text: text }
     end
 
     def add_parent(parent, distance)

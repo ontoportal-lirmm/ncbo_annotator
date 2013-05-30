@@ -21,6 +21,7 @@ module Annotator
       IDPREFIX = "term:"
       OCCURENCE_DELIM = "|"
       LABEL_DELIM = ","
+      DATA_TYPE_DELIM = "@@"
 
       def create_term_cache_from_ontologies(ontologies)
         page = 1
@@ -45,7 +46,7 @@ module Annotator
             begin
               begin
                 class_page = LinkedData::Models::Class.page submission: last, page: page, size: size,
-                                                            load_attrs: { prefLabel: true, synonym: true, definition: true }
+                                                            load_attrs: { prefLabel: true, synonym: true, definition: true, semanticType: true }
               rescue
                 # If page fails, skip to next ontology
                 logger.info("Failed caching classes for #{ont.acronym}"); logger.flush
@@ -57,11 +58,12 @@ module Annotator
                 prefLabel = cls.prefLabel.value rescue next # Skip classes with no prefLabel
                 resourceId = cls.resource_id.value
                 synonyms = cls.synonym || []
+                semanticTypes = cls.semanticType || []
 
                 synonyms.each do |syn|
-                  create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn.value)
+                  create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn.value, semanticTypes)
                 end
-                create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_preferred_name], prefLabel)
+                create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_preferred_name], prefLabel, semanticTypes)
               end
               page = class_page.next_page
             end while !page.nil?
@@ -96,18 +98,19 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[],expand_hierachy_levels=0, filter_integers=false)
-        annotations = annotate_direct(text, ontologies, filter_integers)
+      def annotate(text, ontologies=[], semantic_types=[], filter_integers=false, expand_hierachy_levels=0)
+        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers)
         return annotations.values if expand_hierachy_levels == 0 || annotations.length == 0
         hierarchy_annotations = []
         expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
         return annotations.values
       end
 
-      def annotate_direct(text, ontologies=[], filter_integers=false)
+      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false)
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, true)
+
         rawAnnotations.filter_integers() if filter_integers
 
         allAnnotations = {}
@@ -116,8 +119,14 @@ module Annotator
           id = get_prefixed_id(ann.string_id)
           matches = redis.hgetall(id)
 
+          # key = resourceId (class)
           matches.each do |key, val|
-            allVals = val.split(OCCURENCE_DELIM)
+            dataTypeVals = val.split(DATA_TYPE_DELIM)
+            classSemanticTypes = (dataTypeVals.length > 1) ? dataTypeVals[1].split(LABEL_DELIMx) : []
+            allVals = dataTypeVals[0].split(OCCURENCE_DELIM)
+
+            # check that class semantic types contain at least one requested semantic type
+            next if !semantic_types.empty? && (semantic_types & classSemanticTypes).empty?
 
             allVals.each do |eachVal|
               typeAndOnt = eachVal.split(LABEL_DELIM)
@@ -128,7 +137,7 @@ module Annotator
               unless allAnnotations.include?(id_group)
                 allAnnotations[id_group] = Annotation.new(key, ontResourceId)
               end
-              allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0])
+              allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
             end
           end
         end
@@ -190,21 +199,52 @@ module Annotator
 
       private
 
-      def create_term_entry(redis, ontResourceId, resourceId, label, val)
+      def create_term_entry(redis, ontResourceId, resourceId, label, val, semanticTypes)
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 1)
           id = get_prefixed_id_from_value(val)
-          entry = "#{label}#{LABEL_DELIM}#{ontResourceId}"
-          matches = redis.hget(id, resourceId)
-
           # populate dictionary structure
           redis.hset(DICTHOLDER, id, val)
+          entry = "#{label}#{LABEL_DELIM}#{ontResourceId}"
+
+          # parse out semanticTypeCodes
+          # always append them back to the original value
+          semanticTypeCodes = get_semantic_type_codes(semanticTypes)
+          semanticTypeCodes = (semanticTypeCodes.empty?) ? "" : "#{DATA_TYPE_DELIM}#{semanticTypeCodes}"
+          matches = redis.hget(id, resourceId)
 
           if (matches.nil?)
-            redis.hset(id, resourceId, entry)
-          elsif (!matches.include? entry)
-            redis.hset(id, resourceId, "#{matches}#{OCCURENCE_DELIM}#{entry}")
+            redis.hset(id, resourceId, "#{entry}#{semanticTypeCodes}")
+          else
+            rawMatches = matches.split(DATA_TYPE_DELIM)
+
+            if (!rawMatches[0].include? entry)
+              redis.hset(id, resourceId, "#{rawMatches[0]}#{OCCURENCE_DELIM}#{entry}#{semanticTypeCodes}")
+            end
           end
+        end
+      end
+
+      def get_semantic_type_codes(semanticTypes)
+        semanticTypeCodes = ""
+        i = 0
+        semanticTypes.each do |semanticType|
+          val = semanticType.value.split('/')[-1]
+          if i > 0
+            semanticTypeCodes << ","
+          end
+          semanticTypeCodes << val
+          i += 1
+        end
+        return semanticTypeCodes
+      end
+
+      def add_semantic_type_entry(redis, resourceId, val, semanticTypeCodes)
+        id = get_prefixed_id_from_value(val)
+        matches = redis.hget(id, resourceId)
+
+        if (!matches.nil? && !semanticTypeCodes.empty?)
+          redis.hset(id, resourceId, "#{matches}#{DATA_TYPE_DELIM}#{semanticTypeCodes}")
         end
       end
 
