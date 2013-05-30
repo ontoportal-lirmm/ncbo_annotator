@@ -124,22 +124,24 @@ class TestAnnotator < TestCase
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=5)
 
-    assert annotations[0].annotations.length == 3
     assert annotations[0].annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+    assert annotations[0].annotations.length == 3
     assert annotations[0].hierarchy.length == 4
     hhh = annotations[0].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.id.to_s }
-    assert hhh == ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
- "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource",
- "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data",
- "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"]
+    assert hhh == [
+      "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
+      "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource",
+      "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data",
+      "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
+    ]
 
-    assert annotations[1].annotations.length == 2
     assert annotations[1].annotatedClass.id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000288#ChromosomalMutation"
+    assert annotations[1].annotations.length == 2
     hhh = annotations[1].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.id.to_s }
     hhh == ["http://purl.obolibrary.org/obo/MCBCC_0000287#GeneticVariation"]
 
-    assert annotations[2].annotations.length == 1
     assert annotations[2].annotatedClass.id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000289#ChromosomalDeletion"
+    assert annotations[2].annotations.length == 1
     hhh = annotations[2].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.id.to_s }
     assert hhh == ["http://purl.obolibrary.org/obo/MCBCC_0000287#GeneticVariation",
             "http://purl.obolibrary.org/obo/MCBCC_0000288#ChromosomalMutation"]

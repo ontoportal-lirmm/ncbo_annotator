@@ -44,14 +44,14 @@ module Annotator
           logger.info("Caching classes from #{ont.acronym}"); logger.flush
 
           paging = LinkedData::Models::Class.in(last)
-                          .include(:prefLabel, :synonym, :definition)
+                          .include(:prefLabel, :synonym, :definition, :semanticType)
                           .page(1,size)
 
           if (!last.nil?)
             begin
               class_page = nil
               begin
-                class_page = paging.all 
+                class_page = paging.all
               rescue
                 # If page fails, skip to next ontology
                 logger.info("Failed caching classes for #{ont.acronym}"); logger.flush
@@ -235,7 +235,7 @@ module Annotator
         semanticTypeCodes = ""
         i = 0
         semanticTypes.each do |semanticType|
-          val = semanticType.value.split('/')[-1]
+          val = semanticType.to_s.split('/')[-1]
           if i > 0
             semanticTypeCodes << ","
           end
