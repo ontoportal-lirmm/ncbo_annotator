@@ -19,7 +19,7 @@ module Annotator
 
       DICTHOLDER = "dict"
       IDPREFIX = "term:"
-      OCCURENCE_DELIM = "|"
+      OCCURRENCE_DELIM = "|"
       LABEL_DELIM = ","
       DATA_TYPE_DELIM = "@@"
 
@@ -122,8 +122,8 @@ module Annotator
           # key = resourceId (class)
           matches.each do |key, val|
             dataTypeVals = val.split(DATA_TYPE_DELIM)
-            classSemanticTypes = (dataTypeVals.length > 1) ? dataTypeVals[1].split(LABEL_DELIMx) : []
-            allVals = dataTypeVals[0].split(OCCURENCE_DELIM)
+            classSemanticTypes = (dataTypeVals.length > 1) ? dataTypeVals[1].split(LABEL_DELIM) : []
+            allVals = dataTypeVals[0].split(OCCURRENCE_DELIM)
 
             # check that class semantic types contain at least one requested semantic type
             next if !semantic_types.empty? && (semantic_types & classSemanticTypes).empty?
@@ -219,7 +219,7 @@ module Annotator
             rawMatches = matches.split(DATA_TYPE_DELIM)
 
             if (!rawMatches[0].include? entry)
-              redis.hset(id, resourceId, "#{rawMatches[0]}#{OCCURENCE_DELIM}#{entry}#{semanticTypeCodes}")
+              redis.hset(id, resourceId, "#{rawMatches[0]}#{OCCURRENCE_DELIM}#{entry}#{semanticTypeCodes}")
             end
           end
         end
