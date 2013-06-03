@@ -46,6 +46,10 @@ module Annotator
           logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}")
           redis.del(keys_chunk) unless keys_chunk.empty?
         end
+        
+        # Check to make sure delete happened
+        termKeys = redis.keys("#{IDPREFIX}*") || []
+        raise Exception("#{termKeys.length} keys exist in redis for classes, stopping Annotator workflow") if termKeys.length > 0
 
         ontologies.each do |ont|
           last = ont.latest_submission
