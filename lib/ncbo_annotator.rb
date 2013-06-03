@@ -42,7 +42,7 @@ module Annotator
         # Redis has a limit on how many arguments (650k) a method can take, so we have to chunk this call
         chunks = (termKeys.length / 500_000.0).ceil
         curr_chunk = 1
-        termKeys.slice(500_000) do |keys_chunk|
+        termKeys.each_slice(500_000) do |keys_chunk|
           logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}"); logger.flush
           redis.del(keys_chunk) unless keys_chunk.empty?
         end
@@ -50,6 +50,7 @@ module Annotator
         # Check to make sure delete happened
         termKeys = redis.keys("#{IDPREFIX}*") || []
         raise Exception, "#{termKeys.length} keys exist in redis for classes, stopping Annotator workflow" if termKeys.length > 0
+        exit(1)
 
         ontologies.each do |ont|
           last = ont.latest_submission
