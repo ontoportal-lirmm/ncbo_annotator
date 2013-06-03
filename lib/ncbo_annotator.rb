@@ -32,12 +32,18 @@ module Annotator
         # Get logger
         logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
 
+        logger.info("Deleting old redis data"); logger.flush
         # remove old dictionary structure
         redis.del(DICTHOLDER)
+
         # remove term cache
         termKeys = redis.keys("#{IDPREFIX}*") || []
+
         # Redis has a limit on how many arguments (650k) a method can take, so we have to chunk this call
+        chunks = (termKeys.length / 500_000.0).ceil
+        curr_chunk = 1
         termKeys.slice(500_000) do |keys_chunk|
+          logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}")
           redis.del(keys_chunk) unless keys_chunk.empty?
         end
 
