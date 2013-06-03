@@ -51,7 +51,6 @@ module Annotator
         # Check to make sure delete happened
         termKeys = redis.keys("#{IDPREFIX}*") || []
         raise Exception, "#{termKeys.length} keys exist in redis for classes, stopping Annotator workflow" if termKeys.length > 0
-        exit(1)
 
         ontologies.each do |ont|
           last = ont.latest_submission
