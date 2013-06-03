@@ -36,7 +36,10 @@ module Annotator
         redis.del(DICTHOLDER)
         # remove term cache
         termKeys = redis.keys("#{IDPREFIX}*") || []
-        redis.del(termKeys) unless termKeys.empty?
+        # Redis has a limit on how many arguments (650k) a method can take, so we have to chunk this call
+        termKeys.slice(500_000) do |keys_chunk|
+          redis.del(keys_chunk) unless keys_chunk.empty?
+        end
 
         ontologies.each do |ont|
           last = ont.latest_submission
