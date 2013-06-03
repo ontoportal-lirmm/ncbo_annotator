@@ -45,6 +45,7 @@ module Annotator
         termKeys.each_slice(500_000) do |keys_chunk|
           logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}"); logger.flush
           redis.del(keys_chunk) unless keys_chunk.empty?
+          curr_chunk += 1
         end
         
         # Check to make sure delete happened
