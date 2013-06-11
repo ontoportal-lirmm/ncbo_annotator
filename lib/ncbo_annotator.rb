@@ -154,7 +154,8 @@ module Annotator
             allVals.each do |eachVal|
               typeAndOnt = eachVal.split(LABEL_DELIM)
               ontResourceId = typeAndOnt[1]
-              next if !ontologies.empty? && !ontologies.include?(ontResourceId)
+              acronym = ontResourceId.to_s.split('/')[-1]
+              next if !ontologies.empty? && !ontologies.include?(ontResourceId) && !ontologies.include?(acronym)
 
               id_group = ontResourceId + key
               unless allAnnotations.include?(id_group)
