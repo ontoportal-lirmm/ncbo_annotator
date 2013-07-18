@@ -186,15 +186,13 @@ class TestAnnotator < TestCase
     process.relation = RDF::URI.new("http://bogus.relation.com/predicate")
     process.save
 
-    3.times do |i|
+    4.times do |i|
       term_mappings = []
       term_mappings << LinkedData::Mappings.create_term_mapping([RDF::URI.new(terms_a[i])], onts_a[i])
       term_mappings << LinkedData::Mappings.create_term_mapping([RDF::URI.new(terms_b[i])], onts_b[i])
       mapping_id = LinkedData::Mappings.create_mapping(term_mappings)
       LinkedData::Mappings.connect_mapping_process(mapping_id, process)
     end
-
-    assert LinkedData::Models::Mapping.all.count == 4 
   end
 
   def test_annotate_with_mappings
