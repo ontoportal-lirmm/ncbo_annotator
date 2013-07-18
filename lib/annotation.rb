@@ -10,10 +10,10 @@ module Annotator
 
   class MappingClass
     include LinkedData::Hypermedia::Resource
-    attr_accessor :term, :ontology
-    embed :term,:ontology
-    def initialize(term, ontology)
-      @term = term; @ontology = ontology
+    attr_accessor :mappedClass
+    embed :mappedClass
+    def initialize(mappedClass)
+      @mappedClass = mappedClass
     end
   end
   
@@ -53,8 +53,12 @@ module Annotator
       @hierarchy << HierarchyClass.new(parent_class, distance)
     end
 
-    def add_mapping(mapped_term,ontology)
-      @mappings << MappingClass.new(mapped_term,ontology)
+    def add_mapping(mapped_term,ontology_id)
+      ontology = LinkedData::Models::Ontology.read_only(id: RDF::IRI.new(ontology_id), acronym: ontology_id.split("/").last)
+      submission = LinkedData::Models::OntologySubmission
+                      .read_only(id: RDF::IRI.new(ontology_id+"/submissions/latest"), ontology: ontology)
+      mapped_class = LinkedData::Models::Class.read_only(id: RDF::IRI.new(mapped_term), submission: submission)
+      @mappings << MappingClass.new(mapped_class)
     end
 
   end
