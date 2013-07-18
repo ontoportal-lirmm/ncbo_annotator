@@ -162,6 +162,40 @@ class TestAnnotator < TestCase
 
   end
 
+  def mapping_test_set
+    terms_a = ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
+               "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data",
+               "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource",
+               "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"]
+    onts_a = ["BROTEST-0","BROTEST-0","BROTEST-0","BROTEST-0"]
+    terms_b = ["http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#La_mastication_de_produit",
+               "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article",
+               "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein",
+               "http://purl.obolibrary.org/obo/MCBCC_0000344#PapillaryInvasiveDuctalTumor"]
+    onts_b = ["OntoMATEST-0","OntoMATEST-0","OntoMATEST-0", "MCCLTEST-0"]
+
+    user_creator = LinkedData::Models::User.where.include(:username).page(1,100).first
+    if user_creator.nil?
+      u = LinkedData::Models::User.new(username: "tim", email: "tim@example.org", password: "password")
+      u.save
+      user_creator = LinkedData::Models::User.where.include(:username).page(1,100).first
+    end
+    process = LinkedData::Models::MappingProcess.new(:creator => user_creator, :name => "TEST Mapping Annotator")
+    process.date = DateTime.now 
+    process.relation = RDF::URI.new("http://bogus.relation.com/predicate")
+    process.save
+
+    3.times do |i|
+      term_mappings = []
+      term_mappings << LinkedData::Mappings.create_term_mapping([RDF::URI.new(terms_a[i])], onts_a[i])
+      term_mappings << LinkedData::Mappings.create_term_mapping([RDF::URI.new(terms_b[i])], onts_b[i])
+      mapping_id = LinkedData::Mappings.create_mapping(term_mappings)
+      LinkedData::Mappings.connect_mapping_process(mapping_id, process)
+    end
+
+    assert LinkedData::Models::Mapping.all.count == 4 
+  end
+
   def get_classes(ontologies)
     assert !ontologies.empty?
     ontology = ontologies[0]
