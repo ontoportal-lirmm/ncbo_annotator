@@ -264,6 +264,16 @@ module Annotator
         return "#{IDPREFIX}#{intId}"
       end
 
+      def mappings_for_class_ids(class_ids)
+        query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(class_ids.first) ])
+        class_ids[1..-1].each do |id|
+          query.or(terms: [ term: RDF::URI.new(id) ])
+        end
+        query.include(terms: [ :term, :ontology ])
+        mappings = query.all
+        return mappings
+      end
+
       def hierarchy_query(class_ids)
         filter_ids = class_ids.map { |id| "?id = <#{id}>" } .join " || "
         query = <<eos
