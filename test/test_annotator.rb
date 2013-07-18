@@ -163,7 +163,7 @@ class TestAnnotator < TestCase
 
   end
 
-  def mapping_test_set
+  def self.mapping_test_set
     terms_a = ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
                "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data",
                "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource",
