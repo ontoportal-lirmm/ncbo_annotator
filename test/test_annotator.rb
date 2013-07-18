@@ -7,6 +7,7 @@ class TestAnnotator < TestCase
   def self.before_suite
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
+    mapping_test_set
   end
   
   def self.after_suite
@@ -197,7 +198,6 @@ class TestAnnotator < TestCase
   end
 
   def test_annotate_with_mappings
-    mapping_test_set()
     text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=0,expand_with_mappings=true)
