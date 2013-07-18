@@ -19,7 +19,7 @@ module Annotator
     attr_reader :annotations, :hierarchy, :annotatedClass, :mappings
     
     # Support serializating from ontologies_linked_data and ontologies_api
-    embed :annotatedClass, :hierarchy
+    embed :annotatedClass, :hierarchy, :mappings
 
     def initialize(class_id,ontology_id)
       # a list of [from, to, machType
