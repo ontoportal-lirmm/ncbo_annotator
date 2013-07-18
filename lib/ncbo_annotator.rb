@@ -121,11 +121,19 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[], semantic_types=[], filter_integers=false, expand_hierachy_levels=0)
+      def annotate(text, ontologies=[], semantic_types=[], 
+                   filter_integers=false, 
+                   expand_hierachy_levels=0,
+                   expand_with_mappings=false)
         annotations = annotate_direct(text, ontologies, semantic_types, filter_integers)
-        return annotations.values if expand_hierachy_levels == 0 || annotations.length == 0
-        hierarchy_annotations = []
-        expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
+        return annotations.values if annotations.length == 0
+        if expand_hierachy_levels > 0
+          hierarchy_annotations = []
+          expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
+        end
+        if expand_with_mappings
+          expand_mappings(annotations, ontologies)
+        end
         return annotations.values
       end
 
@@ -210,7 +218,25 @@ module Annotator
           end
           current_level += 1
         end
+      end
 
+      def expand_mappings(annotations,ontologies)
+        class_ids = []
+        annotations.each do |k,a|
+          class_ids << a.annotatedClass.id.to_s
+        end
+        mappings = mappings_for_class_ids(class_ids)
+        mappings.each do |mapping|
+          annotations.each do |k,a|
+            mapped_term = mapping.terms.select { |t| t.term.first.to_s != a.annotatedClass.id.to_s }
+            next if mapped_term.length == mapping.terms.length
+            mapped_term = mapped_term.first
+            acronym = mapped_term.ontology.id.to_s.split("/")[-1]
+            if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
+              a.add_mapping(mapped_term.term.first.to_s,mapped_term.ontology.id.to_s)
+            end
+          end
+        end
       end
 
       def get_prefixed_id_from_value(val)

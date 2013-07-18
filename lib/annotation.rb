@@ -7,6 +7,15 @@ module Annotator
       @annotatedClass = annotatedClass; @distance = distance
     end
   end
+
+  class MappingClass
+    include LinkedData::Hypermedia::Resource
+    attr_accessor :term, :ontology
+    embed :term,:ontology
+    def initialize(term, ontology)
+      @term = term; @ontology = ontology
+    end
+  end
   
   class Annotation
     include LinkedData::Hypermedia::Resource
@@ -16,7 +25,7 @@ module Annotator
       type_synonym: "SYN"
     }
 
-    attr_reader :annotations, :hierarchy, :annotatedClass
+    attr_reader :annotations, :hierarchy, :annotatedClass, :mappings
     
     # Support serializating from ontologies_linked_data and ontologies_api
     embed :annotatedClass, :hierarchy
@@ -28,6 +37,7 @@ module Annotator
       @annotatedClass = LinkedData::Models::Class.read_only(id: RDF::IRI.new(class_id), submission: submission)
       @hierarchy = []
       @annotations = []
+      @mappings = []
     end
 
     def add_annotation(from, to, matchType, text)
@@ -41,6 +51,10 @@ module Annotator
       end
       parent_class = LinkedData::Models::Class.read_only(id: RDF::IRI.new(parent), submission: @annotatedClass.submission )
       @hierarchy << HierarchyClass.new(parent_class, distance)
+    end
+
+    def add_mapping(mapped_term,ontology)
+      @mappings << MappingClass.new(mapped_term,ontology)
     end
 
   end
