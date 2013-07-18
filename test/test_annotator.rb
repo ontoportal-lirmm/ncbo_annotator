@@ -196,6 +196,60 @@ class TestAnnotator < TestCase
     assert LinkedData::Models::Mapping.all.count == 4 
   end
 
+  def test_annotate_with_mappings
+    mapping_test_set()
+    text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=0,expand_with_mappings=true)
+    step_in_here = 0
+    annotations.each do |ann|
+      if ann.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+        step_in_here += 1
+        assert ann.mappings.length == 1
+        assert ann.mappings.first.term == "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
+        assert ann.mappings.first.ontology == "http://data.bioontology.org/ontologies/OntoMATEST-0"
+      elsif ann.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
+        step_in_here += 1
+        assert ann.mappings.length == 2
+        ann.mappings.each do |map|
+          if map.term =="http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
+            assert map.ontology["OntoMATEST-0"]
+          elsif map.term == "http://purl.obolibrary.org/obo/MCBCC_0000344#PapillaryInvasiveDuctalTumor"
+            assert map.ontology["MCCLTEST-0"]
+          else
+            assert 1==0
+          end
+        end
+      end
+    end
+    assert step_in_here == 2
+
+    #filtering on ontologies
+    ontologies = ["http://data.bioontology.org/ontologies/OntoMATEST-0",
+                 "http://data.bioontology.org/ontologies/BROTEST-0"]
+    annotations = annotator.annotate(text,ontologies, [], false, expand_hierachy_levels=0,expand_with_mappings=true)
+    step_in_here = 0
+    annotations.each do |ann|
+      if ann.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
+        step_in_here += 1
+        assert ann.mappings.length == 1
+        assert ann.mappings.first.term == "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
+        assert ann.mappings.first.ontology == "http://data.bioontology.org/ontologies/OntoMATEST-0"
+      elsif ann.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
+        step_in_here += 1
+        assert ann.mappings.length == 1
+        ann.mappings.each do |map|
+          if map.term =="http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
+            assert map.ontology["OntoMATEST-0"]
+          else
+            assert 1==0
+          end
+        end
+      end
+    end
+    assert step_in_here == 2
+  end
+
   def get_classes(ontologies)
     assert !ontologies.empty?
     ontology = ontologies[0]
