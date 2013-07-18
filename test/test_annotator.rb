@@ -207,19 +207,19 @@ class TestAnnotator < TestCase
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
         step_in_here += 1
         assert ann.mappings.length == 1
-        assert ann.mappings.first.mappedClass.id.to_s == 
+        assert ann.mappings.first.id.to_s == 
             "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
-        assert ann.mappings.first.mappedClass.submission.ontology.id.to_s == 
+        assert ann.mappings.first.submission.ontology.id.to_s == 
           "http://data.bioontology.org/ontologies/OntoMATEST-0"
       elsif ann.annotatedClass.id.to_s == 
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
         step_in_here += 1
         assert ann.mappings.length == 2
         ann.mappings.each do |map|
-          if map.mappedClass.id.to_s =="http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
-            assert map.mappedClass.submission.ontology.id.to_s["OntoMATEST-0"]
-          elsif map.mappedClass.id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000344#PapillaryInvasiveDuctalTumor"
-            assert map.mappedClass.submission.ontology.id.to_s["MCCLTEST-0"]
+          if map.id.to_s =="http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
+            assert map.submission.ontology.id.to_s["OntoMATEST-0"]
+          elsif map.id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000344#PapillaryInvasiveDuctalTumor"
+            assert map.submission.ontology.id.to_s["MCCLTEST-0"]
           else
             assert 1==0
           end
@@ -240,18 +240,18 @@ class TestAnnotator < TestCase
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
         step_in_here += 1
         assert ann.mappings.length == 1
-        assert ann.mappings.first.mappedClass.id.to_s == 
+        assert ann.mappings.first.id.to_s == 
           "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
-        assert ann.mappings.first.mappedClass.submission.ontology.id.to_s == 
+        assert ann.mappings.first.submission.ontology.id.to_s == 
           "http://data.bioontology.org/ontologies/OntoMATEST-0"
       elsif ann.annotatedClass.id.to_s == 
               "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
         step_in_here += 1
         assert ann.mappings.length == 1
         ann.mappings.each do |map|
-          if map.mappedClass.id.to_s ==
+          if map.id.to_s ==
                 "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
-            assert map.mappedClass.submission.ontology.id.to_s["OntoMATEST-0"]
+            assert map.submission.ontology.id.to_s["OntoMATEST-0"]
           else
             assert 1==0
           end

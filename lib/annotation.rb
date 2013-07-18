@@ -8,15 +8,6 @@ module Annotator
     end
   end
 
-  class MappingClass
-    include LinkedData::Hypermedia::Resource
-    attr_accessor :mappedClass
-    embed :mappedClass
-    def initialize(mappedClass)
-      @mappedClass = mappedClass
-    end
-  end
-  
   class Annotation
     include LinkedData::Hypermedia::Resource
 
@@ -58,7 +49,7 @@ module Annotator
       submission = LinkedData::Models::OntologySubmission
                       .read_only(id: RDF::IRI.new(ontology_id+"/submissions/latest"), ontology: ontology)
       mapped_class = LinkedData::Models::Class.read_only(id: RDF::IRI.new(mapped_term), submission: submission)
-      @mappings << MappingClass.new(mapped_class)
+      @mappings << mapped_class
     end
 
   end
