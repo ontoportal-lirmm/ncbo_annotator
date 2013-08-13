@@ -292,12 +292,26 @@ module Annotator
       end
 
       def mappings_for_class_ids(class_ids)
-        query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(class_ids.first) ])
-        class_ids[1..-1].each do |id|
-          query.or(terms: [ term: RDF::URI.new(id) ])
+        mappings = []
+        class_ids.each do |c|
+          query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(c) ])
+          query.include(terms: [ :ontology, :term ])
+          mappings +=  query.all
         end
-        query.include(terms: [ :term, :ontology ])
-        mappings = query.all
+
+        #TODO there is a bug in the data
+        #and some mappings do not have two terms
+        #this can be removed once the data is fixed
+        result = []
+        mappings.each do |m|
+          count = 0
+          m.terms.each do |t|
+            count += 1 if t.loaded_attributes.include?(:term)
+          end
+          result << m if count == 2
+        end
+        mappings = result
+        #end TODO
         return mappings
       end
 
