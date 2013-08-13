@@ -5,7 +5,6 @@ require 'redis'
 class TestAnnotator < TestCase
 
   def self.before_suite
-    return
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     mapping_test_set
