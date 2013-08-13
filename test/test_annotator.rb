@@ -5,14 +5,12 @@ require 'redis'
 class TestAnnotator < TestCase
 
   def self.before_suite
-    return
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     mapping_test_set
   end
   
   def self.after_suite
-    return
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
 
@@ -79,7 +77,34 @@ class TestAnnotator < TestCase
     text = text.join ", "
     annotations = annotator.annotate(text, [], [], true, 0)
     direct = annotations
-    assert ((size <= direct.length) && direct.length > 0)
+
+#    assert ((size <= direct.length) && direct.length > 0)
+
+    # test for a specific class annotation
+    term_text = "Data Storage"
+    text = "#{term_text} is needed"
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text)
+
+    assert annotations.length == 1
+    assert annotations.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Storage"
+    assert annotations.first.annotations.length == 1
+    assert annotations.first.annotations.first[:from] == 1
+    assert annotations.first.annotations.first[:to] == term_text.length
+    assert text[annotations.first.annotations.first[:from] - 1, annotations.first.annotations.first[:to]] == term_text
+
+    term_text = "Aggregate Human Data"
+    ontology_acronym = "DOESNOTEXIST"
+    text = "When #{term_text} is obtained properly, a new research can begin."
+
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text)
+
+
+
+    #binding.pry
+
+
   end
 
   def test_annotate_hierarchy
