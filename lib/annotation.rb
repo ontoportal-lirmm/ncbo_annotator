@@ -49,7 +49,7 @@ module Annotator
       submission = LinkedData::Models::OntologySubmission
                       .read_only(id: RDF::IRI.new(ontology_id+"/submissions/latest"), ontology: ontology)
       mapped_class = LinkedData::Models::Class.read_only(id: RDF::IRI.new(mapped_term), submission: submission )
-      @mappings << mapped_class
+      @mappings << { annotatedClass: mapped_class }
     end
 
   end
