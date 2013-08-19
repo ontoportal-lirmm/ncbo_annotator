@@ -42,7 +42,7 @@ class TestAnnotator < TestCase
 
   def test_generate_dictionary_file
     ontologies = @@ontologies.dup
-    class_page = get_classes(ontologies)
+    class_page = TestAnnotator.all_classes(ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
