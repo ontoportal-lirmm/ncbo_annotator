@@ -47,19 +47,21 @@ class TestAnnotator < TestCase
 
   def test_generate_dictionary_file
     ontologies = @@ontologies.dup
-    class_page = TestAnnotator.all_classes(ontologies)
+    class_pages = TestAnnotator.all_classes(ontologies)
     assert class_pages.length > 100, "No classes in system ???"
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
     lines = File.readlines(Annotator.settings.mgrep_dictionary_file)
 
-    class_page.each do |cls|
+    class_pages.each do |cls|
       prefLabel = cls.prefLabel
-      resourceId = cls.id.to_s
-      prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
-      index = lines.index{|e| e =~ /#{prefLabel}/ }
-      refute_nil index, "The concept: #{resourceId} (#{prefLabel}) was not found in the dictionary file"
+      if prefLabel.length > 2
+        resourceId = cls.id.to_s
+        prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
+        index = lines.select{|e| e.strip().split("\t")[1] == prefLabel }
+        assert index.length > 0, "The concept: #{resourceId} (#{prefLabel}) was not found in the dictionary file"
+      end
     end
     #make sure length term is > 2
     lines.each do |line|
