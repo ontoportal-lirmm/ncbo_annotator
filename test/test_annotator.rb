@@ -6,8 +6,8 @@ class TestAnnotator < TestCase
 
   def self.before_suite
 
-    redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
-    db_size = redis.dbsize
+    @@redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
+    db_size = @@redis.dbsize
     if db_size > 2000
       puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
       return
@@ -26,23 +26,29 @@ class TestAnnotator < TestCase
 
   def test_all_classes_in_cache
     class_pages = TestAnnotator.all_classes(@@ontologies)
+    annotator = Annotator::Models::NcboAnnotator.new
+    assert class_pages.length > 100, "No classes in system ???"
     class_pages.each do |cls|
       prefLabel = cls.prefLabel
       resourceId = cls.id.to_s
       prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
 
-      assert redis.exists(prefixedId)
-      assert redis.hexists(prefixedId, resourceId)
-      assert redis.hexists(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId)
-      assert_equal redis.hget(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId), prefLabel
-      assert !redis.hget(prefixedId, resourceId).empty?
-
+      if prefLabel.length > 2
+        assert @@redis.exists(prefixedId)
+        assert @@redis.hexists(prefixedId, resourceId)
+        assert @@redis.hexists(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId)
+        assert_equal @@redis.hget(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId), prefLabel
+        assert !@@redis.hget(prefixedId, resourceId).empty?
+      else
+        assert !@@redis.exists(prefixedId)
+      end
     end
   end
 
   def test_generate_dictionary_file
     ontologies = @@ontologies.dup
     class_page = TestAnnotator.all_classes(ontologies)
+    assert class_pages.length > 100, "No classes in system ???"
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.generate_dictionary_file
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
