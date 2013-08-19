@@ -5,8 +5,18 @@ require 'redis'
 class TestAnnotator < TestCase
 
   def self.before_suite
+
+    redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
+    db_size = redis.dbsize
+    if db_size > 2000
+      puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
+      return
+    end
+
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotator.create_term_cache_from_ontologies(@@ontologies)
     mapping_test_set
   end
   
@@ -14,32 +24,19 @@ class TestAnnotator < TestCase
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
 
-  def test_create_term_cache
-
-    redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
-
-    db_size = redis.dbsize
-    if db_size > 2000
-      puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
-      return
-    end
-
-    ontologies = @@ontologies.dup
-    class_page = get_classes(ontologies)
-    annotator = Annotator::Models::NcboAnnotator.new
-    annotator.create_term_cache_from_ontologies(ontologies)
-
-    assert redis.exists(Annotator::Models::NcboAnnotator::DICTHOLDER), "The dictionary structure did not get created successfully"
-
-    class_page.each do |cls|
+  def test_all_classes_in_cache
+    class_pages = TestAnnotator.all_classes(@@ontologies)
+    class_pages.each do |cls|
       prefLabel = cls.prefLabel
       resourceId = cls.id.to_s
       prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
+
       assert redis.exists(prefixedId)
       assert redis.hexists(prefixedId, resourceId)
       assert redis.hexists(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId)
       assert_equal redis.hget(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId), prefLabel
       assert !redis.hget(prefixedId, resourceId).empty?
+
     end
   end
 
@@ -113,6 +110,7 @@ class TestAnnotator < TestCase
     text = "Aggregate Human Data Aggregate Human Data"
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text)
+    binding.pry
     assert annotations.length == 1
     assert annotations.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
     assert annotations.first.annotatedClass.submission.ontology.acronym == "BROTEST-0"
@@ -286,17 +284,21 @@ class TestAnnotator < TestCase
     assert step_in_here == 2
   end
 
-  def get_classes(ontologies)
-    assert !ontologies.empty?
-    ontology = ontologies[0]
-    last = ontology.latest_submission
-    refute_nil last, "Test submission appears to be nil"
-    class_page = LinkedData::Models::Class.in(last)
-                                          .include(:prefLabel, :synonym, :definition)
-                                          .page(1, 10)
-                                          .read_only
-                                          .all
-    refute_nil class_page, "There appear to be no classes in a test submission"
-    return class_page
+  def self.all_classes(ontologies)
+    classes = []
+    ontologies.each do |ontology|
+      last = ontology.latest_submission
+      page = 1
+      size = 500
+      paging = LinkedData::Models::Class.in(last)
+                            .include(:prefLabel, :synonym, :definition)
+                            .page(page, size)
+      begin
+        page_classes = paging.page(page,size).all
+        page = page_classes.next? ? page + 1 : nil
+      end while !page.nil?
+    end
+    return classes
   end
+
 end
