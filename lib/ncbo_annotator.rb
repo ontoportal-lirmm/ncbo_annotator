@@ -25,6 +25,14 @@ module Annotator
       LABEL_DELIM = ","
       DATA_TYPE_DELIM = "@@"
 
+      def initialize()
+        @stop_words = Annotator.settings.stop_words_default_list
+      end
+
+      def stop_words=(stop_input)
+        @stop_words = Set.new(stop_input.map { |x| x.upcase })
+      end
+      
       def create_term_cache_from_ontologies(ontologies)
         page = 1
         size = 2500
@@ -147,6 +155,8 @@ module Annotator
 
         rawAnnotations.filter_integers() if filter_integers
         rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
+
+        rawAnnotations.filter_stop_words(@stop_words)
 
         allAnnotations = {}
 

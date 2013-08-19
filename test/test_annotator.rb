@@ -179,6 +179,35 @@ class TestAnnotator < TestCase
   end
 
 
+  def test_annotate_stop_words
+    ontologies = @@ontologies.dup
+    text = "Aggregate Human Data, Resource deletion, chromosomal chromosomal mutation"
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text)
+    not_show = ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
+                "http://purl.obolibrary.org/obo/MCBCC_0000296#Deletion"]
+
+    not_show.each do |cls|
+      assert (annotations.select { |x| x.annotatedClass.id.to_s == cls }).length > 0
+    end
+
+    #annotation should not show up
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotator.stop_words= ["resource", "deletion"]
+    annotations = annotator.annotate(text)
+    not_show.each do |cls|
+      assert (annotations.select { |x| x.annotatedClass.id.to_s == cls }).length == 0
+    end
+
+    #empty array must annotate all
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotator.stop_words= []
+    annotations = annotator.annotate(text)
+    not_show.each do |cls|
+      assert (annotations.select { |x| x.annotatedClass.id.to_s == cls }).length > 0
+    end
+  end
+
   def test_annotate_hierarchy
     ontologies = @@ontologies.dup
     text = "Aggregate Human Data Aggregate Human Data"

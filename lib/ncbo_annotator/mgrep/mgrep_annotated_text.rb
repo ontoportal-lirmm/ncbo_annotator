@@ -6,7 +6,7 @@ module Annotator
       return @annotation_struct
     end
 
-    class AnnotatedText < Array
+    class AnnotatedText
         def initialize(text,annotations)
           @text = text
           @annotations = annotations
@@ -43,6 +43,13 @@ module Annotator
 
         def filter_integers()
           filtered_anns = @annotations.select {|a| !@text[a[1].to_i-1..a[2].to_i-1].numeric? }
+          @annotations = filtered_anns
+        end
+
+        def filter_stop_words(stop_words)
+          return if stop_words.nil?
+          return if stop_words.length == 0
+          filtered_anns = @annotations.select {|a| !stop_words.include?(a[-1]) }
           @annotations = filtered_anns
         end
     end
