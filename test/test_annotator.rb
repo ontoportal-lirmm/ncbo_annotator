@@ -5,7 +5,6 @@ require 'redis'
 class TestAnnotator < TestCase
 
   def self.before_suite
-
     @@redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
     db_size = @@redis.dbsize
     if db_size > 2000
@@ -129,6 +128,56 @@ class TestAnnotator < TestCase
     # test for specific ontologies
 
   end
+
+  def test_annotate_minsize_term
+    ontologies = @@ontologies.dup
+    class_page = TestAnnotator.all_classes(ontologies)
+    class_page = class_page[0..150]
+    text = []
+    size = 0
+
+    class_page.each do |cls|
+      prefLabel = cls.prefLabel
+      text << "#{prefLabel}"
+      if prefLabel.length > 2
+        size += 1
+      end
+    end
+    text = text.join ", "
+
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text, [], [], true, 0,false)
+    direct = annotations
+
+    assert direct.length >= size && direct.length > 0
+    found = 0
+    filter_out_next = []
+    must_be_next = []
+    class_page.each do |cls|
+      if cls.prefLabel.length > 2
+        assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length > 0
+        found += 1
+        if cls.prefLabel.length < 10
+          filter_out_next << cls
+        else
+          must_be_next << cls
+        end
+      end
+    end
+    assert found >= size
+
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text, [], [], true, 0,false,min_term_size=10)
+    direct = annotations
+    filter_out_next.each do |cls|
+      assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length == 0
+    end
+    must_be_next.each do |cls|
+      assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length > 0
+    end
+    assert must_be_next.length > 0 && filter_out_next.length > 0
+  end
+
 
   def test_annotate_hierarchy
     ontologies = @@ontologies.dup

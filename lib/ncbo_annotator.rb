@@ -125,8 +125,10 @@ module Annotator
       def annotate(text, ontologies=[], semantic_types=[], 
                    filter_integers=false, 
                    expand_hierachy_levels=0,
-                   expand_with_mappings=false)
-        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers)
+                   expand_with_mappings=false,
+                   min_term_size=nil)
+
+        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers, min_term_size)
         return annotations.values if annotations.length == 0
         if expand_hierachy_levels > 0
           hierarchy_annotations = []
@@ -138,12 +140,13 @@ module Annotator
         return annotations.values
       end
 
-      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false)
+      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false,min_term_size=nil)
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, false)
 
         rawAnnotations.filter_integers() if filter_integers
+        rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
 
         allAnnotations = {}
 
