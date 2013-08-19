@@ -73,7 +73,6 @@ class TestAnnotator < TestCase
     ontologies = @@ontologies.dup
     class_page = TestAnnotator.all_classes(ontologies)
     class_page = class_page[0..150]
-    annotator = Annotator::Models::NcboAnnotator.new
     text = []
     size = 0
 
@@ -85,18 +84,23 @@ class TestAnnotator < TestCase
       end
     end
     text = text.join ", "
-    annotations = annotator.annotate(text, [], [], true, 0)
-    direct = annotations
 
-    assert direct.length >= size && direct.length > 0
-    found = 0
-    class_page.each do |cls|
-      if cls.prefLabel.length > 2
-        assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length > 0
-        found += 1
+    texts = [text, text.upcase, text.downcase]
+    texts.each do |text|
+      annotator = Annotator::Models::NcboAnnotator.new
+      annotations = annotator.annotate(text, [], [], true, 0)
+      direct = annotations
+
+      assert direct.length >= size && direct.length > 0
+      found = 0
+      class_page.each do |cls|
+        if cls.prefLabel.length > 2
+          assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length > 0
+          found += 1
+        end
       end
+      assert found >= size
     end
-    assert found >= size
 
     # test for a specific class annotation
     term_text = "Data Storage"
