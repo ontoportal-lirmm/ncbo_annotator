@@ -141,7 +141,7 @@ module Annotator
       def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false)
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
-        rawAnnotations = client.annotate(text, true)
+        rawAnnotations = client.annotate(text, false)
 
         rawAnnotations.filter_integers() if filter_integers
 
