@@ -78,7 +78,7 @@ class TestAnnotator < TestCase
     annotations = annotator.annotate(text, [], [], true, 0)
     direct = annotations
 
-#    assert ((size <= direct.length) && direct.length > 0)
+    assert ((size >= direct.length) && direct.length > 0)
 
     # test for a specific class annotation
     term_text = "Data Storage"
@@ -93,17 +93,18 @@ class TestAnnotator < TestCase
     assert annotations.first.annotations.first[:to] == term_text.length
     assert text[annotations.first.annotations.first[:from] - 1, annotations.first.annotations.first[:to]] == term_text
 
-    term_text = "Aggregate Human Data"
-    ontology_acronym = "DOESNOTEXIST"
-    text = "When #{term_text} is obtained properly, a new research can begin."
-
+    # check for a non-existent ontology
+    non_existent_ont = ["DOESNOTEXIST"]
     annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text, non_existent_ont)
+    assert_empty(annotations)
+
+    # check for a specific term
+    term_text = "Outcomes research"
+    text = "When #{term_text} is obtained properly, a new research can begin."
     annotations = annotator.annotate(text)
 
-
-
-    #binding.pry
-
+    # test for specific ontologies
 
   end
 
