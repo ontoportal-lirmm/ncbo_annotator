@@ -250,7 +250,7 @@ module Annotator
 
       def create_term_entry(redis, ontResourceId, resourceId, label, val, semanticTypes)
         # exclude single-character or empty/null values
-        if (val.to_s.strip.length > 1)
+        if (val.to_s.strip.length > 2)
           id = get_prefixed_id_from_value(val)
           # populate dictionary structure
           redis.hset(DICTHOLDER, id, val)
