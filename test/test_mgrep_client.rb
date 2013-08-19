@@ -49,7 +49,7 @@ eos
       assert (known.include? ann.value)
     end
     annotations = client.annotate("Legal occupations Officer of the court",false)
-    known = ["LEGAL OCCUPATIONS", "OFFICER OF THE COURT","OCCUPATIONS", "LEGAL", "COURT"]
+    known = ["LEGAL OCCUPATIONS", "OFFICER OF THE COURT","OCCUPATIONS", "LEGAL", "COURT", "OF"]
     annotations.each do |ann|
       assert (known.include? ann.value)
     end
