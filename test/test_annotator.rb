@@ -55,6 +55,10 @@ class TestAnnotator < TestCase
       index = lines.index{|e| e =~ /#{prefLabel}/ }
       refute_nil index, "The concept: #{resourceId} (#{prefLabel}) was not found in the dictionary file"
     end
+    #make sure length term is > 2
+    lines.each do |line|
+      assert line.strip().split("\t")[1].length > 2
+    end
   end
 
   def test_annotate
