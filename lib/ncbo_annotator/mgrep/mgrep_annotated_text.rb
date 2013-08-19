@@ -37,7 +37,7 @@ module Annotator
         end
 
         def filter_min_size(min_length)
-          filtered_anns = @annotations.select {|a| a[2].to_i - a[1].to_i + 1 > min_length }
+          filtered_anns = @annotations.select {|a| a[2].to_i - a[1].to_i + 1 >= min_length }
           @annotations = filtered_anns
         end
 

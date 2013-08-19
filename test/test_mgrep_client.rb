@@ -36,7 +36,7 @@ eos
     annotations = client.annotate(long_abstract,true)
     annotations.filter_min_size(5)
     annotations.each do |ann|
-      assert (ann.value.length > 5)
+      assert (ann.value.length >= 5)
     end
     client.close()
   end
