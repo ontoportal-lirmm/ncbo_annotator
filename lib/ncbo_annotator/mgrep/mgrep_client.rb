@@ -17,7 +17,7 @@ module Annotator
       def annotate(text,longword,wholeword=true)
         text = text.upcase.gsub("\n"," ")
         if text.strip().length == 0
-          return  MGrepAnnotatedText(text, [])
+          return  AnnotatedText(text, [])
         end
         message = self.message(text,longword,wholeword)
         @socket.send(message,0)
