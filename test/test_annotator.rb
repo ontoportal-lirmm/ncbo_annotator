@@ -12,6 +12,8 @@ class TestAnnotator < TestCase
       return
     end
 
+    @@redis.del "mappings:*"
+
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     annotator = Annotator::Models::NcboAnnotator.new
