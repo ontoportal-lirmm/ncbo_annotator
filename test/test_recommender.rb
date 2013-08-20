@@ -2,7 +2,7 @@ require_relative 'test_case'
 require 'json'
 require 'redis'
 
-class TestAnnotator < TestCase
+class TestRecommender < TestCase
 
   def self.before_suite
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
