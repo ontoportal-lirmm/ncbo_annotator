@@ -24,7 +24,7 @@ module Recommender
 
             #TODO: there appears to be a bug that does not allow retrieving submission by its id because the id is incorrect. The workaround is to get the ontology object and then retrieve its latest submission.
             sub = LinkedData::Models::Ontology.find(ann.annotatedClass.submission.ontology.id).first.latest_submission
-            sub.bring(metrics: LinkedData::Models::Metrics.attributes)
+            sub.bring(metrics: LinkedData::Models::Metric.attributes)
             recommendations[ontologyId].numTermsTotal = sub.metrics.classes
           end
 
