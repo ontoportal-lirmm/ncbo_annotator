@@ -33,33 +33,39 @@ module Annotator
         @stop_words = Set.new(stop_input.map { |x| x.upcase })
       end
       
-      def create_term_cache_from_ontologies(ontologies)
+      def create_term_cache_from_ontologies(ontologies,delete_cache=false)
         page = 1
         size = 2500
-        redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
+        redis = Redis.new(:host => LinkedData.settings.redis_host, 
+                          :port => LinkedData.settings.redis_port)
 
         # Get logger
         logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
 
-        logger.info("Deleting old redis data"); logger.flush
-        # remove old dictionary structure
-        redis.del(DICTHOLDER)
+        if delete_cache
+          logger.info("Deleting old redis data"); logger.flush
+          # remove old dictionary structure
+          redis.del(DICTHOLDER)
 
-        # remove term cache
-        termKeys = redis.keys("#{IDPREFIX}*") || []
+          # remove term cache
+          termKeys = redis.keys("#{IDPREFIX}*") || []
 
-        # Redis has a limit on how many arguments (650k) a method can take, so we have to chunk this call
-        chunks = (termKeys.length / 500_000.0).ceil
-        curr_chunk = 1
-        termKeys.each_slice(500_000) do |keys_chunk|
-          logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}"); logger.flush
-          redis.del(keys_chunk) unless keys_chunk.empty?
-          curr_chunk += 1
+          # Redis has a limit on how many arguments (650k) a method can take, so we have to chunk this call
+          chunks = (termKeys.length / 500_000.0).ceil
+          curr_chunk = 1
+          termKeys.each_slice(500_000) do |keys_chunk|
+            logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}"); logger.flush
+            redis.del(keys_chunk) unless keys_chunk.empty?
+            curr_chunk += 1
+          end
+          
+          # Check to make sure delete happened
+          termKeys = redis.keys("#{IDPREFIX}*") || []
+          if termKeys.length > 0
+            raise Exception, 
+                  "#{termKeys.length} keys exist in redis for classes, stopping Annotator workflow"
+          end
         end
-        
-        # Check to make sure delete happened
-        termKeys = redis.keys("#{IDPREFIX}*") || []
-        raise Exception, "#{termKeys.length} keys exist in redis for classes, stopping Annotator workflow" if termKeys.length > 0
 
         ontologies.each do |ont|
           last = ont.latest_submission
@@ -103,7 +109,7 @@ module Annotator
         end
       end
 
-      def create_term_cache(ontologies_filter=nil)
+      def create_term_cache(ontologies_filter=nil,delete_cache=false)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
         if ontologies_filter && ontologies_filter.length > 0
           in_list = []
@@ -112,7 +118,7 @@ module Annotator
           end
           ontologies = in_list
         end
-        create_term_cache_from_ontologies(ontologies)
+        create_term_cache_from_ontologies(ontologies,delete_cache=delete_cache)
       end
 
       def generate_dictionary_file()
