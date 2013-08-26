@@ -122,6 +122,10 @@ module Annotator
       end
 
       def generate_dictionary_file()
+        if Annotator.settings.mgrep_dictionary_file.nil?
+          raise Exception, "mgrep_dictionary_file setting is nil"
+        end
+
         redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
 
         if (!redis.exists(DICTHOLDER))
