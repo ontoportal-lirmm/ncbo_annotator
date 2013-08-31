@@ -68,7 +68,7 @@ module Annotator
         end
 
         ontologies.each do |ont|
-          last = ont.latest_submission
+          last = ont.latest_submission(status: [:RDF])
           ontResourceId = ont.id.to_s
           logger.info("Caching classes from #{ont.acronym}"); logger.flush
 
