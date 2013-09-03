@@ -19,7 +19,10 @@ module Annotator
     @settings.mgrep_dictionary_file ||= "./test/tmp/dictionary.txt"
     @settings.mgrep_host            ||= "localhost"
     @settings.mgrep_port            ||= 55555
-    @settings.stop_words_default_file ||= "./test/data/default_stop_words.txt"
+    
+    # Stop words
+    stop_words_path = File.expand_path("../../../test/data/default_stop_words.txt", __FILE__)
+    @settings.stop_words_default_file ||= stop_words_path
 
     @settings.stop_words_default_list = Set.new
     File.open(@settings.stop_words_default_file, "r").each_line do |line|
