@@ -24,6 +24,8 @@ module Annotator
       OCCURRENCE_DELIM = "|"
       LABEL_DELIM = ","
       DATA_TYPE_DELIM = "@@"
+      KEY_STORAGE = "annotator:keys"
+      CHUNK_SIZE = 500_000
 
       def initialize()
         @stop_words = Annotator.settings.stop_words_default_list
@@ -44,26 +46,16 @@ module Annotator
 
         if delete_cache
           logger.info("Deleting old redis data"); logger.flush
+
           # remove old dictionary structure
           redis.del(DICTHOLDER)
-
-          # remove term cache
-          termKeys = redis.keys("#{IDPREFIX}*") || []
-
-          # Redis has a limit on how many arguments (650k) a method can take, so we have to chunk this call
-          chunks = (termKeys.length / 500_000.0).ceil
-          curr_chunk = 1
-          termKeys.each_slice(500_000) do |keys_chunk|
-            logger.info("Deleting class keys chunk #{curr_chunk} of #{chunks}"); logger.flush
-            redis.del(keys_chunk) unless keys_chunk.empty?
-            curr_chunk += 1
-          end
           
-          # Check to make sure delete happened
-          termKeys = redis.keys("#{IDPREFIX}*") || []
-          if termKeys.length > 0
-            raise Exception, 
-                  "#{termKeys.length} keys exist in redis for classes, stopping Annotator workflow"
+          # remove all the stored keys
+          class_keys = redis.lrange(KEY_STORAGE, 0, CHUNK_SIZE)
+          while !class_keys.empty?
+            redis.del(class_keys)
+            redis.ltrim(KEY_STORAGE, CHUNK_SIZE + 1, -1) # Remove what we just deleted
+            class_keys = redis.lrange(KEY_STORAGE, 0, CHUNK_SIZE) # Get next chunk
           end
         end
 
@@ -301,6 +293,8 @@ module Annotator
               redis.hset(id, resourceId, "#{rawMatches[0]}#{OCCURRENCE_DELIM}#{entry}#{semanticTypeCodes}")
             end
           end
+
+          redis.rpush(KEY_STORAGE, id) # Store key for easy delete
         end
       end
 
