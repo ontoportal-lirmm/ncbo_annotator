@@ -309,6 +309,10 @@ class TestAnnotator < TestCase
   end
 
   def self.mapping_test_set
+    raise Exception, "Too many mappings in KB for testing" if LinkedData::Models::Mapping.all.count > 1000
+    Goo.sparql_data_client.delete_graph(LinkedData::Models::Mapping.type_uri)
+    Goo.sparql_data_client.delete_graph(LinkedData::Models::TermMapping.type_uri)
+    Goo.sparql_data_client.delete_graph(LinkedData::Models::MappingProcess.type_uri)
     terms_a = ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
                "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data",
                "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource",
