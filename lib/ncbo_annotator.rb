@@ -35,7 +35,7 @@ module Annotator
         @stop_words = Set.new(stop_input.map { |x| x.upcase })
       end
       
-      def create_term_cache_from_ontologies(ontologies,delete_cache=false)
+      def create_term_cache_from_ontologies(ontologies, delete_cache=false)
         page = 1
         size = 2500
         redis = Redis.new(:host => LinkedData.settings.redis_host, 
@@ -45,13 +45,15 @@ module Annotator
         logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
 
         if delete_cache
-          logger.info("Deleting old redis data"); logger.flush
+          logger.info("Deleting old redis data")
+          logger.flush
 
           # remove old dictionary structure
           redis.del(DICTHOLDER)
           
           # remove all the stored keys
           class_keys = redis.lrange(KEY_STORAGE, 0, CHUNK_SIZE)
+
           while !class_keys.empty?
             redis.del(class_keys)
             redis.ltrim(KEY_STORAGE, CHUNK_SIZE + 1, -1) # Remove what we just deleted
@@ -60,48 +62,59 @@ module Annotator
         end
 
         ontologies.each do |ont|
-          last = ont.latest_submission(status: [:RDF])
-          ontResourceId = ont.id.to_s
-          logger.info("Caching classes from #{ont.acronym}"); logger.flush
-
-          paging = LinkedData::Models::Class.in(last)
-                          .include(:prefLabel, :synonym, :definition, :semanticType)
-                          .page(1,size)
-
-          if (!last.nil?)
-            begin
-              class_page = nil
-              begin
-                class_page = paging.all
-              rescue
-                # If page fails, skip to next ontology
-                logger.info("Failed caching classes for #{ont.acronym}"); logger.flush
-                page = nil
-                next
-              end
-              
-              class_page.each do |cls|
-                prefLabel = cls.prefLabel
-                next if prefLabel.nil? # Skip classes with no prefLabel
-                resourceId = cls.id.to_s
-                synonyms = cls.synonym || []
-                semanticTypes = cls.semanticType || []
-
-                synonyms.each do |syn|
-                  create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn, semanticTypes)
-                end
-                create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_preferred_name], prefLabel, semanticTypes)
-              end
-              page = class_page.next_page
-              if page
-                paging.page(page)
-              end
-            end while !page.nil?
-          end
+          last = ont.latest_submission(status: [:rdf])
+          create_cache_for_submission(logger, ont, last, redis)
         end
       end
 
-      def create_term_cache(ontologies_filter=nil,delete_cache=false)
+      def create_cache_for_submission(logger, ont, sub, redis=nil)
+        redis ||= Redis.new(:host => LinkedData.settings.redis_host,
+                            :port => LinkedData.settings.redis_port)
+        page = 1
+        size = 2500
+        ontResourceId = ont.id.to_s
+        logger.info("Caching classes from #{ont.acronym}")
+        logger.flush
+
+        paging = LinkedData::Models::Class.in(sub)
+            .include(:prefLabel, :synonym, :definition, :semanticType)
+            .page(1, size)
+
+        if (!sub.nil?)
+          begin
+            class_page = nil
+
+            begin
+              class_page = paging.all
+            rescue
+              # If page fails, stop processing of this submission
+              logger.info("Failed caching classes for #{ont.acronym}")
+              logger.flush
+              return
+            end
+
+            class_page.each do |cls|
+              prefLabel = cls.prefLabel
+              next if prefLabel.nil? # Skip classes with no prefLabel
+              resourceId = cls.id.to_s
+              synonyms = cls.synonym || []
+              semanticTypes = cls.semanticType || []
+
+              synonyms.each do |syn|
+                create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn, semanticTypes)
+              end
+              create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_preferred_name], prefLabel, semanticTypes)
+            end
+            page = class_page.next_page
+
+            if page
+              paging.page(page)
+            end
+          end while !page.nil?
+        end
+      end
+
+      def create_term_cache(ontologies_filter=nil, delete_cache=false)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
         if ontologies_filter && ontologies_filter.length > 0
           in_list = []
@@ -110,7 +123,7 @@ module Annotator
           end
           ontologies = in_list
         end
-        create_term_cache_from_ontologies(ontologies,delete_cache=delete_cache)
+        create_term_cache_from_ontologies(ontologies, delete_cache=delete_cache)
       end
 
       def generate_dictionary_file()
