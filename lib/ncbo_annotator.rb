@@ -63,17 +63,19 @@ module Annotator
 
         ontologies.each do |ont|
           last = ont.latest_submission(status: [:rdf])
-          create_cache_for_submission(logger, ont, last, redis)
+          create_cache_for_submission(logger, last, redis)
         end
       end
 
-      def create_cache_for_submission(logger, ont, sub, redis=nil)
-        redis ||= Redis.new(:host => LinkedData.settings.redis_host,
-                            :port => LinkedData.settings.redis_port)
+      def create_cache_for_submission(logger, sub, redis=nil)
         page = 1
         size = 2500
-        ontResourceId = ont.id.to_s
-        logger.info("Caching classes from #{ont.acronym}")
+        redis ||= Redis.new(:host => LinkedData.settings.redis_host,
+                            :port => LinkedData.settings.redis_port)
+        sub.bring(:ontology) if sub.bring?(:ontology)
+        sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
+        ontResourceId = sub.ontology.id.to_s
+        logger.info("Caching classes from #{sub.ontology.acronym}")
         logger.flush
 
         paging = LinkedData::Models::Class.in(sub)
@@ -88,7 +90,7 @@ module Annotator
               class_page = paging.all
             rescue
               # If page fails, stop processing of this submission
-              logger.info("Failed caching classes for #{ont.acronym}")
+              logger.info("Failed caching classes for #{sub.ontology.acronym}")
               logger.flush
               return
             end
