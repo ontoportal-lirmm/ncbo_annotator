@@ -99,6 +99,7 @@ class TestAnnotator < TestCase
       found = 0
       class_page.each do |cls|
         if cls.prefLabel.length > 2
+          #TODO: This assertion may fail if the dictionary file on mgrep server does not contain the terms from the test ontologies
           assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length > 0
           found += 1
         end
@@ -160,6 +161,7 @@ class TestAnnotator < TestCase
     must_be_next = []
     class_page.each do |cls|
       if cls.prefLabel.length > 2
+        #TODO: This assertion may fail if the dictionary file on mgrep server does not contain the terms from the test ontologies
         assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length > 0
         found += 1
         if cls.prefLabel.length < 10
