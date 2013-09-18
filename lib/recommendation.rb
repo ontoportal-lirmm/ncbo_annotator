@@ -4,11 +4,12 @@ module Recommender
 
     include LinkedData::Hypermedia::Resource
 
-    attr_accessor :ontology, :score, :numTermsMatched, :numTermsTotal
+    attr_accessor :ontology, :score, :numTermsMatched, :numTermsTotal, :annotatedClasses
 
     def initialize
       @score = 0
       @numTermsMatched = 0
+      @annotatedClasses = []
     end
 
     def increment_score(annotation)

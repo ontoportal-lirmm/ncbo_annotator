@@ -118,6 +118,7 @@ module Annotator
 
       def create_term_cache(ontologies_filter=nil, delete_cache=false)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
+
         if ontologies_filter && ontologies_filter.length > 0
           in_list = []
           ontologies.each do |ont|

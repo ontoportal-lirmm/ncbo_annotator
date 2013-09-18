@@ -18,7 +18,7 @@ module Recommender
           classId = ann.annotatedClass.id.to_s
           ontologyId = ann.annotatedClass.submission.ontology.id.to_s
 
-          unless recommendations.include?(ontologyId)
+          unless (recommendations.include?(ontologyId))
             recommendations[ontologyId] = Recommendation.new
             recommendations[ontologyId].ontology = ann.annotatedClass.submission.ontology
 
@@ -39,11 +39,11 @@ module Recommender
           end
 
           rec = recommendations[ontologyId]
-
           termsMatchedKey = "#{classId}_#{ontologyId}"
 
           unless termsMatched.include?(termsMatchedKey)
             termsMatched << termsMatchedKey
+            rec.annotatedClasses << ann.annotatedClass
             rec.numTermsMatched += 1
           end
 
