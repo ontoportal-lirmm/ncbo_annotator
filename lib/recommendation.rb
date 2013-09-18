@@ -6,6 +6,8 @@ module Recommender
 
     attr_accessor :ontology, :score, :numTermsMatched, :numTermsTotal, :annotatedClasses
 
+    embed :annotatedClasses
+    
     def initialize
       @score = 0
       @numTermsMatched = 0
