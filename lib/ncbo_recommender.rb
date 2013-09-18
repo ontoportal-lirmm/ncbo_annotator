@@ -29,7 +29,7 @@ module Recommender
               sub.bring(metrics: LinkedData::Models::Metric.attributes)
               nclasses = nil
 
-              if sub.metrics.nil?
+              if !sub.loaded_attributes.include?(:metrics) || sub.metrics.nil?
                 nclasses = LinkedData::Models::Class.where.in(sub).count
               else
                 nclasses = sub.metrics.classes
