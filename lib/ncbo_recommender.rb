@@ -28,26 +28,26 @@ module Recommender
             begin
               #TODO: there appears to be a bug that does not allow retrieving submission by its id because the id is incorrect. The workaround is to get the ontology object and then retrieve its latest submission.
               sub = LinkedData::Models::Ontology.find(ont.id).first.latest_submission
+              next if sub.nil?
             rescue
               logger.error(
                   "Unable to retrieve latest submission for #{ontologyId} in Recommender.")
               next
             end
 
+            sub.bring(metrics: LinkedData::Models::Metric.attributes)
+            nclasses = nil
+
+            if !sub.loaded_attributes.include?(:metrics) || sub.metrics.nil?
+              nclasses = LinkedData::Models::Class.where.in(sub).count
+            else
+              nclasses = sub.metrics.classes
+            end
+            next if nclasses.nil? || nclasses <= 0
+
             recommendations[ontologyId] = Recommendation.new
             recommendations[ontologyId].ontology = ont
-
-            unless (sub.nil?)
-              sub.bring(metrics: LinkedData::Models::Metric.attributes)
-              nclasses = nil
-
-              if !sub.loaded_attributes.include?(:metrics) || sub.metrics.nil?
-                nclasses = LinkedData::Models::Class.where.in(sub).count
-              else
-                nclasses = sub.metrics.classes
-              end
-              recommendations[ontologyId].numTermsTotal = nclasses
-            end
+            recommendations[ontologyId].numTermsTotal = nclasses
           end
 
           rec = recommendations[ontologyId]
