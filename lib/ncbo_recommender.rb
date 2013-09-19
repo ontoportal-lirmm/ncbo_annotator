@@ -1,3 +1,4 @@
+require 'logger'
 require 'ontologies_linked_data'
 require_relative 'recommendation'
 
@@ -9,6 +10,8 @@ module Recommender
       DEFAULT_HIERARCHY_LEVELS = 5
 
       def recommend(text, ontologies=[])
+        # Get logger
+        logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
         annotator = Annotator::Models::NcboAnnotator.new
         annotations = annotator.annotate(text, ontologies, [], false, DEFAULT_HIERARCHY_LEVELS)
         recommendations = {}
@@ -16,14 +19,23 @@ module Recommender
 
         annotations.each do |ann|
           classId = ann.annotatedClass.id.to_s
-          ontologyId = ann.annotatedClass.submission.ontology.id.to_s
+          ont = ann.annotatedClass.submission.ontology
+          ontologyId = ont.id.to_s
 
           unless (recommendations.include?(ontologyId))
-            recommendations[ontologyId] = Recommendation.new
-            recommendations[ontologyId].ontology = ann.annotatedClass.submission.ontology
+            sub = nil
 
-            #TODO: there appears to be a bug that does not allow retrieving submission by its id because the id is incorrect. The workaround is to get the ontology object and then retrieve its latest submission.
-            sub = LinkedData::Models::Ontology.find(ann.annotatedClass.submission.ontology.id).first.latest_submission
+            begin
+              #TODO: there appears to be a bug that does not allow retrieving submission by its id because the id is incorrect. The workaround is to get the ontology object and then retrieve its latest submission.
+              sub = LinkedData::Models::Ontology.find(ont.id).first.latest_submission
+            rescue
+              logger.error(
+                  "Unable to retrieve latest submission for #{ontologyId} in Recommender.")
+              next
+            end
+
+            recommendations[ontologyId] = Recommendation.new
+            recommendations[ontologyId].ontology = ont
 
             unless (sub.nil?)
               sub.bring(metrics: LinkedData::Models::Metric.attributes)
