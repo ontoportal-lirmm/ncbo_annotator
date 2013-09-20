@@ -335,8 +335,20 @@ module Annotator
         mappings = []
         class_ids.each do |c|
           query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(c) ])
+          query.include(:process)
           query.include(terms: [ :ontology, :term ])
-          mappings += query.all
+          mappings.select { |m| !m.to_s }
+          maps_to_filter = query.all
+          maps = []
+          maps_to_filter.each do |m|
+            m.process.each do |p|
+              if !(p.id.to_s["loom"] || p.id.to_s["same_uris"])
+                maps << m
+                break
+              end
+            end
+          end
+          mappings += maps
         end
 
         #TODO there is a bug in the data
