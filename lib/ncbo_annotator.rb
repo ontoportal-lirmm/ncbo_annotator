@@ -270,7 +270,6 @@ module Annotator
             mapped_term = mapping.terms.select { |t| t.term.first.to_s != a.annotatedClass.id.to_s }
             next if mapped_term.length == mapping.terms.length || mapped_term.length == 0
             mapped_term = mapped_term.first
-            binding.pry if mapped_term.nil?
             acronym = mapped_term.ontology.id.to_s.split("/")[-1]
             if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
               a.add_mapping(mapped_term.term.first.to_s,mapped_term.ontology.id.to_s)
@@ -337,7 +336,7 @@ module Annotator
         class_ids.each do |c|
           query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(c) ])
           query.include(terms: [ :ontology, :term ])
-          mappings +=  query.all
+          mappings += query.all
         end
 
         #TODO there is a bug in the data
