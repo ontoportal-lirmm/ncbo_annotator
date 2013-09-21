@@ -35,11 +35,15 @@ module Annotator
         @stop_words = Set.new(stop_input.map { |x| x.upcase })
       end
       
+      def redis
+        @redis ||= Redis.new(:host => Annotator.settings.annotator_redis_host, 
+                          :port => Annotator.settings.annotator_redis_port)
+        @redis
+      end
+
       def create_term_cache_from_ontologies(ontologies, delete_cache=false)
         page = 1
         size = 2500
-        redis = Redis.new(:host => LinkedData.settings.redis_host, 
-                          :port => LinkedData.settings.redis_port)
 
         # Get logger
         logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
@@ -70,8 +74,6 @@ module Annotator
       def create_cache_for_submission(logger, sub, redis=nil)
         page = 1
         size = 2500
-        redis ||= Redis.new(:host => LinkedData.settings.redis_host,
-                            :port => LinkedData.settings.redis_port)
         sub.bring(:ontology) if sub.bring?(:ontology)
         sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
         ontResourceId = sub.ontology.id.to_s
@@ -134,8 +136,6 @@ module Annotator
           raise Exception, "mgrep_dictionary_file setting is nil"
         end
 
-        redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
-
         if (!redis.exists(DICTHOLDER))
           create_term_cache()
         end
@@ -174,7 +174,6 @@ module Annotator
       end
 
       def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false,min_term_size=nil)
-        redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, false)
 

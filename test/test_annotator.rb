@@ -5,7 +5,7 @@ require 'redis'
 class TestAnnotator < TestCase
 
   def self.before_suite
-    @@redis = Redis.new(:host => LinkedData.settings.redis_host, :port => LinkedData.settings.redis_port)
+    @@redis = Annotator.redis
     db_size = @@redis.dbsize
     if db_size > 2000
       puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
