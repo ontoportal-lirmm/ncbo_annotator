@@ -105,9 +105,19 @@ module Annotator
               semanticTypes = cls.semanticType || []
 
               synonyms.each do |syn|
-                create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_synonym], syn, semanticTypes)
+                create_term_entry(redis,
+                                  ontResourceId,
+                                  resourceId,
+                                  Annotator::Annotation::MATCH_TYPES[:type_synonym],
+                                  syn,
+                                  semanticTypes)
               end
-              create_term_entry(redis, ontResourceId, resourceId, Annotator::Annotation::MATCH_TYPES[:type_preferred_name], prefLabel, semanticTypes)
+              create_term_entry(redis,
+                                ontResourceId,
+                                resourceId,
+                                Annotator::Annotation::MATCH_TYPES[:type_preferred_name],
+                                prefLabel,
+                                semanticTypes)
             end
             page = class_page.next_page
 
@@ -284,18 +294,19 @@ module Annotator
 
       private
 
-      def create_term_entry(redis, ontResourceId, resourceId, label, val, semanticTypes)
+      def create_term_entry(redis, ontResourceId, resourceId, label_type, val, semanticTypes)
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 2)
           id = get_prefixed_id_from_value(val)
           # populate dictionary structure
           redis.hset(DICTHOLDER, id, val)
-          entry = "#{label}#{LABEL_DELIM}#{ontResourceId}"
+          entry = "#{label_type}#{LABEL_DELIM}#{ontResourceId}"
 
           # parse out semanticTypeCodes
           # always append them back to the original value
           semanticTypeCodes = get_semantic_type_codes(semanticTypes)
-          semanticTypeCodes = (semanticTypeCodes.empty?) ? "" : "#{DATA_TYPE_DELIM}#{semanticTypeCodes}"
+          semanticTypeCodes = (semanticTypeCodes.empty?) ? "" :
+                                  "#{DATA_TYPE_DELIM}#{semanticTypeCodes}"
           matches = redis.hget(id, resourceId)
 
           if (matches.nil?)
@@ -304,7 +315,8 @@ module Annotator
             rawMatches = matches.split(DATA_TYPE_DELIM)
 
             if (!rawMatches[0].include? entry)
-              redis.hset(id, resourceId, "#{rawMatches[0]}#{OCCURRENCE_DELIM}#{entry}#{semanticTypeCodes}")
+              redis.hset(id, resourceId,
+                         "#{rawMatches[0]}#{OCCURRENCE_DELIM}#{entry}#{semanticTypeCodes}")
             end
           end
 
