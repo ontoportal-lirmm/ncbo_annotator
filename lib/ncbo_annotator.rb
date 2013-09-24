@@ -249,7 +249,8 @@ module Annotator
           end
           return if level_ids.length == 0
           query = hierarchy_query(level_ids)
-          Goo.sparql_query_client.query(query).each do |sol|
+          Goo.sparql_query_client.query(query,query_options: {rules: :NONE})
+              .each do |sol|
             id = sol[:id].to_s
             parent = sol[:parent].to_s
             ontology = sol[:graph].to_s
