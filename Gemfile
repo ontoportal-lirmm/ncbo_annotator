@@ -5,6 +5,7 @@ gem 'pry'
 gem 'redis'
 gem 'minitest', '< 5.0'
 gem 'sparql-client', :git => 'https://github.com/ncbo/sparql-client.git'
+gem 'cube-ruby', require: "cube"
 
 # NCBO gems (can be from a local dev path or from rubygems/git)
 gemfile_local = File.expand_path("../Gemfile.local", __FILE__)
