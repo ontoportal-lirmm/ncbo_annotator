@@ -1,20 +1,20 @@
 LinkedData.config do |config|
-  config.goo_port              = 9000
-  config.goo_host              = "localhost"
-  config.search_server_url     = "http://localhost:8983/solr"
-  config.repository_folder     = "./test/data/ontology_files/repo"
-  config.rest_url_prefix       = "http://data.bioontology.org/"
-  config.enable_security       = false
-  config.http_redis_host = "localhost"
-  config.http_redis_port = 6379
-  config.goo_redis_host = "localhost"
-  config.goo_redis_port = 6379
+  config.goo_port          = 9000
+  config.goo_host          = "localhost"
+  config.search_server_url = "http://localhost:8983/solr"
+  config.repository_folder = "./test/data/ontology_files/repo"
+  config.rest_url_prefix   = "http://data.bioontology.org/"
+  config.enable_security   = false
+  config.http_redis_host   = "localhost"
+  config.http_redis_port   = 6379
+  config.goo_redis_host    = "localhost"
+  config.goo_redis_port    = 6379
 end
 
 Annotator.config do |config|
-  config.mgrep_dictionary_file ||= "./test/tmp/dictionary.txt"
-  config.mgrep_host            ||= "localhost"
-  config.mgrep_port            ||= 55555
-  config.annotator_redis_host  ||="localhost"
-  config.annotator_redis_port  ||= 6379
+  config.mgrep_dictionary_file = "./test/tmp/dictionary.txt"
+  config.mgrep_host            = "localhost"
+  config.mgrep_port            = 55555
+  config.annotator_redis_host  = "localhost"
+  config.annotator_redis_port  = 6379
 end

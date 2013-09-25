@@ -22,7 +22,8 @@ module Recommender
           @score += 5
         end
       end
-      @score += annotation.hierarchy.length * 2
+      # TODO: Disabling this part of forumula for now until hierarchy is fixed
+      # @score += annotation.hierarchy.length * 2
     end
 
   end
