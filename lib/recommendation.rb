@@ -22,8 +22,13 @@ module Recommender
           @score += 5
         end
       end
-      # TODO: Disabling this part of formula for now until hierarchy is fixed
+
+      # TODO: Disabling this part of the formula for now until hierarchy is fixed
       # @score += annotation.hierarchy.length * 2
+    end
+
+    def normalize_score()
+      @score = Math.log10(@score).round(2)
     end
 
   end

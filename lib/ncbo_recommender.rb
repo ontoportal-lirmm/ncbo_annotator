@@ -63,6 +63,7 @@ module Recommender
         end
 
         vals = recommendations.values.sort {|a, b| b.score <=> a.score}
+        vals.select {|v| v.normalize_score()}
 
         return vals
       end
