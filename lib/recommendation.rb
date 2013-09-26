@@ -11,6 +11,7 @@ module Recommender
     def initialize
       @score = 0
       @numTermsMatched = 0
+      @numTermsTotal = 0
       @annotatedClasses = []
     end
 
@@ -28,7 +29,7 @@ module Recommender
     end
 
     def normalize_score()
-      @score = Math.log10(@score).round(2)
+      @score = (@score / Math.log10(@numTermsTotal)).round(2)
     end
 
   end

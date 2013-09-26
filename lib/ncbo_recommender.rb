@@ -62,8 +62,9 @@ module Recommender
           rec.increment_score(ann)
         end
 
-        vals = recommendations.values.sort {|a, b| b.score <=> a.score}
-        vals.select {|v| v.normalize_score()}
+        vals = recommendations.values
+        vals.each {|v| v.normalize_score()}
+        vals.sort! {|a, b| b.score <=> a.score}
 
         return vals
       end
