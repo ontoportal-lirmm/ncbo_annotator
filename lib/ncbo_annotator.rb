@@ -72,6 +72,7 @@ module Annotator
       end
 
       def create_cache_for_submission(logger, sub, redis=nil)
+        redis ||= redis()
         page = 1
         size = 2500
         sub.bring(:ontology) if sub.bring?(:ontology)
