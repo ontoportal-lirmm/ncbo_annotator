@@ -37,7 +37,8 @@ module Annotator
       
       def redis
         @redis ||= Redis.new(:host => Annotator.settings.annotator_redis_host, 
-                          :port => Annotator.settings.annotator_redis_port)
+                             :port => Annotator.settings.annotator_redis_port,
+                             :timeout => 30)
         @redis
       end
 
