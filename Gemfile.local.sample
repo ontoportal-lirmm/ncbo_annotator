@@ -1,7 +1,0 @@
-# Local gemfile
-# This gets included by a back-door in bundler if it exists
-
-source 'https://rubygems.org'
-
-gem 'ontologies_linked_data', :path => '~/Development/ontologies_linked_data'
-gem 'goo', :path => '~/Development/goo'
