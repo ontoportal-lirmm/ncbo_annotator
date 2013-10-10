@@ -1,0 +1,104 @@
+GIT
+  remote: git://github.com/ncbo/goo.git
+  revision: c408158f82ec71285be453421b4c0578e6efce2a
+  branch: staging
+  specs:
+    goo (0.0.2)
+      rdf
+      redis
+      rest-client
+      rsolr
+      sparql-client
+      uuid
+
+GIT
+  remote: git://github.com/ncbo/ontologies_linked_data.git
+  revision: ef3ceb2f781ca84a7ed591aa3adcfc1fb4e8c579
+  branch: staging
+  specs:
+    ontologies_linked_data (0.0.1)
+      activesupport
+      bcrypt-ruby
+      goo
+      json
+      libxml-ruby
+      multi_json
+      oj
+      rack
+      rack-test
+      rsolr
+      rubyzip
+
+GIT
+  remote: git://github.com/ncbo/sparql-client.git
+  revision: de82689e690f400833653b0ecc51676396e945a8
+  branch: staging
+  specs:
+    sparql-client (1.0.4.1)
+      json_pure (>= 1.4)
+      net-http-persistent (>= 1.4)
+      rdf (>= 1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.0.0)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.37)
+    addressable (2.3.5)
+    atomic (1.1.14)
+    bcrypt-ruby (3.1.2)
+    builder (3.2.2)
+    coderay (1.0.9)
+    cube-ruby (0.0.3)
+    i18n (0.6.5)
+    json (1.8.0)
+    json_pure (1.8.0)
+    libxml-ruby (2.7.0)
+    macaddr (1.6.1)
+      systemu (~> 2.5.0)
+    method_source (0.8.2)
+    mime-types (1.25)
+    minitest (4.7.5)
+    multi_json (1.8.1)
+    net-http-persistent (2.9)
+    oj (2.1.6)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    rack (1.5.2)
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rake (10.1.0)
+    rdf (1.0.8)
+      addressable (>= 2.2)
+    redis (3.0.5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    rsolr (1.0.9)
+      builder (>= 2.1.2)
+    rubyzip (1.0.0)
+    slop (3.4.6)
+    systemu (2.5.2)
+    thread_safe (0.1.3)
+      atomic
+    tzinfo (0.3.38)
+    uuid (2.3.7)
+      macaddr (~> 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cube-ruby
+  goo!
+  minitest (~> 4.0)
+  ontologies_linked_data!
+  pry
+  rake (~> 10.0)
+  redis (~> 3.0)
+  sparql-client!
