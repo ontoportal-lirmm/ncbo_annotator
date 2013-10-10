@@ -22,13 +22,14 @@ eos
     recommendations = recommender.recommend(text)
     assert_equal(3, recommendations.length)
 
-    ontAcronyms =["BROTEST-0", "MCCLTEST-0"]
-    recommendations = recommender.recommend(text, ontAcronyms)
+    ont_acronyms =["BROTEST-0", "MCCLTEST-0"]
+    recommendations = recommender.recommend(text, ont_acronyms)
     assert_equal(2, recommendations.length)
-    rec = recommendations[0]
-
-    assert_instance_of(Recommender::Recommendation, rec)
-    assert_equal("MCCLTEST-0", rec.ontology.acronym)
+    recommendations.each do |rec|
+      assert_instance_of(Recommender::Recommendation, rec, msg='recommendations value is not an instance of Recommender::Recommendation')
+    end
+    rec_acronyms = recommendations.map {|rec| rec.ontology.acronym }
+    assert_equal(ont_acronyms, rec_acronyms, msg="#{rec_acronyms} != #{ont_acronyms}")
   end
 
 end
