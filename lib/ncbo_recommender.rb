@@ -7,67 +7,68 @@ module Recommender
 
     class NcboRecommender
 
+      # Get logger
+      @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+
       DEFAULT_HIERARCHY_LEVELS = 5
 
-      def recommend(text, ontologies=[])
-        # Get logger
-        logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+      def recommend(text, ontologies=[], include_classes=false)
         annotator = Annotator::Models::NcboAnnotator.new
         annotations = annotator.annotate(text, ontologies, [], false, DEFAULT_HIERARCHY_LEVELS)
         recommendations = {}
-        termsMatched = []
+        classes_matched = []
 
         annotations.each do |ann|
           classId = ann.annotatedClass.id.to_s
           ont = ann.annotatedClass.submission.ontology
           ontologyId = ont.id.to_s
 
-          unless (recommendations.include?(ontologyId))
-            sub = nil
-
-            begin
-              #TODO: there appears to be a bug that does not allow retrieving submission by its id because the id is incorrect. The workaround is to get the ontology object and then retrieve its latest submission.
-              sub = LinkedData::Models::Ontology.find(ont.id).first.latest_submission
-              next if sub.nil?
-            rescue
-              logger.error(
-                  "Unable to retrieve latest submission for #{ontologyId} in Recommender.")
-              next
-            end
-
-            sub.bring(metrics: LinkedData::Models::Metric.attributes)
-            nclasses = nil
-
-            if !sub.loaded_attributes.include?(:metrics) || sub.metrics.nil?
-              nclasses = LinkedData::Models::Class.where.in(sub).count
-            else
-              nclasses = sub.metrics.classes
-            end
-            next if nclasses.nil? || nclasses <= 0
-
+          unless recommendations.include?(ontologyId)
+            cls_count = get_ontology_class_count(ont)
+            next if cls_count <= 0  # skip any ontologies without a ready latest submission
             recommendations[ontologyId] = Recommendation.new
             recommendations[ontologyId].ontology = ont
-            recommendations[ontologyId].numTermsTotal = nclasses
+            recommendations[ontologyId].numTermsTotal = cls_count
           end
 
           rec = recommendations[ontologyId]
-          termsMatchedKey = "#{classId}_#{ontologyId}"
-
-          unless termsMatched.include?(termsMatchedKey)
-            termsMatched << termsMatchedKey
-            rec.annotatedClasses << ann.annotatedClass
+          cls_ont_key = "#{classId}_#{ontologyId}"
+          unless classes_matched.include?(cls_ont_key)
+            classes_matched << cls_ont_key
+            rec.annotatedClasses << ann.annotatedClass if include_classes
             rec.numTermsMatched += 1
           end
-
           rec.increment_score(ann)
         end
 
-        vals = recommendations.values
-        vals.each {|v| v.normalize_score()}
-        vals.sort! {|a, b| b.score <=> a.score}
-
-        return vals
+        recommendations.values.each {|v| v.normalize_score}
+        return recommendations.values.sort {|a,b| b.score <=> a.score}
       end
+
+
+      private
+
+      def get_ontology_class_count(ont)
+        sub = nil
+        begin
+          #TODO: there appears to be a bug that does not allow retrieving submission by its id
+          # because the id is incorrect. The workaround is to get the ontology object and
+          # then retrieve its latest submission.
+          sub = LinkedData::Models::Ontology.find(ont.id).first.latest_submission
+        rescue
+          @logger.error("Unable to retrieve latest submission for #{ont.id.to_s} in Recommender.")
+        end
+        return 0 if sub.nil?
+        begin
+          sub.bring(metrics: LinkedData::Models::Metric.attributes)
+          cls_count = sub.metrics.classes
+        rescue
+          @logger.error("Unable to retrieve metrics for latest submission of #{ont.id.to_s} in Recommender.")
+          cls_count = LinkedData::Models::Class.where.in(sub).count
+        end
+        return cls_count || 0
+      end
+
 
     end
 
