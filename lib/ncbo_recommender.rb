@@ -56,14 +56,14 @@ module Recommender
           # then retrieve its latest submission.
           sub = LinkedData::Models::Ontology.find(ont.id).first.latest_submission
         rescue
-          @logger.error("Unable to retrieve latest submission for #{ont.id.to_s} in Recommender.")
+          LOGGER.error("Unable to retrieve latest submission for #{ont.id.to_s} in Recommender.")
         end
         return 0 if sub.nil?
         begin
           sub.bring(metrics: LinkedData::Models::Metric.attributes)
           cls_count = sub.metrics.classes
         rescue
-          @logger.error("Unable to retrieve metrics for latest submission of #{ont.id.to_s} in Recommender.")
+          LOGGER.error("Unable to retrieve metrics for latest submission of #{ont.id.to_s} in Recommender.")
           cls_count = LinkedData::Models::Class.where.in(sub).count
         end
         return cls_count || 0
