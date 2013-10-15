@@ -7,8 +7,9 @@ module Recommender
 
     class NcboRecommender
 
-      # Get logger
-      @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+      def initialize()
+        @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+      end
 
       DEFAULT_HIERARCHY_LEVELS = 5
 
@@ -56,14 +57,14 @@ module Recommender
           # then retrieve its latest submission.
           sub = LinkedData::Models::Ontology.find(ont.id).first.latest_submission
         rescue
-          LOGGER.error("Unable to retrieve latest submission for #{ont.id.to_s} in Recommender.")
+          @logger.error("Unable to retrieve latest submission for #{ont.id.to_s} in Recommender.")
         end
         return 0 if sub.nil?
         begin
           sub.bring(metrics: LinkedData::Models::Metric.attributes)
           cls_count = sub.metrics.classes
         rescue
-          LOGGER.error("Unable to retrieve metrics for latest submission of #{ont.id.to_s} in Recommender.")
+          @logger.error("Unable to retrieve metrics for latest submission of #{ont.id.to_s} in Recommender.")
           cls_count = LinkedData::Models::Class.where.in(sub).count
         end
         return cls_count || 0
