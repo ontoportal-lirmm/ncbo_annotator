@@ -4,7 +4,7 @@ gem 'rake'
 gem 'pry'
 gem 'redis'
 gem 'minitest', '< 5.0'
-gem 'sparql-client', :git => 'https://github.com/ncbo/sparql-client.git'
+gem 'sparql-client', :git => 'https://github.com/ncbo/sparql-client.git', :branch => "master"
 gem 'cube-ruby', require: "cube"
 
 gem 'goo', :git => 'https://github.com/ncbo/goo.git', :branch => "master"
