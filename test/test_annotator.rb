@@ -324,7 +324,7 @@ class TestAnnotator < TestCase
                "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article",
                "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein",
                "http://purl.obolibrary.org/obo/MCBCC_0000344#PapillaryInvasiveDuctalTumor"]
-    onts_b = ["OntoMATEST-0","OntoMATEST-0","OntoMATEST-0", "MCCLTEST-0"]
+    onts_b = ["ONTOMATEST-0","ONTOMATEST-0","ONTOMATEST-0", "MCCLTEST-0"]
 
     user_creator = LinkedData::Models::User.where.include(:username).page(1,100).first
     if user_creator.nil?
@@ -359,14 +359,14 @@ class TestAnnotator < TestCase
         assert ann.mappings.first[:annotatedClass].id.to_s == 
             "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
         assert ann.mappings.first[:annotatedClass].submission.ontology.id.to_s == 
-          "http://data.bioontology.org/ontologies/OntoMATEST-0"
+          "http://data.bioontology.org/ontologies/ONTOMATEST-0"
       elsif ann.annotatedClass.id.to_s == 
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
         step_in_here += 1
         assert ann.mappings.length == 2
         ann.mappings.each do |map|
           if map[:annotatedClass].id.to_s =="http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
-            assert map[:annotatedClass].submission.ontology.id.to_s["OntoMATEST-0"]
+            assert map[:annotatedClass].submission.ontology.id.to_s["ONTOMATEST-0"]
           elsif map[:annotatedClass].id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000344#PapillaryInvasiveDuctalTumor"
             assert map[:annotatedClass].submission.ontology.id.to_s["MCCLTEST-0"]
           else
@@ -380,7 +380,7 @@ class TestAnnotator < TestCase
     assert step_in_here == 2
 
     #filtering on ontologies
-    ontologies = ["http://data.bioontology.org/ontologies/OntoMATEST-0",
+    ontologies = ["http://data.bioontology.org/ontologies/ONTOMATEST-0",
                  "http://data.bioontology.org/ontologies/BROTEST-0"]
     annotations = annotator.annotate(text,ontologies, [], false, expand_hierachy_levels=0,expand_with_mappings=true)
     step_in_here = 0
@@ -392,7 +392,7 @@ class TestAnnotator < TestCase
         assert ann.mappings.first[:annotatedClass].id.to_s == 
           "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
         assert ann.mappings.first[:annotatedClass].submission.ontology.id.to_s == 
-          "http://data.bioontology.org/ontologies/OntoMATEST-0"
+          "http://data.bioontology.org/ontologies/ONTOMATEST-0"
       elsif ann.annotatedClass.id.to_s == 
               "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
         step_in_here += 1
@@ -400,7 +400,7 @@ class TestAnnotator < TestCase
         ann.mappings.each do |map|
           if map[:annotatedClass].id.to_s ==
                 "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Maux_de_rein"
-            assert map[:annotatedClass].submission.ontology.id.to_s["OntoMATEST-0"]
+            assert map[:annotatedClass].submission.ontology.id.to_s["ONTOMATEST-0"]
           else
             assert 1==0
           end
