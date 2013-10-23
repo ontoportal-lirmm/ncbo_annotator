@@ -32,6 +32,7 @@ module Annotator
       end
 
       def stop_words=(stop_input)
+        stop_input = stop_input.is_a?(String) ? stop_input.split(/\s*,\s*/) : stop_input.is_a?(Array) ? stop_input : [stop_input]
         @stop_words = Set.new(stop_input.map { |x| x.upcase })
       end
       
