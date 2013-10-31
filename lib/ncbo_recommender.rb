@@ -7,8 +7,9 @@ module Recommender
 
     class NcboRecommender
 
-      # Get logger
-      @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+      def initialize()
+        @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+      end
 
       DEFAULT_HIERARCHY_LEVELS = 5
 

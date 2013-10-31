@@ -18,8 +18,6 @@ _yardoc
 doc/
 
 # Support local configs
-Gemfile.local
-Gemfile.lock
 config/config.rb
 
 # Ignore RubyMine editor files

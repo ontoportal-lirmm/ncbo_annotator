@@ -1,0 +1,115 @@
+GIT
+  remote: git://github.com/ncbo/goo.git
+  revision: 240b88e2db091756dde17198d19be529b9bbd450
+  branch: staging
+  specs:
+    goo (0.0.2)
+      rdf (= 1.0.8)
+      redis
+      rest-client
+      rsolr
+      sparql-client
+      uuid
+
+GIT
+  remote: git://github.com/ncbo/ontologies_linked_data.git
+  revision: 4d27a87e6e66017d1307c48860a9d764a01a18ec
+  branch: staging
+  specs:
+    ontologies_linked_data (0.0.1)
+      activesupport
+      bcrypt-ruby
+      goo
+      json
+      libxml-ruby
+      multi_json
+      oj
+      pony
+      rack
+      rack-test
+      rsolr
+      rubyzip
+
+GIT
+  remote: git://github.com/ncbo/sparql-client.git
+  revision: de82689e690f400833653b0ecc51676396e945a8
+  branch: staging
+  specs:
+    sparql-client (1.0.4.1)
+      json_pure (>= 1.4)
+      net-http-persistent (>= 1.4)
+      rdf (>= 1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.0.0)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.37)
+    addressable (2.3.5)
+    atomic (1.1.14)
+    bcrypt-ruby (3.1.2)
+    builder (3.2.2)
+    coderay (1.0.9)
+    cube-ruby (0.0.3)
+    i18n (0.6.5)
+    json (1.8.1)
+    json_pure (1.8.1)
+    libxml-ruby (2.7.0)
+    macaddr (1.6.1)
+      systemu (~> 2.5.0)
+    mail (2.2.7)
+      activesupport (>= 2.3.6)
+      mime-types
+      treetop (>= 1.4.5)
+    method_source (0.8.2)
+    mime-types (2.0)
+    minitest (4.7.5)
+    multi_json (1.8.2)
+    net-http-persistent (2.9)
+    oj (2.1.7)
+    polyglot (0.3.3)
+    pony (1.5.1)
+      mail (>= 2.0)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    rack (1.5.2)
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rake (10.1.0)
+    rdf (1.0.8)
+      addressable (>= 2.2)
+    redis (3.0.5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    rsolr (1.0.9)
+      builder (>= 2.1.2)
+    rubyzip (1.0.0)
+    slop (3.4.6)
+    systemu (2.5.2)
+    thread_safe (0.1.3)
+      atomic
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
+    tzinfo (0.3.38)
+    uuid (2.3.7)
+      macaddr (~> 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cube-ruby
+  goo!
+  minitest (~> 4.0)
+  ontologies_linked_data!
+  pry
+  rake (~> 10.0)
+  redis (~> 3.0)
+  sparql-client!
