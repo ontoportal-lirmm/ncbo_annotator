@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 71426d4d1ecb6675bb18f8dc6962022bd617c987
+  revision: 9852dda05909d9bcaaf287493c71bec18f3d0c31
   branch: staging
   specs:
     goo (0.0.2)
@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: aa58b68d2748e354b68bbc44dddb06ca02827688
+  revision: 673133e60c9ce84c2f28a3eeb6555113acdd3561
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -84,7 +84,7 @@ GEM
     rake (10.1.0)
     rdf (1.0.8)
       addressable (>= 2.2)
-    redis (3.0.5)
+    redis (3.0.6)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rsolr (1.0.9)
