@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 9e387b5224d7ff2887f54e65669d41a5892c3bb9
+  revision: 8f9c2aa0cf26b97a257a7425d52d40451ef4d1c4
   branch: master
   specs:
     goo (0.0.2)
@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 5180dbe9c0519ab127747eabfa005837cc6ab922
+  revision: 0b0ef673fa6375937c55cf52ee525883a90d139e
   branch: master
   specs:
     ontologies_linked_data (0.0.1)
@@ -32,7 +32,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 972f264109779a7522552cda0325755dbc004edc
+  revision: 1dc17f0bd9966b3a4d93d5d9ccc1b2d8f0cd4e8e
   branch: master
   specs:
     sparql-client (1.0.4.1)
@@ -70,7 +70,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.2)
     net-http-persistent (2.9)
-    oj (2.2.0)
+    oj (2.2.3)
     polyglot (0.3.3)
     pony (1.5.1)
       mail (>= 2.0)
@@ -90,7 +90,7 @@ GEM
     rsolr (1.0.9)
       builder (>= 2.1.2)
     rubyzip (1.1.0)
-    slop (3.4.6)
+    slop (3.4.7)
     systemu (2.5.2)
     thread_safe (0.1.3)
       atomic
