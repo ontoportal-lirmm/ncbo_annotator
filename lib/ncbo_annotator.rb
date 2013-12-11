@@ -197,9 +197,23 @@ module Annotator
 
         allAnnotations = {}
 
+        redis_data = Hash.new
+
+        redis.pipelined {
+          rawAnnotations.each do |ann|
+            id = get_prefixed_id(ann.string_id)
+            redis_data[id] = { future: redis.hgetall(id) }
+          end
+        }
+        sleep(1.0 / 150.0)
+        redis_data.each do |k,v|
+          while v[:future].value.is_a?(Redis::FutureNotReady)
+            sleep(1.0 / 150.0)
+          end
+        end
         rawAnnotations.each do |ann|
           id = get_prefixed_id(ann.string_id)
-          matches = redis.hgetall(id)
+          matches = redis_data[id][:future].value
 
           # key = resourceId (class)
           matches.each do |key, val|
