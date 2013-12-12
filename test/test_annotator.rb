@@ -7,7 +7,7 @@ class TestAnnotator < TestCase
   def self.before_suite
     @@redis = Annotator::Models::NcboAnnotator.new.redis
     db_size = @@redis.dbsize
-    if db_size > 2000
+    if db_size > 5000
       puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
       return
     end
@@ -23,7 +23,7 @@ class TestAnnotator < TestCase
     annotator.create_term_cache_from_ontologies(@@ontologies, true)
     mapping_test_set
   end
-  
+
   def self.after_suite
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
@@ -284,7 +284,7 @@ class TestAnnotator < TestCase
     assert annotations[3].annotatedClass.id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000296#Deletion"
     hhh = annotations[3].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.id.to_s }
     assert hhh = ["http://purl.obolibrary.org/obo/MCBCC_0000287#GeneticVariation",
-     "http://purl.obolibrary.org/obo/MCBCC_0000295#GeneMutation"]  
+     "http://purl.obolibrary.org/obo/MCBCC_0000295#GeneMutation"]
 
     assert annotations[4].annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
     hhh = annotations[4].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.id.to_s }
@@ -333,7 +333,7 @@ class TestAnnotator < TestCase
       user_creator = LinkedData::Models::User.where.include(:username).page(1,100).first
     end
     process = LinkedData::Models::MappingProcess.new(:creator => user_creator, :name => "TEST Mapping Annotator")
-    process.date = DateTime.now 
+    process.date = DateTime.now
     process.relation = RDF::URI.new("http://bogus.relation.com/predicate")
     process.save
 
@@ -352,15 +352,15 @@ class TestAnnotator < TestCase
     annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=0,expand_with_mappings=true)
     step_in_here = 0
     annotations.each do |ann|
-      if ann.annotatedClass.id.to_s == 
+      if ann.annotatedClass.id.to_s ==
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
         step_in_here += 1
         assert ann.mappings.length == 1
-        assert ann.mappings.first[:annotatedClass].id.to_s == 
+        assert ann.mappings.first[:annotatedClass].id.to_s ==
             "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
-        assert ann.mappings.first[:annotatedClass].submission.ontology.id.to_s == 
+        assert ann.mappings.first[:annotatedClass].submission.ontology.id.to_s ==
           "http://data.bioontology.org/ontologies/ONTOMATEST-0"
-      elsif ann.annotatedClass.id.to_s == 
+      elsif ann.annotatedClass.id.to_s ==
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
         step_in_here += 1
         assert ann.mappings.length == 2
@@ -385,15 +385,15 @@ class TestAnnotator < TestCase
     annotations = annotator.annotate(text,ontologies, [], false, expand_hierachy_levels=0,expand_with_mappings=true)
     step_in_here = 0
     annotations.each do |ann|
-      if ann.annotatedClass.id.to_s == 
+      if ann.annotatedClass.id.to_s ==
           "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
         step_in_here += 1
         assert ann.mappings.length == 1
-        assert ann.mappings.first[:annotatedClass].id.to_s == 
+        assert ann.mappings.first[:annotatedClass].id.to_s ==
           "http://www.semanticweb.org/associatedmedicine/lavima/2011/10/Ontology1.owl#Article"
-        assert ann.mappings.first[:annotatedClass].submission.ontology.id.to_s == 
+        assert ann.mappings.first[:annotatedClass].submission.ontology.id.to_s ==
           "http://data.bioontology.org/ontologies/ONTOMATEST-0"
-      elsif ann.annotatedClass.id.to_s == 
+      elsif ann.annotatedClass.id.to_s ==
               "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
         step_in_here += 1
         assert ann.mappings.length == 1
