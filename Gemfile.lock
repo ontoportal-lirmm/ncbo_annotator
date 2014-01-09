@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: ff6f242b4a2443dae07f0735ca8b18cb073a5953
+  revision: 8a5df731b1a621c50e23f1d333ececbb12637784
   branch: staging
   specs:
     goo (0.0.2)
@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 218f06e500009f80de364f19855144cd95c4b0f2
+  revision: 6f2763dd3b6f08c4b3820f5b395b929cc2554ea8
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)

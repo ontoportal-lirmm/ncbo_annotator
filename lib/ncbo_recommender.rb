@@ -15,7 +15,8 @@ module Recommender
 
       def recommend(text, ontologies=[], include_classes=false)
         annotator = Annotator::Models::NcboAnnotator.new
-        annotations = annotator.annotate(text, ontologies, [], false, DEFAULT_HIERARCHY_LEVELS)
+        annotations = annotator.annotate(text, ontologies, [], false, DEFAULT_HIERARCHY_LEVELS, expand_with_mappings=false,
+                                         min_term_size=nil, whole_word_only=true, with_synonyms=true)
         recommendations = {}
         classes_matched = []
 

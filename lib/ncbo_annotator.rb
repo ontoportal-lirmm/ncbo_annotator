@@ -172,9 +172,11 @@ module Annotator
                    filter_integers=false, 
                    expand_hierachy_levels=0,
                    expand_with_mappings=false,
-                   min_term_size=nil)
+                   min_term_size=nil,
+                   whole_word_only=true,
+                   with_synonyms=true)
 
-        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers, min_term_size)
+        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers, min_term_size, whole_word_only, with_synonyms)
         return annotations.values if annotations.length == 0
         if expand_hierachy_levels > 0
           hierarchy_annotations = []
@@ -186,9 +188,9 @@ module Annotator
         return annotations.values
       end
 
-      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false,min_term_size=nil)
+      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false, min_term_size=nil, whole_word_only=true, with_synonyms=true)
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
-        rawAnnotations = client.annotate(text, false)
+        rawAnnotations = client.annotate(text, false, whole_word_only)
 
         rawAnnotations.filter_integers() if filter_integers
         rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
@@ -226,6 +228,8 @@ module Annotator
 
             allVals.each do |eachVal|
               typeAndOnt = eachVal.split(LABEL_DELIM)
+              recordType = typeAndOnt[0]
+              next if recordType == Annotator::Annotation::MATCH_TYPES[:type_synonym] && !with_synonyms
               ontResourceId = typeAndOnt[1]
               acronym = ontResourceId.to_s.split('/')[-1]
               next if !ontologies.empty? && !ontologies.include?(ontResourceId) && !ontologies.include?(acronym)
