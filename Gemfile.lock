@@ -68,7 +68,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.0)
     minitest (4.7.5)
-    multi_json (1.8.3)
+    multi_json (1.8.4)
     net-http-persistent (2.9)
     oj (2.5.3)
     polyglot (0.3.3)
