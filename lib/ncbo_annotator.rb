@@ -168,27 +168,44 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[], semantic_types=[], 
-                   filter_integers=false, 
-                   expand_hierachy_levels=0,
-                   expand_with_mappings=false,
-                   min_term_size=nil,
-                   whole_word_only=true,
-                   with_synonyms=true)
+      ########################################
+      # Possible options with their defaults:
+      #   ontologies              = []
+      #   semantic_types          = []
+      #   filter_integers         = false
+      #   expand_hierarchy_levels = 0
+      #   expand_with_mappings    = false
+      #   min_term_size           = nil
+      #   whole_word_only         = true
+      #   with_synonyms           = true
+      #######################################
+      def annotate(text, options={})
+        ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
+        expand_hierarchy_levels = options[:expand_hierarchy_levels].is_a?(Integer) ? options[:expand_hierarchy_levels] : 0
+        expand_with_mappings = options[:expand_with_mappings] == true ? true : false
 
-        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers, min_term_size, whole_word_only, with_synonyms)
+        annotations = annotate_direct(text, options)
         return annotations.values if annotations.length == 0
-        if expand_hierachy_levels > 0
+
+        if expand_hierarchy_levels > 0
           hierarchy_annotations = []
-          expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
+          expand_hierarchies(annotations, expand_hierarchy_levels, ontologies)
         end
+
         if expand_with_mappings
           expand_mappings(annotations, ontologies)
         end
         return annotations.values
       end
 
-      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false, min_term_size=nil, whole_word_only=true, with_synonyms=true)
+      def annotate_direct(text, options={})
+        ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
+        semantic_types = options[:semantic_types].is_a?(Array) ? options[:semantic_types] : []
+        filter_integers = options[:filter_integers] == true ? true : false
+        min_term_size = options[:min_term_size].is_a?(Integer) ? options[:min_term_size] : nil
+        whole_word_only = options[:whole_word_only] == false ? false : true
+        with_synonyms = options[:with_synonyms] == false ? false : true
+
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, false, whole_word_only)
 
