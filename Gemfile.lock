@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: ff6f242b4a2443dae07f0735ca8b18cb073a5953
+  revision: 5cbf2cffb36cf81cc994c30c8a8cae169a8f2b54
   branch: staging
   specs:
     goo (0.0.2)
@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: bdaa8710dbf6b82a8b9ef8234cede5cbe809f042
+  revision: 791803d642a8db879183022b3599d1b2d3ce6898
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -69,7 +69,7 @@ GEM
     mime-types (2.0)
     minitest (4.7.5)
     multi_json (1.8.4)
-    net-http-persistent (2.9)
+    net-http-persistent (2.9.1)
     oj (2.5.4)
     polyglot (0.3.3)
     pony (1.6.2)
