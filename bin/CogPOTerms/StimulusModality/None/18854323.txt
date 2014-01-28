@@ -1,0 +1,18 @@
+The pathophysiology of auditory verbal hallucinations (AVH) is largely unknown. Several
+functional imaging studies have measured cerebral activation during these hallucinations,
+but sample sizes were relatively small (one to eight subjects) and findings inconsistent.
+In this study cerebral activation was measured using fMRI in 24 psychotic patients
+while they experienced AVH in the scanner and, in another session, while they silently
+generated words. All patients were right handed and diagnosed with schizophrenia,
+schizo-affective disorder or psychotic disorder not otherwise specified. Group analysis
+for AVH revealed activation in the right homologue of Broca's area, bilateral insula,
+bilateral supramarginal gyri and right superior temporal gyrus. Broca's area and left
+superior temporal gyrus were not activated. Group analysis for word generation in
+these patients yielded activation in Broca's and Wernicke's areas and to a lesser
+degree their right-sided homologues, bilateral insula and anterior cingulate gyri.
+Lateralization of activity during AVH was not correlated with language lateralization,
+but rather with the degree to which the content of the hallucinations had a negative
+emotional valence. The main difference between cerebral activity during AVH and activity
+during normal inner speech appears to be the lateralization. The predominant engagement
+of the right inferior frontal area during AVH may be related to the typical low semantic
+complexity and negative emotional content.

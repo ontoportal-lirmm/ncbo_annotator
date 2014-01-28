@@ -1,0 +1,22 @@
+Brain morphology and physiological measures in schizophrenia have yielded inconsistent
+results. This may be due in part to difficulties in ascertaining precisely to what
+degree each measure deviates from its genetically and environmentally determined potential
+level. We attempted to surmount this problem in a paradigm involving monozygotic twin
+pair discordant for schizophrenia. In this paradigm, the difference score and reaction
+time between the unaffected member and affected member of a twin pair should represent
+the degree of pathologic involvement irrespective of actual level.We investigated,
+using fMRI, the neural substrate underlying encoding and retrieval of aversive and
+neutral IAPS pictures.An ANOVA on reaction time (RT) between schizophrenia patient
+(J) and normal sister (D) significant difference, (F = 5.2, p &lt; or = .02) for J had
+less RT than D. Conversely, the ANOVA for the correct pictures retrieved was insignificant
+(F = 1.8, p &lt; or = .2). When the brain activity associated with the encoding and retrieval
+of the aversive pictures was subtracted (J-D and D-J) from that associated with the
+neutral ones, significant loci of activation were found. During encoding: for J-D
+the right fusiform gyrus was significantly activated (p &lt; .0001) and for D-J the orbitofrontal
+cortex was significantly activated (p &lt; .05). During retrieval: for J-D the right
+anterior cingulate (p &lt; .0001) was activated and the dorsolateral prefrontal cortex
+(p &lt; .002). For D-J only the cerebellum showed activation (p &lt; .0001).Results indicated
+subtle attenuations in some aspects of memory, thus providing another evidence for
+cognitive markers of a genetic component in schizophrenia. New approaches in neuropsychiatry-based
+on genetic methodologies should further define the cerebral physiology responsible
+for schizophrenia.

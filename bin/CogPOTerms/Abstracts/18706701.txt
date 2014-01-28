@@ -1,0 +1,22 @@
+Unipolar major depressive disorder (MDD) is characterized by aberrant amygdala responses
+to sad stimuli and poor cognitive control, but the interactive effects of these impairments
+are poorly understood.To evaluate brain activation in MDD in response to cognitive
+control stimuli embedded within sad and neutral contexts.Fourteen adults with MDD
+and fifteen matched controls participated in a mixed block/event-related functional
+magnetic resonance imaging (fMRI) task that presented oddball target stimuli embedded
+within blocks of sad or neutral images.Target events activated similar prefrontal
+brain regions in both groups. However, responses to target events embedded within
+blocks of emotional images revealed a clear group dissociation. During neutral blocks,
+the control group demonstrated greater activation to targets in the midfrontal gyrus
+and anterior cingulate relative to the MDD group, replicating previous findings of
+prefrontal hypo-activation in MDD samples to cognitive control stimuli. However, during
+sad blocks, the MDD group demonstrated greater activation in a number of prefrontal
+regions, including the mid-, inferior, and orbito-frontal gyri and the anterior cingulate,
+suggesting that relatively more prefrontal brain activation was required to disengage
+from the sad images to respond to the target events.A larger sample size would have
+provided greater statistical power, and more standardized stimuli would have increased
+external validity.This double dissociation of prefrontal responses to target events
+embedded within neutral and sad context suggests that MDD impacts not only responses
+to affective events, but extends to other cognitive processes carried out in the context
+of affective engagement. This implies that emotional reactivity to sad events in MDD
+may impact functioning more broadly than previously understood.

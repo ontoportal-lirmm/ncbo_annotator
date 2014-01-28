@@ -1,0 +1,17 @@
+We used an event-related functional Magnetic Resonance Imaging (fMRI) approach to
+examine the neural basis of the selective associative memory deficit in schizophrenia.Fifteen
+people with schizophrenia and 18 controls were scanned during a pair and item memory
+encoding and recognition task. During encoding, subjects studied items and pairs of
+visual objects. In a subsequent retrieval task, participants performed an item recognition
+memory test (old/new decisions) and an associative recognition test (intact/rearranged
+decisions). The fMRI analysis of the recognition data was restricted to correct items
+only and a random effects model was used.At the behavioral level, both groups performed
+equally well on item recognition, whereas people with schizophrenia demonstrated lower
+performance on associative recognition relative to the control group. At the brain
+level, the comparison between associative and item encoding revealed greater activity
+in the control group in the left prefrontal cortex and cingulate gyrus relative to
+the schizophrenia group. During recognition, greater left dorsolateral prefrontal
+and right inferior prefrontal activations were observed in the control group relative
+to the schizophrenia group.This fMRI study implicates the prefrontal cortex among
+other brain regions as the basis for the selective associative memory encoding and
+recognition deficit seen in schizophrenia.

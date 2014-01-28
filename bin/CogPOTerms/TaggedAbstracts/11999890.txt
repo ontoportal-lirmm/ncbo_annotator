@@ -1,0 +1,1 @@
+StimulusModalityNone StimulusTypeNone ResponseModalityHand ResponseModalityNone ResponseTypeFingerTapping ResponseTypeNone InstructionsMove InstructionsPassive 

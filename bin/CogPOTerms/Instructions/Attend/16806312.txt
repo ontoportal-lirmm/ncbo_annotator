@@ -1,0 +1,20 @@
+Impaired social cognition is a core feature of autism. There is much evidence showing
+people with autism use a different cognitive style than controls for face-processing.
+We tested if people with autism would show differential activation of social brain
+areas during a face-processing task. Thirteen adults with high-functioning autism
+or Asperger Syndrome (HFA/AS) and 13 matched controls. We used fMRI to investigate
+'social brain' activity during perception of fearful faces. We employed stimuli known
+to reliably activate the amygdala and other social brain areas, and ROI analyses to
+investigate brain areas responding to facial threat as well as those showing a linear
+response to varying threat intensities. We predicted: (1) the HFA/AS group would show
+differential activation (as opposed to merely deficits) of the social brain compared
+to controls and (2) that social brain areas would respond to varied intensity of fear
+in the control group, but not the HFA/AS group. Both predictions were confirmed. The
+controls showed greater activation in the left amygdala and left orbito-frontal cortex,
+while the HFA/AS group showed greater activation in the anterior cingulate gyrus and
+superior temporal cortex. The control group also showed varying responses in social
+brain areas to varying intensities of fearful expression, including differential activations
+in the left and right amygdala. This response in the social brain was absent in the
+HFA/AS group. HFA/AS are associated with different patterns of activation of social
+brain areas during fearful emotion processing, and the absence in the HFA/AS brain
+of a response to varying emotional intensity.

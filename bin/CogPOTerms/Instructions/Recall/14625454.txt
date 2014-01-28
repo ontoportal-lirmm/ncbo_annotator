@@ -1,0 +1,11 @@
+The present fMRI study aimed to investigate effective connectivity within a cortical-subcortical-cerebellar
+information processing network in drug free schizophrenic patients while performing
+a 2-back working memory task. The finding of enhanced thalamo-cortical and cortico-cortical
+intrahemispheric connectivity could be interpreted as a compensatory increase of neuronal
+connection strength consistent with a model of cortical inefficiency in schizophrenic
+patients. Additionally, the result could be integrated into a model of deficient thalamo-cortical
+filter functions. Conversely, lower interhemispheric connectivity of the frontal and
+parietal association cortex appears to be the functional correlate of reduced cognitive
+performance in schizophrenic patients. The study demonstrated the feasibility to model
+information processing within cognitive networks and provided additional evidence
+for the concept of cognitive dysmetria in schizophrenia.

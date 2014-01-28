@@ -1,0 +1,17 @@
+Several studies have implicated the involvement of two major components of emotion
+regulatory networks, the ventrolateral prefrontal cortex (VLPFC) and amygdala, in
+the pathophysiology of bipolar disorder. In healthy subjects, the VLPFC has been shown
+to negatively modulate amygdala response when subjects cognitively evaluate an emotional
+face by identifying and labeling the emotion it expresses. The current study used
+such a paradigm to assess whether the strength of this modulation was altered in bipolar
+subjects when manic. During functional magnetic resonance imaging (fMRI), nine manic
+subjects with bipolar I disorder and nine healthy subjects either named the emotion
+shown in a face by identifying one of two words that correctly expressed the emotion
+(emotion labeling task) or matched the emotion shown in a face to one of two other
+faces (emotion perception task). The degree to which the VLPFC regulated amygdala
+response during these tasks was assessed using a psychophysiological interaction (PPI)
+analysis. Compared with healthy subjects, manic patients had a significantly reduced
+VLPFC regulation of amygdala response during the emotion labeling task. These findings,
+taken in context with previous fMRI studies of bipolar mania, suggest that reductions
+in inhibitory frontal activity in these patients may lead to an increased reactivity
+of the amygdala.

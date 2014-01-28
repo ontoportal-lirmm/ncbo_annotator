@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeWords ResponseModalityHand ResponseModalityNone ResponseTypeButtonPress ResponseTypeNone InstructionsMove InstructionsPassive 

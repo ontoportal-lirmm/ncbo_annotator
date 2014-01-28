@@ -1,0 +1,20 @@
+Functional magnetic resonance imaging (fMRI) techniques were used to identify the
+neural circuitry underlying emotional processing in control and depressed subjects.
+Depressed subjects were studied before and after treatment with venlafaxine. This
+new technique provides a method to noninvasively image regional brain function with
+unprecedented spatial and temporal resolution.Echo-planar imaging was used to acquire
+whole brain images while subjects viewed positively and negatively valenced visual
+stimuli. Two control subjects and two depressed subjects who met DSM-IV criteria for
+major depression were scanned at baseline and 2 weeks later. Depressed subjects were
+treated with venlafaxine after the baseline scan.Preliminary results from this ongoing
+study revealed three interesting trends in the data. Both depressed patients demonstrated
+considerable symptomatic improvement at the time of the second scan. Across control
+and depressed subjects, the negative compared with the positive pictures elicited
+greater global activation. In both groups, activation induced by the negative pictures
+decreased from the baseline scan to the 2-week scan. This decrease in activation was
+also present in the control subjects when they were exposed to the positive pictures.
+In contrast, when the depressed subjects were presented with the positive pictures
+they showed no activation at baseline, whereas after 2 weeks of treatment an area
+of activation emerged in right secondary visual cortex.While preliminary, these results
+demonstrate the power of using fMRI to study emotional processes in normal and depressed
+subjects and to examine mechanisms of action of antidepressant drugs.

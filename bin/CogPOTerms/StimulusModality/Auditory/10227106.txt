@@ -1,0 +1,22 @@
+Functional magnetic resonance imaging was used to examine the neural correlates of
+two linguistic tasks in schizophrenia.Five dextral male schizophrenic patients and
+five volunteers matched for demographic variables and task performance participated.
+Echoplanar images were acquired over 5 min at 1.5 T while subjects performed two paced,
+covert tasks; (1) verbal fluency: silent generation of words beginning with an aurally
+presented cue letter, contrasted with silent repetition of the aurally presented word
+'rest'; (2) semantic decision: deciding whether a visually presented cue word was
+'living or non-living' and silently articulating the response, contrasted with rest.
+Both tasks entailed language processing; only verbal fluency requires the intrinsic
+generation of verbal material. Between-group differences in the mean power of experimental
+response to the semantic decision task were identified by a one-way analysis of covariance
+(ANCOVA), with a measure of stimulus-correlated motion as a covariate. Voxels demonstrating
+a significant interaction between task and group were identified using a two-way ANCOVA.In
+controls, both tasks were associated with activation of prefrontal cortex. In patients
+with schizophrenia there was a significantly reduced power of response in several
+prefrontal regions during verbal fluency relative to controls, a difference that was
+not evident for the semantic decision task. There was a significant group x task interaction
+in the left inferior frontal gyrus, left dorsolateral prefrontal cortex and the supplementary
+motor area at voxel and regional levels of analysis.Attenuation of frontal activation
+during cognitive task performance in schizophrenia does not represent a fixed deficit
+in frontal function, but may depend on the specific cognitive demands of the experimental
+task employed.

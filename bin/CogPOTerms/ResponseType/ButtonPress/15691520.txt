@@ -1,0 +1,17 @@
+Accurate recognition of facial expressions is crucial for social functioning. In depressed
+individuals, implicit and explicit attentional biases away from happy and toward sad
+stimuli have been demonstrated. These may be associated with the negative cognitions
+in these individuals.Using event-related functional magnetic resonance imaging (fMRI),
+neural responses to happy and sad facial expressions were measured in 14 healthy individuals
+and 16 individuals with major depressive disorder.Healthy but not depressed individuals
+demonstrated linear increases in response in bilateral fusiform gyri and right putamen
+to expressions of increasing happiness, while depressed individuals demonstrated linear
+increases in response in left putamen, left parahippocampal gyrus/amygdala, and right
+fusiform gyrus to expressions of increasing sadness. There was a negative correlation
+in depressed individuals between depression severity and magnitude of neural response
+within right fusiform gyrus to happy expressions.Our findings indicate preferential
+increases in neural response to sad but not happy facial expressions in neural regions
+involved in the processing of emotional stimuli in depressed individuals. These findings
+may be associated with the above pattern of implicit and explicit attentional biases
+in these individuals and suggest a potential neural basis for the negative cognitions
+and social dysfunction in major depression.

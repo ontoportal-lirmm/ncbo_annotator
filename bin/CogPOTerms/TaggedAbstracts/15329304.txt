@@ -1,0 +1,1 @@
+StimulusModalityAuditory StimulusModalityNone StimulusTypeLetters StimulusTypeNone ResponseModalityNone ResponseTypeNone InstructionsGenerate InstructionsPassive 

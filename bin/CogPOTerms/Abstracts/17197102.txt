@@ -1,0 +1,21 @@
+Our goal in the current report was to design a new functional magnetic resonance imaging
+(fMRI) task to probe the role of the anterior cingulate cortex (ACC) and orbitofrontal
+cortex (OFC) in processing of salient symptom-related cues during the simultaneous
+performance of an unrelated task in drug-addicted persons. We used a novel fMRI color-word
+drug Stroop task in 14 individuals with cocaine use disorders; subjects had to press
+for color of drug vs. matched neutral words. Although there were no accuracy or speed
+differences between the drug and neutral conditions in the current sample of subjects,
+drug words were more negatively valenced than the matched neutral words. Further,
+consistent with prior reports in individuals with other psychopathologies using different
+Stroop fMRI paradigms, our more classical color-word Stroop design revealed bilateral
+activations in the caudal-dorsal anterior cingulate cortex (cdACC) and hypoactivations
+in the rostro-ventral anterior cingulate cortex/medial orbitofrontal cortex (rACC/mOFC).
+A trend for larger rACC/mOFC hypoactivations to the drug than neutral words did not
+survive whole-brain corrections. Nevertheless, correlation analyses indicated that
+(1) the more the cdACC drug-related activation, the more negative the valence attributed
+to the drug words (r=-0.86, P&lt;0.0001) but not neutral words; and (2) the more the
+rACC/mOFC hypoactivation to drug minus neutral words, the more the errors committed
+specifically to the drug minus neutral words (r=0.85, P&lt;0.0001). Taken together, results
+suggest that this newly developed drug Stroop fMRI task may be a sensitive biobehavioral
+assay of the functions recruited for the regulation of responses to salient symptom-related
+stimuli in drug-addicted individuals.

@@ -1,0 +1,20 @@
+There is evidence that patients with bipolar disorder have working memory deficits
+even during periods of euthymia. The neural basis of such deficits and its relationship
+with genetic risk remain unclear. We utilized functional magnetic resonance imaging
+(fMRI) to investigate neural activity in samples of bipolar disorder patients and
+their unaffected first-degree relatives while performing working memory tasks of increasing
+difficulty.Twenty remitted bipolar I disorder patients, 20 of their unaffected first-degree
+relatives, and 20 healthy volunteers were recruited and successfully completed scanning.
+Subjects participated in fMRI scans consisting of an n-back working memory task with
+three stages of increasing difficulty (1-back, 2-back, and 3-back), alternating with
+a baseline attention task. Groups were analyzed separately to produce brain activation
+maps, and a group-by-task analysis of variance (ANOVA) with post hoc comparisons was
+completed.Patients performed more poorly online than control subjects and relatives
+on the 2-back and 3-back tasks. The group-by-task ANOVA demonstrated a significantly
+altered region of neural activity involving a cluster located in the left frontal
+pole/ventrolateral gyrus. Post hoc analyses demonstrated that this cluster was accounted
+for by significantly greater activation in relatives compared with control subjects
+for the 2-back task. Patients demonstrated a trend to significantly greater activation
+than control subjects in the same cluster during 1-back performance.Left prefrontal
+hyperactivation during working memory is associated with genetic liability for bipolar
+disorder and represents a potential neurobiological endophenotype for the illness.

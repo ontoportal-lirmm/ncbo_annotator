@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypePictures ResponseModalityNone ResponseModalityHand ResponseTypeNone ResponseTypeFingerTapping InstructionsEncode InstructionsRecall 

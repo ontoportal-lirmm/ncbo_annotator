@@ -1,0 +1,23 @@
+It has been suggested that in healthy persons higher-order cognitive processing engaged
+by incremental working memory load hierarchically employs more dorsal than ventral
+prefrontal resources in healthy individuals. Given that working memory performance
+is impaired in schizophrenia, especially at higher executive loads, the authors investigated
+how this prefrontal functional organization might be altered in disease, independent
+of performance deficits.Using N-back working memory functional magnetic resonance
+imaging (fMRI) data, the authors studied 15 patients with schizophrenia and 26 healthy
+comparison subjects. Subgroups based on median performance accuracy at 2-back were
+analyzed; high performers included eight schizophrenia patients and 14 comparison
+subjects, and low performers included seven patients and 12 comparison subjects.High-performing
+but not low-performing comparison subjects responded to incremental working memory
+executive load with disproportionately greater dorsal but not ventral prefrontal cortex
+activation, which also predicted performance accuracy. In the high- and low-performing
+patient groups, incremental working memory load caused a disproportionate increase
+in ventral but not dorsal prefrontal cortex activation relative to the respective
+comparison group, which also correlated with accuracy. Functional connectivity between
+the ventral prefrontal cortex and posterior parietal cortex was relatively greater
+in patients, whereas comparison subjects had greater functional connectivity between
+the dorsal prefrontal cortex and posterior parietal cortex.The hierarchical organization
+of the prefrontal cortex may be compromised in schizophrenia, resulting in loss of
+functional specialization and integration at the dorsal prefrontal cortex and in compensatory
+activation from the ventral prefrontal cortex, which may ultimately affect working
+memory and executive cognition.

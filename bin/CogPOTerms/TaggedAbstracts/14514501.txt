@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeShapes ResponseModalityHand ResponseTypeFingerTapping InstructionsMove 

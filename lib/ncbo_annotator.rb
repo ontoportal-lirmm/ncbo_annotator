@@ -14,6 +14,10 @@ require_relative 'ncbo_annotator/config'
 require_relative 'ncbo_annotator/monkeypatches'
 require_relative 'ncbo_recommender'
 
+# Require all models
+project_root = File.dirname(File.absolute_path(__FILE__))
+$project_bin = project_root + '/../bin/'
+
 module Annotator
   module Models
 
@@ -29,6 +33,7 @@ module Annotator
 
       def initialize()
         @stop_words = Annotator.settings.stop_words_default_list
+        @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
       end
 
       def stop_words=(stop_input)
@@ -47,12 +52,9 @@ module Annotator
         page = 1
         size = 2500
 
-        # Get logger
-        logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
-
         if delete_cache
-          logger.info("Deleting old redis data")
-          logger.flush
+          @logger.info("Deleting old redis data")
+          @logger.flush
 
           # remove old dictionary structure
           redis.del(DICTHOLDER)
@@ -69,7 +71,7 @@ module Annotator
 
         ontologies.each do |ont|
           last = ont.latest_submission(status: [:rdf])
-          create_cache_for_submission(logger, last, redis)
+          create_cache_for_submission(@logger, last, redis)
         end
       end
 
@@ -320,7 +322,7 @@ module Annotator
             mapped_term = mapped_term.first
             acronym = mapped_term.ontology.id.to_s.split("/")[-1]
             if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
-              a.add_mapping(mapped_term.term.first.to_s,mapped_term.ontology.id.to_s)
+              a.add_mapping(mapped_term.term.first.to_s, mapped_term.ontology.id.to_s)
             end
           end
         end

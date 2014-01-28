@@ -1,0 +1,7 @@
+To examine mirror neuron abnormalities in autism, high-functioning children with autism
+and matched controls underwent fMRI while imitating and observing emotional expressions.
+Although both groups performed the tasks equally well, children with autism showed
+no mirror neuron activity in the inferior frontal gyrus (pars opercularis). Notably,
+activity in this area was inversely related to symptom severity in the social domain,
+suggesting that a dysfunctional 'mirror neuron system' may underlie the social deficits
+observed in autism.

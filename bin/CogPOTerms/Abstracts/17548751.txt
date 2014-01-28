@@ -1,0 +1,25 @@
+Understanding a speaker's communicative intent in everyday interactions is likely
+to draw on cues such as facial expression and tone of voice. Prior research has shown
+that individuals with autism spectrum disorders (ASD) show reduced activity in brain
+regions that respond selectively to the face and voice. However, there is also evidence
+that activity in key regions can be increased if task demands allow for explicit processing
+of emotion.To examine the neural circuitry underlying impairments in interpreting
+communicative intentions in ASD using irony comprehension as a test case, and to determine
+whether explicit instructions to attend to facial expression and tone of voice will
+elicit more normative patterns of brain activity.Eighteen boys with ASD (aged 7-17
+years, full-scale IQ &gt;70) and 18 typically developing (TD) boys underwent functional
+magnetic resonance imaging at the Ahmanson-Lovelace Brain Mapping Center, University
+of California, Los Angeles.Blood oxygenation level-dependent brain activity during
+the presentation of short scenarios involving irony. Behavioral performance (accuracy
+and response time) was also recorded.Reduced activity in the medial prefrontal cortex
+and right superior temporal gyrus was observed in children with ASD relative to TD
+children during the perception of potentially ironic vs control scenarios. Importantly,
+a significant group x condition interaction in the medial prefrontal cortex showed
+that activity was modulated by explicit instructions to attend to facial expression
+and tone of voice only in the ASD group. Finally, medial prefrontal cortex activity
+was inversely related to symptom severity in children with ASD such that children
+with greater social impairment showed less activity in this region.Explicit instructions
+to attend to facial expression and tone of voice can elicit increased activity in
+the medial prefrontal cortex, part of a network important for understanding the intentions
+of others, in children with ASD. These findings suggest a strategy for future intervention
+research.

@@ -1,0 +1,1 @@
+StimulusModalityNone StimulusModalityVisual StimulusTypeNone StimulusTypeWords ResponseModalityNone ResponseTypeNone InstructionsGenerate InstructionsPassive 

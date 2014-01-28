@@ -1,0 +1,27 @@
+As a means toward understanding the neural bases of schizophrenic thought disturbance,
+we examined brain activation patterns in response to semantically and superficially
+encoded words in patients with schizophrenia. Nine male schizophrenic and 9 male control
+subjects were tested in a visual levels of processing (LOP) task first outside the
+magnet and then during the fMRI scanning procedures (using a different set of words).
+During the experiments visual words were presented under two conditions. Under the
+deep, semantic encoding condition, subjects made semantic judgments as to whether
+the words were abstract or concrete. Under the shallow, nonsemantic encoding condition,
+subjects made perceptual judgments of the font size (uppercase/lowercase) of the presented
+words. After performance of the behavioral task, a recognition test was used to assess
+the depth of processing effect, defined as better performance for semantically encoded
+words than for perceptually encoded words. For the scanned version only, the words
+for both conditions were repeated in order to assess repetition-priming effects. Reaction
+times were assessed in both testing scenarios. Both groups showed the expected depth
+of processing effect for recognition, and control subjects showed the expected increased
+activation of the left inferior prefrontal cortex (LIPC) under semantic encoding relative
+to perceptual encoding conditions as well as repetition priming for semantic conditions
+only. In contrast, schizophrenics showed similar patterns of fMRI activation regardless
+of condition. Most striking in relation to controls, patients showed decreased LIFC
+activation concurrent with increased left superior temporal gyrus activation for semantic
+encoding versus shallow encoding. Furthermore, schizophrenia subjects did not show
+the repetition priming effect, either behaviorally or as a decrease in LIPC activity.
+In patients with schizophrenia, LIFC underactivation and left superior temporal gyrus
+overactivation for semantically encoded words may reflect a disease-related disruption
+of a distributed frontal temporal network that is engaged in the representation and
+processing of meaning of words, text, and discourse and which may underlie schizophrenic
+thought disturbance.

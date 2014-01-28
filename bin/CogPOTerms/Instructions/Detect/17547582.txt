@@ -1,0 +1,17 @@
+Abnormal language processing is a consistent finding in bipolar disorder (BD). We
+used functional magnetic resonance imaging (fMRI) to investigate the core components
+of language processing as well as the impact of task demand in a group of bipolar
+subjects.Twelve euthymic dextral male BD I participants receiving lithium monotherapy
+were matched with 12 controls. Groups were matched for age, years of education and
+estimated premorbid IQ. We employed a factorial design manipulating task demand (decision
+versus fluency) and task domain (phonetic versus semantic) to investigate differences
+in language processing between groups and across different task domains and requirements.
+Data were fitted to haemodynamic response models convolved to the experimental design.
+Group and task difference maps were generated.During the scanning session bipolar
+patients demonstrated significantly slower reaction times. However, groups demonstrated
+the same task accuracy except for one domain (phonetic decision). All participants
+activated regions known to be engaged by language tasks, but compared to controls
+the bipolar patients showed altered patterns of prefrontal activation which were related
+to the nature of the task, language processing, and increasing task demand.We have
+demonstrated abnormal prefrontal activation in bipolar patients across a range of
+language tasks with varying task demands.

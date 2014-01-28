@@ -1,0 +1,22 @@
+Processing affective facial expressions is an important component of interpersonal
+relationships. However, depressed patients show impairments in this system. The present
+study investigated the neural correlates of implicit processing of happy facial expressions
+in depression and identified regions affected by antidepressant therapy.Two groups
+of subjects participated in a prospective study with functional magnetic resonance
+imaging (fMRI). The patients were 19 medication-free subjects (mean age, 43.2 years)
+with major depression, acute depressive episode, unipolar subtype. The comparison
+group contained 19 matched healthy volunteers (mean age, 42.8 years). Both groups
+underwent fMRI scans at baseline (week 0) and at 8 weeks. Following the baseline scan,
+the patients received treatment with fluoxetine, 20 mg daily. The fMRI task was implicit
+affect recognition with standard facial stimuli morphed to display varying intensities
+of happiness. The fMRI data were analyzed to estimate the average activation (overall
+capacity) and differential response to variable intensity (dynamic range) in brain
+systems involved in processing facial affect.An attenuated dynamic range of response
+in limbic-subcortical and extrastriate visual regions was evident in the depressed
+patients, relative to the comparison subjects. The attenuated extrastriate cortical
+activation at baseline was increased following antidepressant treatment, and symptomatic
+improvement was associated with greater overall capacity in the hippocampal and extrastriate
+regions.Impairments in the neural processing of happy facial expressions in depression
+were evident in the core regions of affective facial processing, which were reversed
+following treatment. These data complement the neural effects observed with negative
+affective stimuli.

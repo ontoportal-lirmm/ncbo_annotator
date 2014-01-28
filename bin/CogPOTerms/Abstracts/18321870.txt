@@ -1,0 +1,16 @@
+Patients who suffer from the devastating psychiatric illness schizophrenia are plagued
+by hallucinations, bizarre behavior, and delusional ideas, such as believing that
+they are controlled by malevolent outside forces. A fundamental human cognitive operation
+that may contribute to these hallmark symptoms is the ability to maintain accurate
+and coherent self-referential processing over time, such as occurs during reality
+monitoring (distinguishing self-generated from externally perceived information).
+However, the neural bases for a disturbance in this operation in schizophrenia have
+not been fully explored. Using functional magnetic resonance imaging, we asked clinically
+stable schizophrenia patients to remember whether or not they had generated a target
+word during an earlier sentence completion task. We found that, during accurate performance
+of this self-referential source memory task, the schizophrenia subjects manifest a
+deficit in rostral medial prefrontal cortex (mPFC) activity--a brain region critically
+implicated in both the instantiation and the retrieval of self-referential information
+in healthy subjects. Impairment in rostral mPFC function likely plays a key role in
+the profound subjective disturbances that characterize schizophrenia and that are
+the aspect of the disorder most troubling to patients and to society at large.

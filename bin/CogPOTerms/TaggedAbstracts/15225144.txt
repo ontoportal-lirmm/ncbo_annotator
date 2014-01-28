@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypePictures StimulusTypeWords ResponseModalityNone ResponseTypeNone InstructionsRead 

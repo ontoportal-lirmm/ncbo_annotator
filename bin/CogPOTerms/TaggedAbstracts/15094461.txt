@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeFixationPoint StimulusTypeWords ResponseModalityNone ResponseModalityOral/Facial ResponseTypeNone ResponseTypeSpeech InstructionsFixate InstructionsRead 

@@ -1,0 +1,1 @@
+StimulusModalityNone StimulusModalityVisual StimulusTypeNone StimulusTypeLetters ResponseModalityHand ResponseModalityNone ResponseTypeGrasp ResponseTypeNone InstructionsAttend InstructionsPassive InstructionsGenerate 

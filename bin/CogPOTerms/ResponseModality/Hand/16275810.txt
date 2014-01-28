@@ -1,0 +1,24 @@
+The pathophysiology of major depressive disorder (MDD) includes disturbances in several
+neuroanatomical substrates and neurotransmitter systems. The challenge is to elucidate
+the brain mechanisms of MDD behavioral symptoms, chiefly those of anhedonia.To visualize
+the neuroanatomical substrates implicated in altered reward processing in MDD, using
+functional magnetic resonance imaging in combination with a dopaminergic probe (a
+30-mg dose of oral dextroamphetamine sulfate) to stimulate the brain reward system;
+and to test the hypothesis that a hypersensitive response to dextroamphetamine in
+MDD involves the prefrontal cortex and the striatum.Among subjects with MDD and healthy
+control subjects, functional magnetic resonance imaging data were collected before
+and after single-blind administration of dextroamphetamine.Subjects were recruited
+through local newspaper advertisements and by word of mouth.Twelve depressed subjects
+(mean age, 34.83 years; male-female ratio, 6:6) met criteria for MDD according to
+the DSM-IV, were not taking antidepressants, and had no comorbid Axis I disorders.
+Twelve control subjects (mean age, 29.33 years; male-female ratio, 5:7) were healthy
+volunteers without a history of Axis I disorders.Functional magnetic resonance imaging
+blood oxygen level-dependent activation was measured during a controlled task, and
+dextroamphetamine-induced subjective effects were assessed using the Addiction Research
+Center Inventory.Subjects with MDD had a hypersensitive response to the rewarding
+effects of dextroamphetamine (2-fold increase; t(21) = 2.74, P = .01), with altered
+brain activation in the ventrolateral prefrontal cortex and the orbitofrontal cortex
+and the caudate and putamen (F(1,44) = 11.93, P = .001).Dopamine-related neuroanatomical
+substrates are involved in altered reward processing in MDD, shedding light on the
+neurobiology of the anhedonic symptoms in MDD and suggesting these substrates as future
+therapeutic targets.

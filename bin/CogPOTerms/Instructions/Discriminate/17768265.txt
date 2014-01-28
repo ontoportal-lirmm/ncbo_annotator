@@ -1,0 +1,25 @@
+Memory is one of the cognitive functions most affected in schizophrenia, with deficits
+observed from the first episode of psychosis (FEP). Previous studies have indicated
+that some memory processes may be more affected than others.To examine the neural
+correlates of 3 specific memory processes in FEP by means of functional magnetic resonance
+imaging (fMRI).Case-control study.Prevention and Early Intervention Program for Psychoses
+of the Douglas Hospital and Montreal Neurological Institute, McGill University. Subjects
+Twenty-six patients with FEP and 20 healthy controls.Behavioral performance and regional
+brain activity measured during memory encoding by fMRI. Our fMRI design included 3
+within-subject contrasts (associative vs item-oriented encoding, encoding of arbitrary
+vs semantically related image pairs, and successful vs unsuccessful memory encoding)
+that were then used for group conjunctions and between-group analyses.Patients with
+FEP showed normal activation of several brain regions, including the prefrontal cortex,
+hippocampus, and parahippocampal cortex, during successful memory encoding and associative
+encoding. In contrast, the hippocampus and surrounding medial temporal areas showed
+reduced activity during the encoding of arbitrary pairs. This selective dysfunction
+reflected by abnormal brain activation during encoding was accompanied by a greater
+deficit for subsequent recognition of arbitrary pairs relative to the semantically
+related pairs.This study demonstrated that, in the same group of patients with FEP,
+the hippocampus could show either normal or abnormal modulation of activation depending
+on the specific cognitive process that was examined. The normal modulation of hippocampal
+activation observed during successful memory encoding in FEP argues against a general
+inability to recruit this region. Instead, the dysfunction was specifically linked
+to semantic relatedness. This selective deficit seems to affect memory performance
+in FEP and denotes an important representational problem that may confer greater vulnerability
+to psychotic disorders and would thus be interesting to examine in high-risk populations.

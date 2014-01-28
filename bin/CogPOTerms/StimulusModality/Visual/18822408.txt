@@ -1,0 +1,22 @@
+Most patients with major depressive disorder (MDD) experience a period of lengthy
+trial and error when trying to find optimal antidepressant treatment; identifying
+biomarkers that could predict response to antidepressant treatment would be of enormous
+benefit. We tested the hypothesis that pretreatment anterior cingulate cortex (ACC)
+activity could be a putative biomarker of rapid antidepressant response to ketamine,
+in line with previous findings that investigated the effects of conventional antidepressants.
+We also investigated patterns of ACC activity to rapid presentation of fearful faces
+compared with the normal habituation observed in healthy subjects.We elicited ACC
+activity in drug-free patients with MDD (n = 11) and healthy control subjects (n =
+11) by rapidly presenting fearful faces, a paradigm known to activate rostral regions
+of the ACC. Spatial-filtering analyses were performed on magnetoencephalographic (MEG)
+recordings, which offer the temporal precision necessary to estimate ACC activity
+elicited by the rapid presentation of stimuli. Magnetoencephalographic recordings
+were obtained only once for both patients and control subjects. Patients were subsequently
+administered a single ketamine infusion followed by assessment of depressive symptoms
+4 hours later.Although healthy subjects had decreased neuromagnetic activity in the
+rostral ACC across repeated exposures, patients with MDD showed robust increases in
+pretreatment ACC activity. Notably, this increase was positively correlated with subsequent
+rapid antidepressant response to ketamine. Exploratory analyses showed that pretreatment
+amygdala activity was negatively correlated with change in depressive symptoms.Pretreatment
+rostral ACC activation may be a useful biomarker that identifies a subgroup of patients
+who will respond favorably to ketamine's antidepressant effects.

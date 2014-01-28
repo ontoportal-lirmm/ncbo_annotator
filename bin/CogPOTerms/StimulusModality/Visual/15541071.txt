@@ -1,0 +1,23 @@
+Even when euthymic bipolar disorder patients can have persistent deficits in working
+memory, but the neural basis of this deficit remains unclear. We undertook an functional
+magnetic resonance imaging investigation of euthymic bipolar disorder patients performing
+two working memory paradigms; the two-back and Sternberg tasks, selected to examine
+the central executive and the phonological loop respectively. We hypothesized that
+neuronal dysfunction would be specific to the network underlying the executive rather
+than the phonological loop component of working memory.Twelve right-handed euthymic
+bipolar I males receiving lithium carbonate monotherapy were matched with 12 controls.
+The two-back task comprised a single working memory load contrasted with baseline
+vigilance condition. The Sternberg paradigm used a parametric design incorporating
+variable working memory load with fixed delay between presentation of an array of
+items to be remembered and a target item. Functional activation data were acquired
+during performance of the tasks and were analysed to produce brain activation maps
+representing significant group differences in activation (ANOVA). Load-response curves
+were derived from the Sternberg task data set.There were no significant between-group
+differences (t-test) in performance of the two-back task, or in 2 x 5 group by memory
+load ANOVA for the performance data from Sternberg task. In the two-back task, compared
+with controls bipolar disorder patients showed reductions in bilateral frontal, temporal
+and parietal activation, and increased activations with the left precentral, right
+medial frontal and left supramarginal gyri. No between-group differences were observed
+in the Sternberg task at any working memory load.Our findings support the notion that,
+in euthymic bipolar disorder, failure to engage fronto-executive function underpins
+the core neuropsychological deficits.Blackwell Munksgaard, 2004

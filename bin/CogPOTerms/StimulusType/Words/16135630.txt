@@ -1,0 +1,22 @@
+Bipolar disorder is characterized by disturbed mood homeostasis accompanied by cognitive
+impairments that appear to persist during euthymia. Cognitive probes, coupled with
+neuroimaging, provide an approach toward clarifying the neurophysiology of bipolar
+disorder.Sixteen patients with euthymic bipolar disorder and 16 healthy subjects underwent
+functional magnetic resonance imaging (fMRI) while performing a counting Stroop interference
+task and a control condition. Task performance was correlated with regional brain
+activation differences between groups, and the effect on brain activation of receiving
+versus not receiving medications was evaluated.Bipolar patients exhibited impaired
+task performance relative to the healthy subjects. In addition, the two groups demonstrated
+significantly different patterns of brain activation during the interference task.
+Healthy subjects exhibited relatively increased activation in temporal cortical regions,
+middle frontal gyrus, putamen, and midline cerebellum. Bipolar subjects exhibited
+relatively greater activation in the medial occipital cortex. The groups demonstrated
+different associations between task performance and fMRI activation in these brain
+regions. No differences in activation in these regions were observed between patients
+who were versus those who were not receiving medications; however, patients receiving
+medications exhibited greater activation in the anterior cingulate and dorsolateral
+prefrontal cortex.These differences suggest that patients with euthymic bipolar disorder
+fail to activate brain regions associated with performance of an interference task,
+which may contribute to impaired task performance. Medications do not explain these
+differences but may influence activation of brain regions primarily associated with
+performing an interference task.

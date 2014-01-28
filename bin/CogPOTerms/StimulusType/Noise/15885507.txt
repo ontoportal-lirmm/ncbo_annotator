@@ -1,0 +1,19 @@
+Schizophrenia is characterised by marked disturbances of attention and information
+processing. Patients experience difficulty focusing on relevant cues and avoiding
+distraction by irrelevant stimuli. Event-related potential recordings indicate an
+amplitude reduction in the P3a component elicited by involuntary orienting to task-irrelevant,
+infrequent novel stimuli presented during auditory oddball detection in patients with
+schizophrenia. The goal of the present study was to elucidate the functional abnormality
+underlying the disturbed orienting to novel stimuli in schizophrenia. Twenty-eight
+stable, partially remitted, medicated patients with schizophrenia and 28 healthy control
+participants completed a novelty oddball variant during event-related fMRI. Relative
+to healthy participants, patients with schizophrenia were characterised by underactivity
+during novel stimulus processing in the right amygdala-hippocampus, within paralimbic
+cortex in the rostral anterior cingulate and posterior cingulate cortices and the
+right frontal operculum, and in association cortex at the right temporo-parietal-occipital
+junction, bilateral intraparietal sulcus, and bilateral dorsal frontal cortex. Subcortically,
+relative hypoactivation during novelty processing was apparent in the cerebellum,
+thalamus, and basal ganglia. These results suggest that patients less efficiently
+reorient processing resources away from the ongoing task of detecting and responding
+to the task-relevant target stimuli. In addition, trend results suggest that patients
+experienced increased distraction by novel stimuli.

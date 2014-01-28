@@ -1,0 +1,18 @@
+Working memory dysfunction is considered to be fundamental to the cognitive and clinical
+features evident in schizophrenia. Functional neuroimaging studies have begun to elucidate
+the neurobiological basis of such deficits, however, interpretation of these studies
+may be confounded by performance impairment, when the cognitive load exceeds the limited
+response capacity of patients with schizophrenia. In this study, patients were pre-selected
+on the basis of intact performance on a relatively low-load verbal working memory
+task, in order to mitigate against performance confounds. Subjects included 20 right-handed
+male subjects with chronic schizophrenia, and 20 right-handed, age-matched, male healthy
+controls, without personal or familial psychiatric history. All subjects underwent
+fMRI scanning whilst performing a verbal n-back task. There were no significant between-group
+differences in target identification; the patient group showed a significantly increased
+mean response latency. Both groups demonstrated robust fronto-parietal activation.
+In the control subjects, the power of functional response was positively correlated
+with reaction time in bilateral posterior parietal cortex, however, this coupling
+of behavioural performance and cerebral response was not evident in the patients.
+This deficit, apparent within the performance capacity of the patients, may represent
+a fundamental abnormality in schizophrenia, and may compromise performance at higher
+cognitive loads.

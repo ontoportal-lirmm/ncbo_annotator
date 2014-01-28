@@ -1,0 +1,27 @@
+Working memory (WM) deficits are a core feature of schizophrenia. However, it has
+not been examined whether these deficits are related to altered temporal dynamics
+of information acquisition and changes in executive cognitive control. Therefore,
+the present study intended to quantify and model the dynamic process of information
+acquisition during continuous overlearning of WM information. It also aimed at investigating
+the relation between overlearning-associated change in behavioral performance and
+brain activity. Thirteen schizophrenic patients and 13 healthy volunteers were studied
+with functional magnetic resonance imaging (fMRI) while performing a recently developed
+overlearning paradigm [Koch K, Wagner G, von Consbruch K, Nenadic I, Schultz C, Ehle
+C, Reichenbach J, Sauer H, Schlösser R (2006) Temporal changes in neural activation
+during practice of information retrieval from short-term memory: An fMRI study. Brain
+Res 1107:140-150]. Consistent with the earlier study, short-term learning of stimulus
+material was associated with significant performance improvements and exponential
+signal decreases in a fronto-parieto-cerebellar network both in schizophrenic patients
+and in healthy volunteers. Against expectation patients exhibited stronger signal
+decreases relative to controls in anterior cingulate (Brodmann area (BA) 32), middle
+and superior temporal (BA 37, BA 22), superior frontal (BA 8/9, BA 6) and posterior
+parietal regions (BA 40). Furthermore, the individually modeled exponential decay
+rate of the blood oxygenation level-dependent signal in the right dorsolateral prefrontal
+cortex was significantly correlated with exponential decrease in mean behavioral response
+times in healthy controls while a statistical trend emerged in patients. A relative
+hyperactivation in the patient group was observable only at the start of the learning
+process and diminished with continued overlearning. This effect might indicate a gradual
+reduction of recruited neuronal resources and a practice-associated activation normalization
+in patients with schizophrenia. Our data suggest that in subacute patients learning
+and associated decreases in cerebral activation brought about by short-term practice
+are left unimpaired.

@@ -1,0 +1,16 @@
+Several lines of research suggest both dorsal and ventral prefrontal cortical dysfunction
+in bipolar disorder (BD). We used functional magnetic resonance imaging to compare
+patterns of brain activation in remitted BD patients and controls whilst performing
+tasks selected for their relative specificity in engaging either the dorsal (n-back
+sequential-letter working memory task) or ventral (gambling task) PFC. Seven BD patients
+were selected from participants of the Maudsley Bipolar Disorder Project on the basis
+of clinical remission, absence of cognitive deficits, and monotherapy with mood stabilisers.
+Subjects were individually matched by gender, age, and IQ to an equal number of healthy
+controls. In the n-back task, group differences were only present in response to increasing
+memory load. Patients did not show the predicted dynamic response in the dorsal PFC,
+but had increased activation in the parietal cortices. During the gambling task, controls
+showed significant activation in the ventral and dorsal PFC; this was attenuated in
+BD patients where increased activation was seen in lateral temporal and polar regions.
+Our findings suggest that there are trait abnormalities in dorsal and ventral PFC
+function in BD that may be more pronounced during tasks that rely on ventral-dorsal
+PFC interaction.

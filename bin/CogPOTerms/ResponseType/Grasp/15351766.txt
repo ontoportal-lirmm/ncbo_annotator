@@ -1,0 +1,26 @@
+Depression is associated with interpersonal difficulties related to abnormalities
+in affective facial processing.To map brain systems activated by sad facial affect
+processing in patients with depression and to identify brain functional correlates
+of antidepressant treatment and symptomatic response.Two groups underwent scanning
+twice using functional magnetic resonance imaging (fMRI) during an 8-week period.
+The event-related fMRI paradigm entailed incidental affect recognition of facial stimuli
+morphed to express discriminable intensities of sadness.Participants were recruited
+by advertisement from the local population; depressed subjects were treated as outpatients.We
+matched 19 medication-free, acutely symptomatic patients satisfying DSM-IV criteria
+for unipolar major depressive disorder by age, sex, and IQ with 19 healthy volunteers.
+Intervention After the baseline assessment, patients received fluoxetine hydrochloride,
+20 mg/d, for 8 weeks.Average activation (capacity) and differential response to variable
+affective intensity (dynamic range) were estimated in each fMRI time series. We used
+analysis of variance to identify brain regions that demonstrated a main effect of
+group (depressed vs healthy subjects) and a group x time interaction (attributable
+to antidepressant treatment). Change in brain activation associated with reduction
+of depressive symptoms in the patient group was identified by means of regression
+analysis. Permutation tests were used for inference.Over time, depressed subjects
+showed reduced capacity for activation in the left amygdala, ventral striatum, and
+frontoparietal cortex and a negatively correlated increase of dynamic range in the
+prefrontal cortex. Symptomatic improvement was associated with reduction of dynamic
+range in the pregenual cingulate cortex, ventral striatum, and cerebellum.Antidepressant
+treatment reduces left limbic, subcortical, and neocortical capacity for activation
+in depressed subjects and increases the dynamic range of the left prefrontal cortex.
+Changes in anterior cingulate function associated with symptomatic improvement indicate
+that fMRI may be a useful surrogate marker of antidepressant treatment response.

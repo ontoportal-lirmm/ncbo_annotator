@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeAbstractPatterns ResponseModalityHand ResponseTypeButtonPress InstructionsDetect InstructionsRecall 

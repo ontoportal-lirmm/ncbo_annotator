@@ -1,0 +1,20 @@
+Functional magnetic resonance imaging was used to study changes in cerebral blood
+oxygenation in schizophrenic patients during a verbal fluency task.Five right-handed
+male schizophrenic patients and five volunteers matched on demographic variables and
+verbal fluency performance participated in the study. Echoplanar images were acquired
+over 5 minutes at 1.5 T while the subjects performed two tasks. The first involved
+paced silent generation of words beginning with an aurally presented cue letter. This
+task alternated with paced silent repetition of the aurally presented word "rest."
+Generic brain activation maps were constructed from individual images by sinusoidal
+regression and non-parametric hypothesis testing. Between-group differences in the
+mean power of experimental response were identified on a voxelwise basis by an analysis
+of covariance that controlled for between-group differences in stimulus-correlated
+motion.The comparison group showed significant responses in the left prefrontal cortex,
+the insula bilaterally, the midline supplementary motor area, and the medial parietal
+cortex. Compared to those subjects, the schizophrenic subjects showed significantly
+reduced power of response in the left dorsal prefrontal cortex, the inferior frontal
+gyrus, and the insula but significantly increased power of response in the medial
+parietal cortex. In both groups frontal and parietal responses were negatively correlated.Schizophrenic
+patients displayed attenuated power of response in several frontal regions during
+word generation but greater power of response in the medial parietal cortex during
+word r

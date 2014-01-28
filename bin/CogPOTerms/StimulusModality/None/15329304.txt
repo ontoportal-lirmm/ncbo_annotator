@@ -1,0 +1,6 @@
+FMRI was used to study cortical activation patterns in nine healthy male subjects
+and nine high-functioning male schizophrenia patients during a letter verbal fluency
+task. Both groups showed similar patterns of activation, however, in controls the
+activation was primarily in the left broca area, while for schizophrenia patients,
+it was more bilateral. These data indicate that high-functioning schizophrenia patients
+show a reduced language lateralization of the frontal cortex compared to healthy controls.

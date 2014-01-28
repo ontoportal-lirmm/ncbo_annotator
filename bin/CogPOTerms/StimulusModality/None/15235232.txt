@@ -1,0 +1,24 @@
+To demonstrate the functional neuroanatomy associated with sexual arousal visually
+evoked in depressed males who have underlying sexual dysfunction using Blood Oxygenation
+Level Dependent-based fMRI.Ten healthy volunteers (age range 21-55: mean 32.5 years),
+and 10 depressed subjects (age range 23-51: mean 34.4 years, mean Beck Depression
+Inventory score of 39.6+/-5.9, mean Hamilton Rating Scale Depression (HAMD)-17 score
+of 33.5+/-6.0) with sexual arousal dysfunction viewed erotic and neutral video films
+during functional magnetic resonance imaging (fMRI) with 1.5 T MR scanner (GE Signa
+Horizon). The fMRI data were obtained from 7 oblique planes using gradient-echo EPI
+(flip angle/TR/TE= 90 degrees /6000 ms/50 ms). The visual stimulation paradigm began
+with 60 sec of black screen, 150 sec of neutral stimulation with a documentary video
+film, 30 sec of black screen, 150 sec of sexual stimulation with an erotic video film
+followed by 30 sec of black screen. The brain activation maps and their quantification
+were analyzed by SPM99 program.There was a significant difference of brain activation
+between two groups during visual sexual stimulation. In depressed subjects, the level
+of activation during the visually evoked sexual arousal was significantly less than
+that of healthy volunteers, especially in the cerebrocortical areas of the hypothalamus,
+thalamus, caudate nucleus, and inferior and superior temporal gyri. On the other hand,
+the cerebral activation patterns during the neutral condition in both groups showed
+no significant differences (p &lt; 0.01).This study is the first demonstration of the
+functional neuroanatomy of the brain associated with sexual dysfunction in depressed
+patients using fMRI. In order to validate our physiological neuroscience results,
+further studies that would include patients with other disorders and sexual dysfunction,
+and depressed patients without sexual dysfunction and their treatment response are
+needed.

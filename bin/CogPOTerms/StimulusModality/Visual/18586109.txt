@@ -1,0 +1,19 @@
+Depressed individuals show hypersensitivity to negative feedback during cognitive
+testing, which can precipitate subsequent errors and thereby impair a broad range
+of cognitive abilities. We studied the neural mechanisms underlying this feedback
+hypersensitivity using functional magnetic resonance imaging (fMRI) with a reversal
+learning task that required subjects to ignore misleading negative feedback on some
+trials. Thirteen depressed subjects with major depressive disorder (MDD), 12 depressed
+subjects with bipolar disorder (BD) and 15 healthy controls participated. The MDD
+group, but not the BD group, demonstrated enhanced sensitivity to negative feedback
+compared to controls, as indicated by the rates of rule reversal following misleading
+negative feedback. In the control and BD groups, hemodynamic activity was significantly
+higher in the dorsomedial and ventrolateral prefrontal cortices during reversal shifting,
+and significantly lower in the right amygdala in response to negative feedback. The
+extent to which the amygdala showed less activity during negative feedback correlated
+inversely with the behavioral tendency to reverse after misleading feedback. This
+effect was not present in the MDD group, who also failed to recruit the prefrontal
+cortex during behavioral reversal. Hypersensitivity to negative feedback is present
+in unmedicated depressed patients with MDD. Disrupted top-down control by the prefrontal
+cortex of the amygdala may underlie this abnormal response to negative feedback in
+unipolar depression.

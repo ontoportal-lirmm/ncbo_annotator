@@ -1,0 +1,24 @@
+Previous small-sample studies have shown altered frontotemporal activity in schizophrenia
+patients with auditory hallucinations and impaired monitoring of self-generated speech.
+We examined a large cohort of patients with schizophrenia (n = 63) and a representative
+group of healthy controls (n = 20) to disentangle performance, illness, and symptom-related
+effects in functional magnetic resonance imaging-detected brain abnormalities during
+monitoring of self- and externally generated speech in schizophrenia. Our results
+revealed activation of the thalamus (medial geniculate nucleus, MGN) and frontotemporal
+regions with accurate monitoring across all participants. Less activation of the thalamus
+(MGN, pulvinar) and superior-middle temporal and inferior frontal gyri occurred in
+poorly performing patients (1 standard deviation below controls' mean; n = 36), relative
+to the combined group of controls and well-performing patients. In patients, (1) greater
+deactivation of the ventral striatum and hypothalamus to own voice, combined with
+nonsignificant activation of the same regions to others' voice, associated positively
+with negative symptoms (blunted affect, emotional withdrawal, poor rapport, passive
+social avoidance) regardless of performance and (2) exaggerated activation of the
+right superior-middle temporal gyrus during undistorted, relative to distorted, feedback
+associated with both positive symptoms (hallucinations, persecution) and poor performance.
+A further thalamic abnormality characterized schizophrenia patients regardless of
+performance and symptoms. We conclude that hypoactivation of a neural network comprised
+of the thalamus and frontotemporal regions underlies impaired speech monitoring in
+schizophrenia. Positive symptoms and poor monitoring share a common activation abnormality
+in the right superior temporal gyrus during processing of degraded speech. Altered
+striatal and hypothalamic modulation to own and others' voice characterizes emotionally
+withdrawn and socially avoidant patients.

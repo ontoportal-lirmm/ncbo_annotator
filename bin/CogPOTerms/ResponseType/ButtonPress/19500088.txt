@@ -1,0 +1,17 @@
+Bipolar disorder is associated with working memory (WM) impairments that persist during
+periods of symptomatic remission. However, the neural underpinnings of these deficits
+are not well understood.Fifteen clinically remitted bipolar patients and 15 demographically
+matched healthy controls underwent functional magnetic resonance imaging while performing
+a novel delayed-non-match-to-sample (DNMS) task. This nonverbal DNMS task involves
+two conditions, one requiring the organization of existing memory traces ('familiarity'),
+and one involving the formation of new memory traces ('novelty'). These processes
+are thought to differentially engage the prefrontal cortex and medial temporal lobe,
+respectively.Although behavioral performance did not differ between groups, bipolar
+patients and controls exhibited significantly different patterns of neural activity
+during task performance. Patients showed relative hyperactivation in the right prefrontal
+gyrus and relative hypoactivation in visual processing regions compared to healthy
+subjects across both task conditions. During the novelty condition, patients showed
+a pattern of hypoactivation relative to controls in medial temporal regions, with
+relative hyperactivation in the anterior cingulate.These findings suggest that disruption
+in fronto-temporal neural circuitry may underlie memory difficulties frequently observed
+in patients with bipolar disorder.

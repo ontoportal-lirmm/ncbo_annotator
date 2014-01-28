@@ -1,0 +1,17 @@
+While much is known about receptor affinity profiles of antipsychotic medications,
+less is known about their impact on functional brain systems in patients with schizophrenia.
+We conducted functional magnetic resonance imaging (fMRI) studies with first-episode
+schizophrenia patients as they made saccades to unpredictable visual targets before
+and after 4-6 weeks of antipsychotic treatment. Matched healthy individuals were scanned
+at similar time intervals. Pretreatment, patients had less activation in frontal and
+parietal eye fields and cerebellum. After treatment these disturbances were not present,
+suggesting improved function in attentional and sensorimotor systems. Other pretreatment
+abnormalities were noted in sensory and ventromedial prefrontal cortex, but after
+treatment these abnormalities were absent or less prominent, in line with improved
+function in attentional systems. In addition, although not abnormal at baseline, there
+was reduced activity after treatment in dorsal prefrontal cortex, dorsal striatum,
+and dorsomedial thalamus, suggesting a potential adverse effect of treatment on frontostriatal
+systems, perhaps related to dopamine blockade in the caudate. These findings provide
+evidence for a complex impact of antipsychotic medication on functional brain systems
+in schizophrenia and illustrate the potential of neuroimaging biomarkers for both
+adverse and beneficial drug effects on functional brain systems.

@@ -1,0 +1,17 @@
+Patients with schizophrenia tend to have impaired source monitoring and intact item
+recognition, suggesting an over-reliance of familiarity effects. We previously demonstrated
+that providing patients with a levels-of-processing (LOP) semantic encoding strategy
+normalized source monitoring. The current blood-oxygen-level-dependent (BOLD) functional
+magnetic resonance imaging (fMRI) study tests the hypothesis that patients will have
+abnormally increased fronto-temporal activation despite intact performance. fMRI was
+measured in 13 patients and 13 demographically matched healthy controls during a LOP
+source monitoring paradigm. SPM2 was used for standard pre-processing and statistical
+analyses, with a corrected significance threshold of p&lt;.05. Examination of accuracy
+and speed measures did not reveal any group differences in task performance. Regardless
+of source retrieval success both groups activated expected prefrontal and parietal
+regions, with no areas of relatively greater control versus patient activation. In
+support of the hypothesis, patients showed abnormally increased activation in temporolimbic
+areas including middle and superior temporal gyrus, thalamus, and parahippocampal
+gyrus. Activation in these areas was associated with worse positive and negative symptoms,
+but did not correlate with performance, suggesting inefficient rather than compensatory
+activation.

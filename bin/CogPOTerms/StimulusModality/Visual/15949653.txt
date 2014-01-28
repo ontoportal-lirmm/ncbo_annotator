@@ -1,0 +1,14 @@
+Patients with schizophrenia frequently demonstrate hypofrontality in tasks that require
+executive processing; however questions still remain as to whether prefrontal cortex
+dysfunctions are specific to schizophrenia, or a general feature of major psychopathology.
+Context processing is conceptualized as an executive function associated with attention
+and working memory processes. Impairment in the ability of patients with schizophrenia
+to represent and maintain context information has been previously reported in a number
+of studies. To examine the question of the specificity of a context processing deficit
+to schizophrenia, we used functional MRI and an expectancy AX continuous performance
+task designed to assess context processing in a group of healthy controls (n=9), depressed
+patient controls (n=10), and patients with schizophrenia (n=7). The behavioral performance
+was consistent with a context processing deficit in patients with schizophrenia, but
+not those with depression. The imaging data replicate previous results in showing
+abnormal activity in the right middle frontal gyrus (BA9) in schizophrenia patients
+related to context processing.

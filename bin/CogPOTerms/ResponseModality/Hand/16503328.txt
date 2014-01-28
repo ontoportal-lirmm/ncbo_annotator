@@ -1,0 +1,17 @@
+Previous neuroimaging studies of working memory (WM) in schizophrenia, typically focusing
+on dorsolateral prefrontal cortex, yield conflicting results, possibly because of
+varied choice of tasks and analysis techniques. We examined neural function changes
+at several WM loads to derive a more complete picture of WM dysfunction in schizophrenia.We
+used a version of the Sternberg Item Recognition Paradigm to test WM function at five
+distinct loads. Eighteen schizophrenia patients and 18 matched healthy controls were
+scanned with functional magnetic resonance imaging at 3 Tesla.Patterns of both overactivation
+and underactivation in patients were observed depending on WM load. Patients' activation
+was generally less responsive to load changes than control subjects', and different
+patterns of between-group differences were observed for memory encoding and retrieval.
+In the specific case of successful retrieval, patients recruited additional neural
+circuits unused by control subjects. Behavioral effects were generally consistent
+with these imaging results.Differential findings of overactivation and underactivation
+may be attributable to patients' decreased ability to focus and allocate neural resources
+at task-appropriate levels. Additionally, differences between encoding and retrieval
+suggest that WM dysfunction may be manifested differently during the distinct phases
+of encoding, maintenance, and retrieval.

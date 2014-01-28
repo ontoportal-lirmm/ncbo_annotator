@@ -1,0 +1,13 @@
+We investigated whether individuals with autism spectrum disorders (ASD) would show
+attentional modulation for social (face) and non-social (house) stimuli. Sixteen individuals
+with ASD and 16 matched control participants completed a task in which pairs of face
+and house stimuli were present on every trial, with one of the pairs randomly assigned
+to attended locations and the other to unattended locations. Both mass-univariate
+(SPM) and region of interest analyses suggested that responses to houses were modulated
+by attention in both groups, but that only the control participants demonstrated attentional
+modulation of face-selective regions. Thus, the participants with ASD demonstrated
+a lack of attentional modulation which was particularly evident for the social stimulus.
+Analyses of effective connectivity indicated that these results were due to a failure
+of attention to modulate connectivity between extrastriate areas and V1. We discuss
+how these results may suggest a mechanism to explain the reduced salience of social
+stimuli in ASD.

@@ -1,0 +1,20 @@
+To investigate neural activity in prefrontal cortex and amygdala during bipolar depression.Eleven
+bipolar I depressed and 17 normal subjects underwent functional magnetic resonance
+imaging (fMRI) while performing a task known to activate prefrontal cortex and amygdala.
+Whole brain activation patterns were determined using statistical parametric mapping
+(SPM) when subjects matched faces displaying neutral or negative affect (match condition)
+or matched a geometric form (control condition). Contrasts for each group for the
+match versus control conditions were used in a second-level random effects analysis.Random
+effects between-group analysis revealed significant attenuation in right and left
+orbitofrontal cortex (BA47) and right dorsolateral prefrontal cortex (DLPFC) (BA9)
+in bipolar depressed subjects. Additionally, random effects analysis showed a significantly
+increased activation in left lateral orbitofrontal cortex (BA10) in the bipolar depressed
+versus control subjects. Within-group contrasts demonstrated significant amygdala
+activation in the controls and no significant amygdala activation in the bipolar depressed
+subjects. The amygdala between-group difference, however, was not significant.Bipolar
+depression is associated with attenuated bilateral orbitofrontal (BA47) activation,
+attenuated right DLPFC (BA9) activation and heightened left orbitofrontal (BA10) activation.
+BA47 attenuation has also been reported in mania and may thus represent a trait feature
+of the disorder. Increased left prefrontal (BA10) activation may be a state marker
+to bipolar depression. Our findings suggest dissociation between mood-dependent and
+disease-dependent functional brain abnormalities in bipolar disorder.

@@ -1,0 +1,17 @@
+Neuroimaging studies of bipolar disorder (BD) have provided evidence of brain functional
+abnormalities during both the states of mania and remission. However, the differences
+in brain function between these two states are still poorly known. In the current
+study, we aimed to use a longitudinal design to examine the functional changes associated
+with symptomatic remission from mania within the brain network underlying motor response
+inhibition.Using event-related functional magnetic resonance imaging (fMRI), 10 BD
+patients and 10 healthy subjects were imaged twice while performing a Go/NoGo task.
+Patients were in a manic state when they underwent the first scan and fully remitted
+during the second scan. A mixed-effect ANOVA was used to identify brain regions showing
+differences in activation change over time between the two groups.The left amygdala
+was the only brain region to show a time-dependent change in activation that was significantly
+different between BD patients and healthy subjects. Further analyses revealed that
+this difference arose from the patient group, in which amygdala activation was decreased
+between mania and subsequent remission.This finding suggests that a decrease in left
+amygdala responsiveness is a critical phenomenon associated with remission from mania.
+It emphasizes the relevance of longitudinal approaches for identifying neurofunctional
+modifications associated with mood changes in BD.

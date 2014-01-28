@@ -1,0 +1,17 @@
+Deficits in inhibitory control have been reported in euthymic bipolar disorder patients.
+To date, data on the neuroanatomical correlates of these deficits are exclusively
+related to cognitive inhibition. This study aimed to examine the neural substrates
+of motor inhibitory control in euthymic bipolar patients. Groups of 20 patients with
+euthymic bipolar disorder and 20 demographically matched healthy subjects underwent
+event-related functional magnetic resonance imaging while performing a Go-NoGo task.
+Between-group differences in brain activation associated with motor response inhibition
+were assessed by using random-effects analyses. Although euthymic bipolar patients
+and healthy subjects performed similarly on the Go-NoGo task, they showed different
+patterns of brain activation associated with response inhibition. Specifically, patients
+exhibited significantly decreased activation in the left frontopolar cortex and bilateral
+dorsal amygdala compared with healthy subjects. There were no brain regions that were
+significantly more activated in patients than in healthy subjects. The findings suggest
+that euthymic bipolar patients have deficits in their ability to engage the left frontopolar
+cortex and bilateral dorsal amygdala during response inhibition. Further research
+should ascertain the role that such deficits may play in the emergence of impulsive
+behaviors that characterize bipolar disorder.

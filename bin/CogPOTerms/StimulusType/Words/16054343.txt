@@ -1,0 +1,19 @@
+It remains controversial as to what determines the neurodegenerative course in schizophrenia.
+This study administered a modified version of the Stroop task and investigated the
+relationship between functional magnetic resonance imaging (fMRI) signal changes in
+dysfunctioned task-related regions and clinical course variables. Functional MRI data
+during task performance were acquired from 10 right-handed schizophrenic patients
+(mean+/-SD age=29.2+/-10.3 years, range of illness duration=0.8-14 years, number of
+episodes=1-5) and 10 healthy controls (mean+/-SD age=30.3+/-6.4). Imaging data were
+investigated on a voxel-by-voxel basis for single group analysis and for between-group
+analysis according to the random effect model using Statistical Parametric Mapping
+(SPM 99b). Correlation analysis with age as a covariate identified those brain regions
+whose fMRI signal changes were significantly related to clinical course variables
+in schizophrenia. The number of psychotic episodes was negatively correlated with
+the fMRI signal change in the right inferior frontal and the right frontal precentral
+gyri among the activated regions during the Stroop task in schizophrenia, whereas
+the length of illness was not so correlated. The number of psychotic episodes was
+also negatively correlated with the fMRI signal change in the left paracingulate in
+which functional activity was diminished in the patients relative to the controls.
+Our results indicate that recurrent psychotic episodes are related to the neurodegenerative
+course in some dysfunctional brain regions in schizophrenia.

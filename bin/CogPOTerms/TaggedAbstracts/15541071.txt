@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeLetters StimulusTypeDigits ResponseModalityHand ResponseTypeButtonPress InstructionsDiscriminate InstructionsRecall 

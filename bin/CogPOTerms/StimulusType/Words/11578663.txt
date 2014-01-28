@@ -1,0 +1,16 @@
+The precise nature of frontal lobe dysfunction in schizophrenia remains unclear. We
+have previously demonstrated, using fMRI, a task-specific attenuation of frontal activation
+in schizophrenic patients. By using an identical methodology in matched bipolar subjects,
+we sought to determine whether this finding is specific to schizophrenia or a correlate
+of psychosis in general.Five dextral male bipolar patients and matching groups of
+schizophrenic subjects and controls were studied using fMRI. Echoplanar images were
+acquired while subjects performed two paced tasks: covert verbal fluency and a semantic
+decision task. Generic brain activation maps were constructed from individual images
+by sinusoidal regression analysis. Between-group differences in the mean power of
+experimental response were identified on a voxel-wise basis by an analysis of variance
+(ANOVA).The bipolar patients showed extensive prefrontal activation during verbal
+fluency which was significantly greater than in controls. There was no difference
+in the prefrontal BOLD response during the semantic decision task.These data indicate
+that bipolar patients show a strikingly different pattern of frontal responses compared
+to those with schizophrenia and provide further evidence that abnormal frontal activation
+in psychotic disorders is more apparent during verbal fluency than semantic decision.

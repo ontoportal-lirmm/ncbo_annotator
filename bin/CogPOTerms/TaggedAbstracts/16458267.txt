@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeFixationPoint StimulusTypeShapes ResponseModalityNone ResponseModalityOcular ResponseTypeNone ResponseTypeSaccades InstructionsFixate InstructionsMove InstructionsRecall 

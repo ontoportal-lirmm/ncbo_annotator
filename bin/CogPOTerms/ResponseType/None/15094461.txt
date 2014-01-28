@@ -1,0 +1,11 @@
+Word reading is considered a highly over-learned task. If true, then practice should
+have no effect on its performance or associated functional brain anatomy. We tested
+this hypothesis in two experiments of skilled readers repeatedly reading the same
+list of nouns (1 session, 10 runs). In Experiment 1 we used fMRI to monitor the changes
+in brain activity. In Experiment 2 we recorded voice onset latency reaction times.
+Neither experiment showed changes as an effect of practice. In a third experiment,
+Experiment 3, we examined the behavioral effect of prolonged practice on the word
+association task of verb generation for which reading nouns aloud has served as a
+control. Both short (1 session, 10 runs) and long term (15 days, 150 runs) effects
+were noted providing a new perspective on functional anatomical differences between
+word reading and verb generation previously noted after short periods of practice.

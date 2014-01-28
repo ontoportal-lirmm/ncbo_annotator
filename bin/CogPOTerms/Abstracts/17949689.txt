@@ -1,0 +1,20 @@
+Methods of analysis that examine the pattern of cerebral activity over the whole brain
+have been used to identify and predict neurocognitive states in healthy individuals.
+Such methods may be applied to functional neuroimaging data in patient groups to aid
+in the diagnosis of psychiatric disorders and the prediction of treatment response.
+We sought to examine the sensitivity and specificity of whole brain pattern classification
+of implicit processing of sad facial expressions in depression.Nineteen medication-free
+patients with depression and 19 healthy volunteers had been recruited for a functional
+magnetic resonance imaging (fMRI) study involving serial scans. The fMRI paradigm
+entailed incidental affective processing of sad facial stimuli with modulation of
+the intensity of the emotional expression (low, medium, and high intensity). The fMRI
+data were analyzed at each level of affective intensity with a support vector machine
+pattern classification method.The pattern of brain activity during sad facial processing
+correctly classified up to 84% of patients (sensitivity) and 89% of control subjects
+(specificity), corresponding to an accuracy of 86% (p &lt; .0001). Classification of
+patients' clinical response at baseline, prior to the initiation of treatment, showed
+a trend toward significance.Significant classification of patients in an acute depressive
+episode was achieved with whole brain pattern analysis of fMRI data. The prediction
+of treatment response showed a trend toward significance due to the reduced power
+of the subsample. Such methods may provide the first steps toward developing neurobiological
+markers in psychiatry.

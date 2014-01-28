@@ -1,0 +1,1 @@
+StimulusModalityAuditory StimulusTypeDigits StimulusTypeWords ResponseModalityNone ResponseModalityOral/Facial ResponseTypeNone ResponseTypeSpeech InstructionsEncode InstructionsRecall 

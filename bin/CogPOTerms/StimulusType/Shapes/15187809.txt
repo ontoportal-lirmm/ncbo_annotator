@@ -1,0 +1,16 @@
+To examine the neural basis of impairments in interpreting facial emotions in children
+and adolescents with autism spectrum disorders (ASD).Twelve children and adolescents
+with ASD and 12 typically developing (TD) controls matched faces by emotion and assigned
+a label to facial expressions while undergoing functional magnetic resonance imaging.Both
+groups engaged similar neural networks during facial emotion processing, including
+activity in the fusiform gyrus (FG) and prefrontal cortex. However, between-group
+analyses in regions of interest revealed that when matching facial expressions, the
+ASD group showed significantly less activity than the TD group in the FG, but reliably
+greater activity in the precuneus. During the labeling of facial emotions, no between-group
+differences were observed at the behavioral or neural level. Furthermore, activity
+in the amygdala was moderated by task demands in the TD group but not in the ASD group.These
+findings suggest that children and adolescents with ASD in part recruit different
+neural networks and rely on different strategies when processing facial emotions.
+High-functioning individuals with ASD may be relatively unimpaired in the cognitive
+assessment of basic emotions, yet still show differences in the automatic processing
+of facial expressions.

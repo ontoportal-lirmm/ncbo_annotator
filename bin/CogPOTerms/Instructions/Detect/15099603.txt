@@ -1,0 +1,22 @@
+Goldman-Rakic and Selemon (Schizophr. Bull. 23 (1997)) hypothesized that many of the
+symptoms of schizophrenia can be explained by deficits of working memory (WM) that
+are, in turn, caused by dysfunction of dorsolateral prefrontal cortex (DLPFC). We
+examined whether older patients with schizophrenia would show an aberrant neural response
+in the DLPFC or other brain sites when performing a spatial working memory (WM) task
+adapted from McCarthy et al. (Proc. Natl. Acad. Sci. U. S. A. 91 (1994)).Middle-aged
+and older patients with schizophrenia or schizoaffective disorder and healthy volunteers
+performed a spatial WM task contrasted with two baselines, passive and active viewing
+(PV and AV, respectively), while blood oxygen level dependent (BOLD) images were acquired
+in a functional magnetic resonance study.Patients did not perform significantly less
+well on the spatial tasks compared to the volunteers. Although we found no significant
+group effects in spatial WM activation of DLPFC, we did observe areas in medial frontal
+cortex including the left anterior cingulate gyrus, parietal areas of the both hemispheres,
+multiple sites within the basal ganglia of the left hemisphere, and the left superior
+temporal gyrus where healthy volunteers showed greater BOLD response to WM. In a second
+pattern, patients showed a greater BOLD response to WM in left fusiform gyrus [Brodmann's
+Area (BA) 19], peri-rolandic areas, medial frontal area; right anterior cerebellum
+(culmen), middle occipital lobe, and postcentral/supramarginal gyri (BA 2/40).Middle-aged
+and older patients with schizophrenia display normal or near-normal spatial WM activation
+of DLPFC when the processing demands of the WM task are within their performance capacity.
+Nonetheless, even when patients perform nearly normally, they demonstrate an aberrant
+pattern of brain response.

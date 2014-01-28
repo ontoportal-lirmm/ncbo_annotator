@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeFaces StimulusTypeFixationPoint ResponseModalityNone ResponseModalityOral/Facial ResponseTypeFlexion/Extension ResponseTypeNone InstructionsFixate InstructionsMove InstructionsAttend 

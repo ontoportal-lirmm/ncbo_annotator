@@ -1,0 +1,20 @@
+Although depressed mood is a normal occurrence in response to adversity in all individuals,
+what distinguishes those who are vulnerable to major depressive disorder (MDD) is
+their inability to effectively regulate negative mood when it arises. Investigating
+the neural underpinnings of adaptive emotion regulation and the extent to which such
+processes are compromised in MDD may be helpful in understanding the pathophysiology
+of depression. We report results from a functional magnetic resonance imaging study
+demonstrating left-lateralized activation in the prefrontal cortex (PFC) when downregulating
+negative affect in nondepressed individuals, whereas depressed individuals showed
+bilateral PFC activation. Furthermore, during an effortful affective reappraisal task,
+nondepressed individuals showed an inverse relationship between activation in left
+ventrolateral PFC and the amygdala that is mediated by the ventromedial PFC (VMPFC).
+No such relationship was found for depressed individuals, who instead show a positive
+association between VMPFC and amygdala. Pupil dilation data suggest that those depressed
+patients who expend more effort to reappraise negative stimuli are characterized by
+accentuated activation in the amygdala, insula, and thalamus, whereas nondepressed
+individuals exhibit the opposite pattern. These findings indicate that a key feature
+underlying the pathophysiology of major depression is the counterproductive engagement
+of right prefrontal cortex and the lack of engagement of left lateral-ventromedial
+prefrontal circuitry important for the downregulation of amygdala responses to negative
+stimuli.

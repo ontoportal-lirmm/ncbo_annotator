@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeFilmClip ResponseModalityHand ResponseTypeButtonPress InstructionsDetect InstructionsMove 

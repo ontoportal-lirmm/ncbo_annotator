@@ -1,0 +1,23 @@
+Most of the functional neuroimaging studies of depression have focused primarily on
+the resting state or responses to negatively valenced stimuli. However, depression
+consists not only of an accentuation of negative affective processing but of an inability
+to experience pleasure or positive motivation. The authors tested the hypothesis that
+depressed subjects would show less activation than healthy comparison subjects, in
+response to positive stimuli, in ventral striatal regions associated with processing
+of reward and positive stimuli.Positive, negative, and neutral words were presented
+to 10 unmedicated depressed patients and 12 healthy comparison subjects in the context
+of a 3T functional magnetic resonance imaging (MRI) paradigm. Image processing and
+analysis were performed using statistical parametric mapping with a mixed-effects
+model. Significant differences in neural responses were assessed, examining group,
+condition, and interaction effects of interest within the context of a general linear
+model.Relative to comparison subjects, depressed patients demonstrated significantly
+less bilateral ventral striatal activation to positive stimuli, correlating with decreased
+interest/pleasure in and performance of activities. They also displayed decreased
+activation to positive stimuli in a dorsomedial frontal region associated with processing
+of self-related stimuli. Responses of depressed subjects to negative stimuli were
+consistent with the growing literature on frontolimbic dysfunction in depression.This
+finding 1) supports a pathophysiological model of depression that includes reward/motivational
+pathway dysfunction, 2) suggests a contributing neural substrate of the inability
+to experience pleasure or engage in rewarding activities, 3) provides greater specification
+of abnormalities of basal ganglia function in depression, and 4) may help guide treatment
+approaches.

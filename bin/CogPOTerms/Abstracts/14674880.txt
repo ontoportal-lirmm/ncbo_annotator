@@ -1,0 +1,12 @@
+Context processing is conceptualized as an executive function involved in voluntary,
+complex actions such as overcoming automatic responses. The present study tested the
+hypothesis that context-processing deficits in patients with schizophrenia are associated
+with a dysfunction of left dorsolateral prefrontal cortex (DLPFC). Using event-related
+functional magnetic resonance imaging (fMRI), 17 controls and 17 medicated patients
+performed a version of the AX task in which a learned, automatic response had to be
+inhibited. In controls, left DLPFC activity increased when preparing to overcome an
+automatic response, whereas patients with schizophrenia showed no differential activation.
+In controls, context processing appeared to be associated with the differential representation
+of cues associated with the need to provide top-down support for overcoming automatic
+responses. This mechanism appeared to be impaired in patients with schizophrenia.((c)
+2003 APA, all rights reserved)

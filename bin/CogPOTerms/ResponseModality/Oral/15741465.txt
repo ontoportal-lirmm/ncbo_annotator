@@ -1,0 +1,24 @@
+Impaired prefrontal cortical function is regarded as a central feature of schizophrenia.
+Although many neuroimaging studies have found evidence of abnormal prefrontal activation
+when patients with schizophrenia perform cognitive tasks, the extent to which this
+abnormality depends on the presence of active psychotic symptoms and on the demands
+of the task is unclear. The authors tested the hypothesis that prefrontal functional
+abnormalities in schizophrenia would be more evident in patients with active psychosis
+than in patients who were in remission and would become more apparent in the face
+of increasing task demands.The authors used functional magnetic resonance imaging
+(fMRI) to examine prefrontal cortical activity during a paced letter verbal fluency
+task in three groups of subjects: acutely psychotic patients with schizophrenia, schizophrenia
+patients in remission, and healthy volunteers. Online subject performance was measured
+by utilizing a clustered fMRI acquisition sequence that allowed overt verbal responses
+to be made in the relative absence of scanner noise.Patients with schizophrenia showed
+less activation than the healthy comparison subjects in the anterior cingulate and
+the inferior frontal and right middle frontal cortices, independent of psychotic state
+and task demand. Acutely psychotic patients showed less activation than the healthy
+comparison subjects, but these differences were less marked than the differences between
+the patients in remission and the healthy comparison subjects. Acutely psychotic patients
+had less activation than the comparison subjects in the anterior cingulate but no
+significant difference in lateral prefrontal activation. Increasing task demand led
+to greater anterior cingulate and middle frontal activation in patients with active
+psychosis than in patients in remission.Schizophrenia is associated with impaired
+prefrontal function, but its manifestation depends on the severity of psychotic symptoms
+and the level of task difficulty.

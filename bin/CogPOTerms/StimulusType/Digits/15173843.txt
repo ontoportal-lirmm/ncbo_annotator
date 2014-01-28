@@ -1,0 +1,21 @@
+The symptoms of bipolar disorder suggest dysfunction of anterior limbic networks that
+modulate emotional behavior and that reciprocally interact with dorsal attentional
+systems. Bipolar patients maintain a constant vulnerability to mood episodes even
+during euthymia, when symptoms are minimal. Consequently, we predicted that, compared
+with healthy subjects, bipolar patients would exhibit abnormal activation of regions
+of the anterior limbic network with corresponding abnormal activation of other cortical
+areas involved in attentional processing. In all, 10 unmedicated euthymic bipolar
+patients and 10 group-matched healthy subjects were studied with fMRI while performing
+the Continuous Performance Task-Identical Pairs version (CPT-IP). fMRI scans were
+obtained on a 3.0 T Bruker system using an echo planar imaging (EPI) pulse sequence,
+while subjects performed the CPT-IP and a control condition to contrast group differences
+in regional brain activation. The euthymic bipolar and healthy subjects performed
+similarly on the CPT-IP, yet showed significantly different patterns of brain activation.
+Specifically, bipolar patients exhibited increased activation of limbic, paralimbic,
+and ventrolateral prefrontal areas, as well as visual associational cortices. Healthy
+subjects exhibited relatively increased activation in fusiform gyrus and medial prefrontal
+cortex. In conclusion, these differences suggest that bipolar patients exhibit overactivation
+of anterior limbic areas with corresponding abnormal activation in visual associational
+cortical areas, permitting successful performance of an attentional task. Since the
+differences occurred in euthymia, they may represent trait, rather than state, abnormalities
+of brain function in bipolar disorder.

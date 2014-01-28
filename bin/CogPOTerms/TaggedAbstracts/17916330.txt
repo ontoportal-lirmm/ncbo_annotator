@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusModalityNone StimulusTypeFixationPoint StimulusTypeShapes StimulusTypeNone ResponseModalityNone ResponseTypeNone InstructionsAttend 

@@ -1,0 +1,25 @@
+To determine the neural responses invoked in the recognition of facial fear and disgust
+in euthymic bipolar patients as compared with healthy subjects.This study examined
+10 female euthymic bipolar patients, and 10 suitably matched healthy subjects using
+functional magnetic resonance imaging (fMRI) while subjects were engaged in an explicit
+facial emotion recognition task involving fear, disgust and neutral expressions. The
+activation paradigm involved nominating the facial expression using specified response
+keys. Behavioural data were collected and analysed and both within-group (Fear versus
+Neutral; Disgust versus Neutral) and random-effects between-group analyses were performed
+on fMRI data using BrainVoyager (Brain Innovations, Maastricht, the Netherlands).Patients
+were equally accurate in identifying facial expressions as healthy subjects but were
+slower to respond, especially with respect to fear and disgust. Responses to fear
+and disgust (within-group analyses) resulted in activation of anticipated brain regions
+such as amygdala and insula, respectively. However, between-group random effects analysis
+revealed differential responses to both disgust and fear in both healthy subjects
+and euthymic bipolar patients such that euthymic bipolar patients responded largely
+to fear and healthy subjects responded more so to disgust. This partitioning of responsiveness
+was reflected by differential activation involving the hippocampus and amygdala.Greater
+responsiveness to fear with hippocampal activation in patients perhaps reflects recollection
+of traumatic events associated with past experiences of illness or simply the use
+of a more mnemonic (hippocampal) as opposed to affective (amygdala) approach when
+performing the task. It is possible that in bipolar disorder, prefrontal-subcortical
+network dysfunction that relegates neural processing to limbic regions is impaired
+and that clinically euthymic bipolar patients, although able to accurately and effectively
+identify emotions such as fear and disgust, are limited in their ability to interpret
+their salience. The implications of these findings are discussed.

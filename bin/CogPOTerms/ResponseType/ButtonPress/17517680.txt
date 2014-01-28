@@ -1,0 +1,18 @@
+Brain activation and functional connectivity were investigated in high functioning
+autism using functional magnetic resonance imaging in an n-back working memory task
+involving photographic face stimuli. The autism group showed reliably lower activation
+compared with controls in the inferior left prefrontal area (involved in verbal processing
+and working memory maintenance) and the right posterior temporal area (associated
+with theory of mind processing). The participants with autism also showed activation
+in a somewhat different location in the fusiform area than the control participants.
+These results suggest that the neural circuitry of the brain for face processing in
+autism may be analyzing the features of the face more as objects and less in terms
+of their human significance. The functional connectivity results revealed that the
+abnormal fusiform activation was embedded in a larger context of smaller and less
+synchronized networks, particularly indicating lower functional connectivity with
+frontal areas. In contrast to the underconnectivity with frontal areas, the autism
+group showed no underconnectivity among posterior cortical regions. These results
+extend previous findings of abnormal face perception in autism by demonstrating that
+the abnormalities are embedded in an abnormal cortical network that manages to perform
+the working memory task proficiently, using a visually oriented, asocial processing
+style that minimizes reliance on prefrontal areas.

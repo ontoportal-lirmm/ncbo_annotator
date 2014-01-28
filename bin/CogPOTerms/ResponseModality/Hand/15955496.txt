@@ -1,0 +1,20 @@
+Several neuroimaging studies have reported 'hypofrontality' in depressed patients
+performing a cognitive challenge compared to control subjects. Hypofrontality in depression
+is likely associated with an impaired behavioral performance. It is unclear whether
+this impaired performance is the consequence or the cause of hypofrontality. Consequently,
+we proposed to compare the cerebral activity of depressed patients and healthy subjects
+while controlling for the level of performance. Ten individuals meeting DSM-IV criteria
+for Major Depression and 10 healthy controls were tested with a verbal version of
+the n-back task during fMRI scanning. The working memory load was manipulated across
+the experiment (1,2,3-back) to increase the cognitive demands. fMRI data were acquired
+on a 1.5-T GE scanner and analyzed using SPM99 software. We did not find any difference
+between groups in both performance and reaction times for each level of complexity
+of the n-back task. Depressed patients and control subjects showed bilateral activation
+of the lateral prefrontal cortex, anterior cingulate and parietal cortex. Activation
+of these regions was modulated by the complexity of the task. Within this n-back neural
+network, depressed patients showed greater activation of the lateral prefrontal cortex
+and the anterior cingulate compared to healthy subjects. This study provides evidence
+that depressed patients need greater activation within the same neural network to
+maintain a similar level of performance as controls during a working memory task.
+Our findings suggest that depression may impair the cognitive capacity of depressed
+patients by recruiting more brain resources than controls during cognitive control.

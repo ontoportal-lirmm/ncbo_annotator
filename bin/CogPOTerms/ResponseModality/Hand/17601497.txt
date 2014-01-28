@@ -1,0 +1,21 @@
+Impairments in the neural circuitry of verbal working memory are evident in depression.
+Factors of task demand and depressive state might have significant effects on its
+functional neuroanatomy.Two groups underwent functional magnetic resonance imaging
+while performing a verbal working memory task of varying cognitive load (n-back).
+The patient group comprised 20 medication-free individuals in an acute episode of
+unipolar major depression and the control group comprised 20 healthy individuals.
+Scans were acquired at weeks 0 (baseline), 2, and 8. Patients received treatment with
+fluoxetine after the baseline scan. Cerebral activations were measured for mean overall
+activation as well as the linear and quadratic load-response activity with increasing
+task demand (1-, 2-, 3-back).There were no significant differences in performance
+accuracy between groups. However, a main effect of group was observed in the load-response
+activity in frontal and posterior cortical regions within the verbal working memory
+network in which patients showed a greater load-response relative to control subjects.
+Group by time effects were revealed in the load-response activity in the caudate and
+thalamus. As a marker of treatment response, a lower linear load-response at baseline
+in the dorsal anterior cingulate, left middle frontal, and lateral temporal cortices
+was associated with an improved clinical outcome.Maintenance of performance accuracy
+in patients was accompanied by a significant increase in the load-response activity
+in frontal and posterior cortical regions within the verbal working memory network.
+These data also provide further support for resilience of activity in the anterior
+cingulate as a predictor of treatment response in depression.

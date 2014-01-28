@@ -1,0 +1,1 @@
+StimulusModalityAuditory StimulusModalityNone StimulusTypeNone StimulusTypeTones ResponseModalityHand ResponseModalityNone ResponseTypeButtonPress ResponseTypeNone InstructionsMove InstructionsPassive InstructionsDiscriminate 

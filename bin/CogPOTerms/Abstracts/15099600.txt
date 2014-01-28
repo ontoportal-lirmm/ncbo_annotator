@@ -1,0 +1,18 @@
+Impaired working memory (WM) function in schizophrenia has been associated with abnormal
+activation of the dorsolateral prefrontal cortex (DLPFC). It is, however, not clear
+whether abnormal activation is a sign of DLPFC pathology, or a correlate of poor performance.
+We address this question by examining activity in the WM brain system at different
+levels of task difficulty. A parametric fMRI paradigm is used to examine how the WM
+system responds to increasing load. A parametric fMRI design with four levels of a
+spatial N-back task was used to examine the relationships between working memory load,
+functional output (performance) and brain activity in 10 schizophrenic patients on
+atypical antipsychotic medication and to compare these to 10 healthy controls. In
+spite of increasingly poor performance in schizophrenic patients, activity increased
+normally in DLPFC and inferior parietal cortex bilaterally and in anterior cingulate,
+with increasing load. At 3-back, activity dropped in DLPFC in comparison with controls,
+but not in the other regions. The results indicate that peak activation of the WM-system
+is reached at a lower processing load in schizophrenic patients than in healthy controls.
+As a decline of DLPFC activity at high processing loads in itself is not abnormal,
+WM dysfunction in schizophrenia appears to be the result of an impaired functional
+output of the whole WM system, causing elevation of the effective burden imposed by
+WM tasks.

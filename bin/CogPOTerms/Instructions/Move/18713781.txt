@@ -1,0 +1,30 @@
+Passivity experiences are hallmark symptoms of schizophrenia that can be characterized
+by the belief that one's thoughts or actions are controlled by an external agent.
+It has recently been suggested that these psychotic experiences result from defective
+monitoring of one's own actions, i.e. disturbed comparison of actions and perceived
+outcomes. In this study, we examined the function of the previously characterized
+action monitoring network of the inferior parietal lobule (IPL), medial (mPFC) and
+lateral prefrontal cortices in patients with different levels of passivity symptoms
+with an fMRI task. The visuomotor fMRI task demanded control of visually perceived
+object movements by alternating button presses with the left and the right index finger.
+In the monitoring condition of this task subjects stopped their actions whenever they
+detected visuomotor incongruence. fMRI and behavioural data from 15 patients were
+tested for correlation with passivity symptoms using standardized Scale for Assessment
+of Positive Symptoms (SAPS)- and AMDP- passivity symptom ratings. Both types of data
+were tested for differences between the patients group and 15 healthy controls. In
+the patient group we found the expected correlation of passivity symptoms and visuomotor
+monitoring performance. There was a significant positive correlation of passivity
+symptoms with increased latency of incongruence detection and a negative correlation
+of SAPS-passivity with the number of detected events. fMRI data revealed correlations
+of passivity symptoms with activation in bilateral IPL, primary motor and sensory
+cortices in the action monitoring condition. A correlation of passivity symptoms with
+the main experimental effect (actions with -- actions without monitoring) was found
+in the posterior cingulate cortex (PCC) and in the left IPL. No group differences
+or group by task interactions were found within the visuomotor-action-monitoring network.
+Our results demonstrate the association between passivity symptoms and the dysfunction
+of visuomotor action monitoring and support the idea that psychotic passivity experiences
+result from dysfunctions of central action monitoring mechanisms: According to pre-existing
+concepts of parietal cortex function, IPL-hyperactivation may represent an increase
+in false detections of visuomotor incongruence while the correlation between passivity
+and the differential effect of monitoring on PCC-activation assumedly represents greater
+self-monitoring effort in passivity experiences.

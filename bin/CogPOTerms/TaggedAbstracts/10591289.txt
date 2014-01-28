@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeLetters ResponseModalityOral/Facial ResponseTypeSpeech InstructionsGenerate InstructionsRecall 

@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusTypeFaces ResponseModalityHand ResponseTypeButtonPress InstructionsRecall 

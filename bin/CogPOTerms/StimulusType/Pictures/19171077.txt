@@ -1,0 +1,22 @@
+Several lines of research suggest a disturbance of reversal learning (reward and punishment
+processing, and affective switching) in patients with major depressive disorder (MDD).
+Obsessive-compulsive disorder (OCD) is also characterized by abnormal reversal learning,
+and is often co-morbid with MDD. However, neurobiological distinctions between the
+disorders are unclear. Functional neuroimaging (activation) studies comparing MDD
+and OCD directly are lacking.Twenty non-medicated OCD-free patients with MDD, 20 non-medicated
+MDD-free patients with OCD, and 27 healthy controls performed a self-paced reversal
+learning task in an event-related design during functional magnetic resonance imaging
+(fMRI).Compared with healthy controls, both MDD and OCD patients displayed prolonged
+mean reaction times (RTs) but normal accuracy. In MDD subjects, mean RTs were correlated
+with disease severity. Imaging results showed MDD-specific hyperactivity in the anterior
+insula during punishment processing and in the putamen during reward processing. Moreover,
+blood oxygen level-dependent (BOLD) responses in the dorsolateral prefrontal cortex
+(DLPFC) and the anterior PFC during affective switching showed a linear decrease across
+controls, MDD and OCD. Finally, the OCD group showed blunted responsiveness of the
+orbitofrontal (OFC)-striatal loop during reward, and in the OFC and anterior insula
+during affective switching.This study shows frontal-striatal and (para)limbic functional
+abnormalities during reversal learning in MDD, in the context of generic psychomotor
+slowing. These data converge with currently influential models on the neuropathophysiology
+of MDD. Moreover, this study reports differential neural patterns in frontal-striatal
+and paralimbic structures on this task between MDD and OCD, confirming previous findings
+regarding the neural correlates of deficient reversal learning in OCD.

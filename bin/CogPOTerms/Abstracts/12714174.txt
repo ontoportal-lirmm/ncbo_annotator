@@ -1,0 +1,17 @@
+Prepulse inhibition (PPI) of the startle reflex refers to the ability of a weak prestimulus,
+the prepulse, to inhibit the response to a closely following strong sensory stimulus,
+the pulse. PPI is found to be deficient in a number of psychiatric and neurological
+disorders associated with abnormalities at some level in the limbic and cortico-pallido-striato-thalamic
+circuitry. We applied whole-brain functional magnetic resonance imaging to elucidate
+the neural correlates of PPI using airpuff stimuli as both the prepulse and the pulse
+in groups of (i) healthy subjects and (ii) schizophrenic patients. Cerebral activation
+during prepulse-plus-pulse stimuli with stimulus-onset asynchronies of 120 ms was
+contrasted with activation during pulse-alone stimuli. In healthy subjects, PPI was
+associated with increased activation bilaterally in the striatum extending to hippocampus
+and thalamus, right inferior frontal gyrus and bilateral inferior parietal lobe/supramarginal
+gyrus, and with decreased activation in the right cerebellum and left medial occipital
+lobe. All activated regions showed significantly greater response in healthy subjects
+than schizophrenic patients, who also showed a trend for lower PPI. The findings demonstrate
+involvement of the striatum, hippocampus, thalamus, and frontal and parietal cortical
+regions in PPI. Dysfunctions in any of these regions may underlie observations of
+reduced PPI in schizophrenia.

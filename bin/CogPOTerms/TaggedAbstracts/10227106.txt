@@ -1,0 +1,1 @@
+StimulusModalityVisual StimulusModalityAuditory StimulusTypeFixationPoint StimulusTypeWords StimulusTypeLetters ResponseModalityNone ResponseTypeNone InstructionsFixate InstructionsGenerate 

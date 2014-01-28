@@ -1,0 +1,21 @@
+Previously we proposed that dorsolateral prefrontal cortex (PFC) supports a specific
+working memory (WM) subcomponent: the ability to represent and maintain context information
+necessary to guide appropriate task behavior. By context, we mean prior task-relevant
+information represented in such a form that it supports selection of the appropriate
+behavioral response. Furthermore, we hypothesized that WM deficits in schizophrenia
+reflect impaired context processing due to a disturbance in dorsolateral PFC. We use
+functional magnetic resonance imaging to examine PFC activation in medication-naive,
+first-episode patients with schizophrenia during a WM, task-isolating context processing.Fourteen
+first-episode, medication-naive patients with schizophrenia and 12 controls similar
+in age, sex, and parental education underwent functional magnetic resonance imaging
+during performance of an A-X version of the Continuous Performance Test.Patients with
+schizophrenia demonstrated deficits in dorsolateral PFC activation in task conditions
+requiring context processing but showed intact activation of posterior and inferior
+PFC. In addition, patients demonstrated intact activation of the primary motor and
+somatosensory cortex in response to stimulus processing demands.These results demonstrate
+selectivity in dorsolateral PFC dysfunction among medication-naive first-episode patients
+with schizophrenia, suggesting that a specific deficit in PFC function is present
+at illness onset, prior to the administration of medication or the most confounding
+effects of illness duration. Furthermore, these results are consistent with the hypothesis
+that WM deficits in patients with schizophrenia reflect an impairment in context processing
+due to a disturbance in dorsolateral PFC function.
