@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 8a5df731b1a621c50e23f1d333ececbb12637784
+  revision: 99db600897ada3ae13ba54ecb7cde87ae38d00d7
   branch: staging
   specs:
     goo (0.0.2)
@@ -13,8 +13,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 86fcecaa60eded02600e16ffad76dda0633f63d7
-  branch: staging
+  revision: 5256f46e7e87bf1f3c664645e0bab7f398a62917
+  branch: mallet_recognizer
   specs:
     ontologies_linked_data (0.0.1)
       activesupport

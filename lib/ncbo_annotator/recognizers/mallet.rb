@@ -20,13 +20,13 @@ module Annotator
 
         def initialize
           super()
-          @mallet_jar_path = $project_bin + "mallet.jar"
-          @mallet_deps_jar_path = $project_bin + "mallet_deps.jar"
+          @mallet_jar_path = $ncbo_annotator_project_bin + "mallet.jar"
+          @mallet_deps_jar_path = $ncbo_annotator_project_bin + "mallet_deps.jar"
         end
 
         def mallet_java_call(text)
-          #command_call = "java -cp \"#{$project_bin}.:#{$project_bin}mallet.jar:#{$project_bin}mallet-deps.jar:#{$project_bin}*\" BasicClassifier string \"hello world\""
-          command_call = "java -cp \"#{$project_bin}.:#{$project_bin}*\" BasicClassifier string \"#{Shellwords.escape(text)}\""
+          #command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}mallet.jar:#{$ncbo_annotator_project_bin}mallet-deps.jar:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"hello world\""
+          command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"#{Shellwords.escape(text)}\""
           stdout, stderr, status = Open3.capture3(command_call)
 
           if not status.success?
@@ -92,6 +92,7 @@ module Annotator
             sub_cat_key = full_label.gsub(category.keys[0], "")
             sub_cat = sub_cat_key.split(/(?=[A-Z])/).join(" ")
           end
+
           return main_cat, sub_cat
         end
 

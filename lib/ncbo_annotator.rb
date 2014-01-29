@@ -16,7 +16,7 @@ require_relative 'ncbo_recommender'
 
 # Require all models
 project_root = File.dirname(File.absolute_path(__FILE__))
-$project_bin = project_root + '/../bin/'
+$ncbo_annotator_project_bin = project_root + '/../bin/'
 
 module Annotator
   module Models

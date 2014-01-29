@@ -23,7 +23,7 @@ class TestAnnotator < TestCase
       @@redis.del(mappings)
     end
 
-    #LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
+    LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     #@@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     #annotator = Annotator::Models::NcboAnnotator.new
     #annotator.create_term_cache_from_ontologies(@@ontologies, true)
@@ -79,19 +79,26 @@ class TestAnnotator < TestCase
     end
   end
 
+  def test_mallet_recognizer
+    count, acronyms, cogpo = LinkedData::SampleData::Ontology.create_ontologies_and_submissions({
+        ont_count: 1,
+        submission_count: 1,
+        process_submission: true,
+        acronym: Annotator::Models::Recognizers::Mallet::COGPO_ACRONYM,
+        name: "Cognitive Paradigm Ontology",
+        acronym_suffix: "",
+        file_path: "../../../../test/data/ontology_files/CogPO12142010.owl"
+    })
 
-
-
-  def test_mallet
     annotator = Annotator::Models::Recognizers::Mallet.new
+    text = "Schizophrenia subjects demonstrate difficulties on tasks requiring saccadic inhibition, despite normal refixation saccade performance. Saccadic inhibition is ostensibly mediated via prefrontal cortex and associated cortical/subcortical circuitry. The current study tests hypotheses about the neural substrates of normal and abnormal saccadic performance among subjects with schizophrenia.Using functional magnetic resonance imaging, blood oxygenation level-dependent (BOLD) data were recorded while 13 normal and 14 schizophrenia subjects were engaged in refixation and antisaccade tasks.Schizophrenia subjects did not demonstrate the increased prefrontal cortex BOLD contrast during antisaccade performance that was apparent in the normal subjects. Schizophrenia subjects did, however, demonstrate normal BOLD contrast associated with refixation saccade performance in the frontal and supplementary eye fields, and posterior parietal cortex.Results from the current study support hypotheses of dysfunctional prefrontal cortex circuitry among schizophrenia subjects. Furthermore, this abnormality existed despite normal BOLD contrast observed during refixation saccade generation in the schizophrenia group."
+    all_annotations = annotator.annotate(text)
+    assert_equal(6, all_annotations.length)
 
-    #annotator.annotate_direct("Depression with cognitive impairment, so called depressive pseudodementia, is commonly mistaken for a neurodegenerative dementia. Using positron emission tomography (PET) derived measures of regional cerebral blood flow (rCBF) a cohort of 33 patients with major depression was studied. Ten patients displayed significant and reversible cognitive impairment. The patterns of rCBF of these patients were compared with a cohort of equally depressed non-cognitively impaired depressed patients. In the depressed cognitively impaired patients a profile of rCBF abnormalities was identified consisting of decreases in the left anterior medial prefrontal cortex and increases in the cerebellar vermis. These changes were additional to those seen in depression alone and are distinct from those described in neurodegenerative dementia. The cognitive impairment seen in a proportion of depressed patients would seem to be associated with dysfunction of neural systems distinct from those implicated in depression alone or the neurodegenerative dementias.")
-
-    annotator.annotate_direct("Schizophrenia subjects demonstrate difficulties on tasks requiring saccadic inhibition, despite normal refixation saccade performance. Saccadic inhibition is ostensibly mediated via prefrontal cortex and associated cortical/subcortical circuitry. The current study tests hypotheses about the neural substrates of normal and abnormal saccadic performance among subjects with schizophrenia.Using functional magnetic resonance imaging, blood oxygenation level-dependent (BOLD) data were recorded while 13 normal and 14 schizophrenia subjects were engaged in refixation and antisaccade tasks.Schizophrenia subjects did not demonstrate the increased prefrontal cortex BOLD contrast during antisaccade performance that was apparent in the normal subjects. Schizophrenia subjects did, however, demonstrate normal BOLD contrast associated with refixation saccade performance in the frontal and supplementary eye fields, and posterior parietal cortex.Results from the current study support hypotheses of dysfunctional prefrontal cortex circuitry among schizophrenia subjects. Furthermore, this abnormality existed despite normal BOLD contrast observed during refixation saccade generation in the schizophrenia group.")
-
-
+    text = "Depression with cognitive impairment, so called depressive pseudodementia, is commonly mistaken for a neurodegenerative dementia. Using positron emission tomography (PET) derived measures of regional cerebral blood flow (rCBF) a cohort of 33 patients with major depression was studied. Ten patients displayed significant and reversible cognitive impairment. The patterns of rCBF of these patients were compared with a cohort of equally depressed non-cognitively impaired depressed patients. In the depressed cognitively impaired patients a profile of rCBF abnormalities was identified consisting of decreases in the left anterior medial prefrontal cortex and increases in the cerebellar vermis. These changes were additional to those seen in depression alone and are distinct from those described in neurodegenerative dementia. The cognitive impairment seen in a proportion of depressed patients would seem to be associated with dysfunction of neural systems distinct from those implicated in depression alone or the neurodegenerative dementias."
+    all_annotations = annotator.annotate(text)
+    assert_equal(3, all_annotations.length)
   end
-
 
   def test_annotate
     ontologies = @@ontologies.dup
@@ -112,7 +119,7 @@ class TestAnnotator < TestCase
     texts = [text, text.upcase, text.downcase]
     texts.each do |text|
       annotator = Annotator::Models::NcboAnnotator.new
-      annotations = annotator.annotate(text, [], [], true, 0)
+      annotations = annotator.annotate(text, {filter_integers: true})
       direct = annotations
 
       assert direct.length >= size && direct.length > 0
@@ -172,7 +179,7 @@ class TestAnnotator < TestCase
     text = text.join ", "
 
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text, [], [], true, 0,false)
+    annotations = annotator.annotate(text, {filter_integers: true})
     direct = annotations
 
     assert direct.length >= size && direct.length > 0
