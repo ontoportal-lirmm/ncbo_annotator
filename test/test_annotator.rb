@@ -186,6 +186,14 @@ class TestAnnotator < TestCase
   end
 
 
+  def test_annotate_extended_character_sets
+    # https://bmir-jira.stanford.edu/browse/NCBO-539
+    # TODO: Add tests for annotation of extended character sets in UTF-8 and/or UTF-16.
+    #  "Ĉ @ ß œ ɛ ö ô" +  is "%C4%88%20%40%20%C3%9F%20%C5%93%20%C9%9B%20%C3%B6%20%C3%B4%20%2B%0A"
+    assert true
+  end
+
+
   def test_annotate_stop_words
     ontologies = @@ontologies.dup
     text = "Aggregate Human Data, Resource deletion, chromosomal chromosomal mutation"

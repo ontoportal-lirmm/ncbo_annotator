@@ -1,9 +1,10 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 0f68487d691d81c676cff97e520b7549166e478a
-  branch: master
+  revision: a5a3aabe06419ce31dc0cf10039d3bcad847a4ec
+  branch: staging
   specs:
     goo (0.0.2)
+      pry
       rdf (= 1.0.8)
       redis
       rest-client
@@ -13,8 +14,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: b5118b55fb79ce0118e1f6d9922c547e8dd28ae9
-  branch: master
+  revision: 07e89355eb21f81ffe8e99c4ea2738811704a6df
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -66,25 +67,25 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     method_source (0.8.2)
-    mime-types (2.0)
+    mime-types (2.1)
     minitest (4.7.5)
-    multi_json (1.8.2)
-    net-http-persistent (2.9)
-    oj (2.4.1)
+    multi_json (1.8.4)
+    net-http-persistent (2.9.1)
+    oj (2.5.4)
     polyglot (0.3.3)
     pony (1.6.2)
       mail (>= 2.0)
-    pry (0.9.12.4)
+    pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.1.0)
+    rake (10.1.1)
     rdf (1.0.8)
       addressable (>= 2.2)
-    redis (3.0.6)
+    redis (3.0.7)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rsolr (1.0.9)
