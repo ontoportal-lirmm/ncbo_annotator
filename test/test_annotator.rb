@@ -93,11 +93,11 @@ class TestAnnotator < TestCase
     annotator = Annotator::Models::Recognizers::Mallet.new
     text = "Schizophrenia subjects demonstrate difficulties on tasks requiring saccadic inhibition, despite normal refixation saccade performance. Saccadic inhibition is ostensibly mediated via prefrontal cortex and associated cortical/subcortical circuitry. The current study tests hypotheses about the neural substrates of normal and abnormal saccadic performance among subjects with schizophrenia.Using functional magnetic resonance imaging, blood oxygenation level-dependent (BOLD) data were recorded while 13 normal and 14 schizophrenia subjects were engaged in refixation and antisaccade tasks.Schizophrenia subjects did not demonstrate the increased prefrontal cortex BOLD contrast during antisaccade performance that was apparent in the normal subjects. Schizophrenia subjects did, however, demonstrate normal BOLD contrast associated with refixation saccade performance in the frontal and supplementary eye fields, and posterior parietal cortex.Results from the current study support hypotheses of dysfunctional prefrontal cortex circuitry among schizophrenia subjects. Furthermore, this abnormality existed despite normal BOLD contrast observed during refixation saccade generation in the schizophrenia group."
     all_annotations = annotator.annotate(text)
-    assert_equal(6, all_annotations.length)
+    assert_equal(3, all_annotations.length)
 
     text = "Depression with cognitive impairment, so called depressive pseudodementia, is commonly mistaken for a neurodegenerative dementia. Using positron emission tomography (PET) derived measures of regional cerebral blood flow (rCBF) a cohort of 33 patients with major depression was studied. Ten patients displayed significant and reversible cognitive impairment. The patterns of rCBF of these patients were compared with a cohort of equally depressed non-cognitively impaired depressed patients. In the depressed cognitively impaired patients a profile of rCBF abnormalities was identified consisting of decreases in the left anterior medial prefrontal cortex and increases in the cerebellar vermis. These changes were additional to those seen in depression alone and are distinct from those described in neurodegenerative dementia. The cognitive impairment seen in a proportion of depressed patients would seem to be associated with dysfunction of neural systems distinct from those implicated in depression alone or the neurodegenerative dementias."
     all_annotations = annotator.annotate(text)
-    assert_equal(3, all_annotations.length)
+    assert_equal(2, all_annotations.length)
   end
 
   def test_annotate
@@ -119,7 +119,16 @@ class TestAnnotator < TestCase
     texts = [text, text.upcase, text.downcase]
     texts.each do |text|
       annotator = Annotator::Models::NcboAnnotator.new
-      annotations = annotator.annotate(text, {filter_integers: true})
+      annotations = annotator.annotate(text, {
+          ontologies: [],
+          semantic_types: [],
+          filter_integers: true,
+          expand_hierarchy_levels: 0,
+          expand_with_mappings: false,
+          min_term_size: nil,
+          whole_word_only: true,
+          with_synonyms: true
+      })
       direct = annotations
 
       assert direct.length >= size && direct.length > 0
@@ -138,7 +147,16 @@ class TestAnnotator < TestCase
     term_text = "Data Storage"
     text = "#{term_text} is needed"
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text)
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
 
     assert annotations.length == 1
     assert annotations.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Storage"
@@ -150,16 +168,32 @@ class TestAnnotator < TestCase
     # check for a non-existent ontology
     non_existent_ont = ["DOESNOTEXIST"]
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text, non_existent_ont)
+    annotations = annotator.annotate(text, {
+        ontologies: non_existent_ont,
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
     assert_empty(annotations)
 
     # check for a specific term
     term_text = "Outcomes research"
     text = "When #{term_text} is obtained properly, a new research can begin."
-    annotations = annotator.annotate(text)
-
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
     # test for specific ontologies
-
   end
 
   def test_annotate_minsize_term
@@ -179,7 +213,16 @@ class TestAnnotator < TestCase
     text = text.join ", "
 
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text, {filter_integers: true})
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: true,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
     direct = annotations
 
     assert direct.length >= size && direct.length > 0
@@ -201,7 +244,17 @@ class TestAnnotator < TestCase
     assert found >= size
 
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text, [], [], true, 0,false,min_term_size=10)
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: true,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: 10,
+        whole_word_only: true,
+        with_synonyms: true
+    })
+
     direct = annotations
     filter_out_next.each do |cls|
       assert (direct.select { |x| x.annotatedClass.id.to_s == cls.id.to_s }).length == 0
@@ -217,7 +270,16 @@ class TestAnnotator < TestCase
     ontologies = @@ontologies.dup
     text = "Aggregate Human Data, Resource deletion, chromosomal chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text)
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
     not_show = ["http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
                 "http://purl.obolibrary.org/obo/MCBCC_0000296#Deletion"]
 
@@ -227,16 +289,36 @@ class TestAnnotator < TestCase
 
     #annotation should not show up
     annotator = Annotator::Models::NcboAnnotator.new
-    annotator.stop_words= ["resource", "deletion"]
-    annotations = annotator.annotate(text)
+    annotator.stop_words = ["resource", "deletion"]
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
+
     not_show.each do |cls|
       assert (annotations.select { |x| x.annotatedClass.id.to_s == cls }).length == 0
     end
 
     #empty array must annotate all
     annotator = Annotator::Models::NcboAnnotator.new
-    annotator.stop_words= []
-    annotations = annotator.annotate(text)
+    annotator.stop_words = []
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
+
     not_show.each do |cls|
       assert (annotations.select { |x| x.annotatedClass.id.to_s == cls }).length > 0
     end
@@ -257,8 +339,17 @@ class TestAnnotator < TestCase
     assert text[annotations.first.annotations.first[:from]-1,annotations.first.annotations.first[:to]-1] == "Aggregate Human Data"
     assert annotations.first.annotations[1][:to] == (1 + ("Aggregate Human Data".length)) + ("Aggregate Human Data".length)
     assert text[annotations.first.annotations[1][:from]-1,annotations.first.annotations[1][:to]-1] == "Aggregate Human Data"
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 1,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
 
-    annotations = annotator.annotate(text, ontologies=[], semantic_types=[], false, expand_hierachy_levels=1)
     assert annotations.length == 1
     assert annotations.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
     assert annotations.first.annotatedClass.submission.ontology.acronym == "BROTEST-0"
@@ -269,8 +360,17 @@ class TestAnnotator < TestCase
     assert annotations.first.hierarchy.length == 1
     assert annotations.first.hierarchy.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
     assert annotations.first.hierarchy.first.distance == 1
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 3,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
 
-    annotations = annotator.annotate(text, ontologies=[], semantic_types=[], false, expand_hierachy_levels=3)
     assert annotations.first.hierarchy.length == 3
     assert annotations.first.hierarchy.first.annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data"
     assert annotations.first.hierarchy.first.distance == 1
@@ -284,7 +384,16 @@ class TestAnnotator < TestCase
     ontologies = @@ontologies.dup
     text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=5)
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 5,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
 
     assert annotations[0].annotatedClass.id.to_s == "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Aggregate_Human_Data"
     assert annotations[0].annotations.length == 3
@@ -376,7 +485,17 @@ class TestAnnotator < TestCase
   def test_annotate_with_mappings
     text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
-    annotations = annotator.annotate(text,[], [], false, expand_hierachy_levels=0,expand_with_mappings=true)
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: true,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
+
     step_in_here = 0
     annotations.each do |ann|
       if ann.annotatedClass.id.to_s ==
@@ -409,7 +528,17 @@ class TestAnnotator < TestCase
     #filtering on ontologies
     ontologies = ["http://data.bioontology.org/ontologies/ONTOMATEST-0",
                  "http://data.bioontology.org/ontologies/BROTEST-0"]
-    annotations = annotator.annotate(text,ontologies, [], false, expand_hierachy_levels=0,expand_with_mappings=true)
+    annotations = annotator.annotate(text, {
+        ontologies: ontologies,
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: true,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true
+    })
+
     step_in_here = 0
     annotations.each do |ann|
       if ann.annotatedClass.id.to_s ==

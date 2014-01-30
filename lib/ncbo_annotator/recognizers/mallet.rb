@@ -11,7 +11,7 @@ module Annotator
           "StimulusModality" => "Stimulus Modality",
           "StimulusType" => "Stimulus Type",
           "ResponseModality" => "Response Modality",
-          "ResponseType" => "Response Type",
+          "Response" => "Response",
           "Instructions" => "Instructions"
         }
 
@@ -46,13 +46,6 @@ module Annotator
 
           labels.each do |label|
             category, sub_category = parse_label(label)
-
-            hit = search_query(category) unless (category.nil?)
-
-            unless hit.nil?
-              resource_id = hit["resource_id"]
-              allAnnotations[resource_id] = Annotation.new(resource_id, COGPO_RESOURCE_ID)
-            end
 
             hit = search_query(sub_category) unless (sub_category.nil?)
 
