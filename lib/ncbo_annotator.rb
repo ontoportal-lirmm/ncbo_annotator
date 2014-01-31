@@ -22,6 +22,8 @@ module Annotator
   module Models
 
     class NcboAnnotator
+      require_relative 'ncbo_annotator/recognizers/mallet'
+      require_relative 'ncbo_annotator/recognizers/mgrep'
 
       DICTHOLDER = "dict"
       IDPREFIX = "term:"
