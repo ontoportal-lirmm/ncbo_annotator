@@ -116,12 +116,24 @@ module Annotator
             end
 
             class_page.each do |cls|
-              prefLabel = cls.prefLabel
-              next if prefLabel.nil? # Skip classes with no prefLabel
+              
               resourceId = cls.id.to_s
-              synonyms = cls.synonym || []
-              semanticTypes = cls.semanticType || []
+              prefLabel = nil
+              synonyms = []
+              semanticTypes = []
+              
+              begin
+                prefLabel = cls.prefLabel
+                synonyms = cls.synonym || []
+                semanticTypes = cls.semanticType || []
+              rescue Goo::Base::AttributeNotLoaded =>  e
+                #TODO: improve this logging with a logger
+                puts "Error loading attributes for class #{cls.id.to_s}"
+                puts e.backtrace
+                next
+              end
 
+              next if prefLabel.nil? # Skip classes with no prefLabel
               synonyms.each do |syn|
                 create_term_entry(redis,
                                   ontResourceId,
