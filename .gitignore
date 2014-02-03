@@ -29,3 +29,7 @@ config/config.rb
 .DS_Store
 
 test/data/ontology_files/repo/
+
+*.rdb
+
+test/data/dictionary.txt

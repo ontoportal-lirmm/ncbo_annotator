@@ -67,9 +67,24 @@ module Annotator
           end
         end
 
-        ontologies.each do |ont|
+        ontologies.each_index do |i|
+          ont = ontologies[i]
           last = ont.latest_submission(status: [:rdf])
-          create_cache_for_submission(logger, last, redis)
+          unless last.nil?
+            #TODO: improve this logging with a logger
+            puts "#{i}/#{ontologies.length} - Creating cache submission for ", last.id.to_s
+            begin
+              create_cache_for_submission(logger, last, redis)
+            rescue => e
+              puts "Error caching #{ont.id.to_s}"
+              puts e.backtrace
+            end
+            #TODO: improve this logging with a logger
+            puts "    Done with ", last.id.to_s
+          else
+            #TODO: improve this logging with a logger
+            puts "Error: Not found last submission for #{ont.id.to_s}"
+          end
         end
       end
 
@@ -101,12 +116,24 @@ module Annotator
             end
 
             class_page.each do |cls|
-              prefLabel = cls.prefLabel
-              next if prefLabel.nil? # Skip classes with no prefLabel
+              
               resourceId = cls.id.to_s
-              synonyms = cls.synonym || []
-              semanticTypes = cls.semanticType || []
+              prefLabel = nil
+              synonyms = []
+              semanticTypes = []
+              
+              begin
+                prefLabel = cls.prefLabel
+                synonyms = cls.synonym || []
+                semanticTypes = cls.semanticType || []
+              rescue Goo::Base::AttributeNotLoaded =>  e
+                #TODO: improve this logging with a logger
+                puts "Error loading attributes for class #{cls.id.to_s}"
+                puts e.backtrace
+                next
+              end
 
+              next if prefLabel.nil? # Skip classes with no prefLabel
               synonyms.each do |syn|
                 create_term_entry(redis,
                                   ontResourceId,
