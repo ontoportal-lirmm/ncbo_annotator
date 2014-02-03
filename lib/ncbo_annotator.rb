@@ -72,7 +72,7 @@ module Annotator
           last = ont.latest_submission(status: [:rdf])
           unless last.nil?
             #TODO: improve this logging with a logger
-            puts "#{i}/#{ontologies.length} - Creating cache submission for ", last.id.to_s
+            puts "#{i}/#{ontologies.length} Creating cache submission for ", last.id.to_s
             begin
               create_cache_for_submission(logger, last, redis)
             rescue => e
@@ -80,7 +80,7 @@ module Annotator
               puts e.backtrace
             end
             #TODO: improve this logging with a logger
-            puts "    Done with ", last.id.to_s
+            puts "    Done with #{last.id.to_s}"
           else
             #TODO: improve this logging with a logger
             puts "Error: Not found last submission for #{ont.id.to_s}"
