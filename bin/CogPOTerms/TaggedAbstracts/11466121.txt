@@ -1,1 +1,0 @@
-StimulusModalityOlfactory StimulusTypeOdor ResponseModalityNone ResponseTypeNone InstructionsAttend 

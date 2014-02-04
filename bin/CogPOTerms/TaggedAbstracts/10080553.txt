@@ -1,1 +1,0 @@
-StimulusModalityAuditory StimulusModalityNone StimulusTypeNone StimulusTypeWords ResponseModalityNone ResponseModalityOral/Facial ResponseTypeNone ResponseTypeSpeech InstructionsPassive InstructionsRecall 

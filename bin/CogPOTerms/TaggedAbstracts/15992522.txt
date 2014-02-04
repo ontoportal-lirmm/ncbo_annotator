@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeWords StimulusTypeFaces StimulusTypeFixationPoint ResponseModalityHand ResponseModalityNone ResponseTypeButtonPress ResponseTypeNone InstructionsDiscriminate InstructionsFixate 

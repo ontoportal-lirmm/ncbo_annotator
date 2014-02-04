@@ -1,1 +1,0 @@
-StimulusModalityAuditory StimulusModalityVisual StimulusTypePictures StimulusTypeWords ResponseModalityHand ResponseTypeButtonPress InstructionsDiscriminate InstructionsImagine 

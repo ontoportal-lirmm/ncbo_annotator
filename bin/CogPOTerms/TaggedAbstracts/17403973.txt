@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeFaces ResponseModalityHand ResponseTypeGrasp InstructionsDiscriminate 

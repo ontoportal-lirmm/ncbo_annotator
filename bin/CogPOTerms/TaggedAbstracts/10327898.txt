@@ -1,1 +1,0 @@
-StimulusModalityAuditory StimulusModalityNone StimulusTypeNone StimulusTypeWords ResponseModalityNone ResponseTypeNone InstructionsAttend InstructionsPassive 

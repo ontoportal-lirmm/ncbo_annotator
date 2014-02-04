@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeDigits StimulusTypeShapes StimulusTypeSymbols StimulusTypeWords ResponseModalityHand ResponseTypeButtonPress InstructionsDiscriminate 

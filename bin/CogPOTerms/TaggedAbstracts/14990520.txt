@@ -1,1 +1,0 @@
-StimulusModalityAuditory StimulusTypeNoise StimulusTypeWords ResponseModalityNone ResponseModalityHand ResponseTypeNone ResponseTypeFlexion/Extension InstructionsAttend InstructionsDiscriminate 

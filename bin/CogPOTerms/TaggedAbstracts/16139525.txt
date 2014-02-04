@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeShapes ResponseModalityHand ResponseTypeButtonPress InstructionsDetect 

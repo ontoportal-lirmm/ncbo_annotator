@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypePictures ResponseModalityNone ResponseTypeNone InstructionsAttend 

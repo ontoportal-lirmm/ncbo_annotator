@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeFixationPoint ResponseModalityNone ResponseTypeNone InstructionsFixate 

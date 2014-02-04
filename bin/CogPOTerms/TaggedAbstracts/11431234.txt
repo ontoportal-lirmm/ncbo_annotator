@@ -1,1 +1,0 @@
-StimulusModalityAuditory StimulusModalityNone StimulusModalityVisual StimulusTypeNone StimulusTypeWords ResponseModalityHand ResponseTypeButtonPress ResponseTypeFingerTapping InstructionsEncode InstructionsMove InstructionsRecall 

@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeLetters ResponseModalityHand ResponseModalityOral/Facial ResponseTypeButtonPress ResponseTypeFlexion/Extension ResponseTypeSpeech InstructionsDetect InstructionsRecall InstructionsGenerate 

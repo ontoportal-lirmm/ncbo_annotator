@@ -1,1 +1,0 @@
-StimulusModalityNone StimulusModalityVisual StimulusTypeLetters StimulusTypeNone ResponseModalityOral/Facial ResponseTypeSpeech InstructionsGenerate InstructionsRepeat 

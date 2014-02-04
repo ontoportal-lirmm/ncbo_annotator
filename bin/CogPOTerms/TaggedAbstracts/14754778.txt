@@ -1,1 +1,0 @@
-StimulusModalityNone StimulusModalityVisual StimulusTypeDigits StimulusTypeNone ResponseModalityHand ResponseModalityNone ResponseTypeButtonPress ResponseTypeNone InstructionsDetect InstructionsGenerate InstructionsPassive 

@@ -1,1 +1,0 @@
-StimulusModalityVisual StimulusTypeShapes StimulusTypeWords ResponseModalityHand ResponseModalityNone ResponseTypeButtonPress ResponseTypeNone InstructionsDetect InstructionsRecall InstructionsPassive 

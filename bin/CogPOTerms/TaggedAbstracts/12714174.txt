@@ -1,1 +1,0 @@
-StimulusModalityNone StimulusModalityTactile StimulusTypeEyePuffs StimulusTypeNone ResponseModalityNone ResponseTypeNone InstructionsAttend InstructionsPassive 
