@@ -29,3 +29,7 @@ config/config.rb
 .DS_Store
 
 test/data/ontology_files/repo/
+
+bin/basic-classifier.jar
+bin/mallet.jar
+bin/mallet-deps.jar
