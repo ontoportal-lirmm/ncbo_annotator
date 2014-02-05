@@ -33,7 +33,7 @@ module Annotator
             @logger.error("Error executing Mallet recognizer")
             @logger.error(stderr)
             @logger.error(stdout)
-            raise Exception, "Mallet java command exited with #{status.exitstatus}. Check parser logs."
+            raise Exception, "Mallet java command exited with #{status.exitstatus}. Check the log for a more detailed description of the error."
           end
 
           return stdout
