@@ -14,10 +14,16 @@ require_relative 'ncbo_annotator/config'
 require_relative 'ncbo_annotator/monkeypatches'
 require_relative 'ncbo_recommender'
 
+# Require all models
+project_root = File.dirname(File.absolute_path(__FILE__))
+$ncbo_annotator_project_bin = project_root + '/../bin/'
+
 module Annotator
   module Models
 
     class NcboAnnotator
+      require_relative 'ncbo_annotator/recognizers/mallet'
+      require_relative 'ncbo_annotator/recognizers/mgrep'
 
       DICTHOLDER = "dict"
       IDPREFIX = "term:"
@@ -29,6 +35,7 @@ module Annotator
 
       def initialize()
         @stop_words = Annotator.settings.stop_words_default_list
+        @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
       end
 
       def stop_words=(stop_input)
@@ -47,12 +54,9 @@ module Annotator
         page = 1
         size = 2500
 
-        # Get logger
-        logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
-
         if delete_cache
-          logger.info("Deleting old redis data")
-          logger.flush
+          @logger.info("Deleting old redis data")
+          @logger.flush
 
           # remove old dictionary structure
           redis.del(DICTHOLDER)
@@ -70,11 +74,12 @@ module Annotator
         ontologies.each_index do |i|
           ont = ontologies[i]
           last = ont.latest_submission(status: [:rdf])
+
           unless last.nil?
             #TODO: improve this logging with a logger
             puts "#{i}/#{ontologies.length} Creating cache submission for ", last.id.to_s
             begin
-              create_cache_for_submission(logger, last, redis)
+              create_cache_for_submission(@logger, last, redis)
             rescue => e
               puts "Error caching #{ont.id.to_s}"
               puts e.backtrace
@@ -195,27 +200,44 @@ module Annotator
         outFile.close
       end
 
-      def annotate(text, ontologies=[], semantic_types=[], 
-                   filter_integers=false, 
-                   expand_hierachy_levels=0,
-                   expand_with_mappings=false,
-                   min_term_size=nil,
-                   whole_word_only=true,
-                   with_synonyms=true)
+      ########################################
+      # Possible options with their defaults:
+      #   ontologies              = []
+      #   semantic_types          = []
+      #   filter_integers         = false
+      #   expand_hierarchy_levels = 0
+      #   expand_with_mappings    = false
+      #   min_term_size           = nil
+      #   whole_word_only         = true
+      #   with_synonyms           = true
+      #######################################
+      def annotate(text, options={})
+        ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
+        expand_hierarchy_levels = options[:expand_hierarchy_levels].is_a?(Integer) ? options[:expand_hierarchy_levels] : 0
+        expand_with_mappings = options[:expand_with_mappings] == true ? true : false
 
-        annotations = annotate_direct(text, ontologies, semantic_types, filter_integers, min_term_size, whole_word_only, with_synonyms)
+        annotations = annotate_direct(text, options)
         return annotations.values if annotations.length == 0
-        if expand_hierachy_levels > 0
+
+        if expand_hierarchy_levels > 0
           hierarchy_annotations = []
-          expand_hierarchies(annotations, expand_hierachy_levels, ontologies)
+          expand_hierarchies(annotations, expand_hierarchy_levels, ontologies)
         end
+
         if expand_with_mappings
           expand_mappings(annotations, ontologies)
         end
         return annotations.values
       end
 
-      def annotate_direct(text, ontologies=[], semantic_types=[], filter_integers=false, min_term_size=nil, whole_word_only=true, with_synonyms=true)
+      def annotate_direct(text, options={})
+        ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
+        semantic_types = options[:semantic_types].is_a?(Array) ? options[:semantic_types] : []
+        filter_integers = options[:filter_integers] == true ? true : false
+        min_term_size = options[:min_term_size].is_a?(Integer) ? options[:min_term_size] : nil
+        whole_word_only = options[:whole_word_only] == false ? false : true
+        with_synonyms = options[:with_synonyms] == false ? false : true
+
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, false, whole_word_only)
 
@@ -330,7 +352,7 @@ module Annotator
             mapped_term = mapped_term.first
             acronym = mapped_term.ontology.id.to_s.split("/")[-1]
             if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
-              a.add_mapping(mapped_term.term.first.to_s,mapped_term.ontology.id.to_s)
+              a.add_mapping(mapped_term.term.first.to_s, mapped_term.ontology.id.to_s)
             end
           end
         end

@@ -23,7 +23,6 @@ config/config.rb
 # Ignore RubyMine editor files
 .idea
 
-
 *.swp
 
 .DS_Store
@@ -33,3 +32,9 @@ test/data/ontology_files/repo/
 *.rdb
 
 test/data/dictionary.txt
+
+bin/basic-classifier.jar
+bin/mallet.jar
+bin/mallet-deps.jar
+bin/CogPOTerms
+
