@@ -80,6 +80,8 @@ class TestAnnotator < TestCase
   end
 
   def test_mallet_recognizer
+    skip "Skipping Mallet recognizer test because the core Java APIs are not present" unless (File.exists?($ncbo_annotator_project_bin + "mallet.jar"))
+
     count, acronyms, cogpo = LinkedData::SampleData::Ontology.create_ontologies_and_submissions({
         ont_count: 1,
         submission_count: 1,
@@ -107,7 +109,8 @@ class TestAnnotator < TestCase
     # check that the number of hits returned by mallet equals to the number of annotations for all existing abstracts
     dir_path = $ncbo_annotator_project_bin + "CogPOTerms/Abstracts/*.txt"
     not_found_labels = []
-    found_labels = []
+    not_found_terms = []
+    found_terms = []
 
     Dir.glob(dir_path).each do |f|
       text = File.open(f).read
@@ -118,15 +121,17 @@ class TestAnnotator < TestCase
       labels.each do |label|
         category, sub_category = annotator.parse_label(label)
 
-        unless (not_found_labels.include?(sub_category) || found_labels.include?(sub_category))
+        unless (not_found_terms.include?(sub_category) || found_terms.include?(sub_category))
           hit = annotator.search_query(sub_category)
 
           if hit.nil?
-            not_found_labels << sub_category
+            not_found_terms << sub_category
           else
-            found_labels << sub_category
+            found_terms << sub_category
           end
         end
+
+        not_found_labels << label if (not_found_terms.include?(sub_category) && !not_found_labels.include?(label))
       end
     end
   end
