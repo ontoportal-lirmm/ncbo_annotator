@@ -11,7 +11,7 @@ module Annotator
           "StimulusModality" => "Stimulus Modality",
           "StimulusType" => "Stimulus Type",
           "ResponseModality" => "Response Modality",
-          "Response" => "Response",
+          "ResponseType" => "Response",
           "Instructions" => "Instructions"
         }
 
@@ -46,7 +46,6 @@ module Annotator
 
           labels.each do |label|
             category, sub_category = parse_label(label)
-
             hit = search_query(sub_category) unless (sub_category.nil?)
 
             unless hit.nil?

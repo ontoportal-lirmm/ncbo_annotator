@@ -91,13 +91,44 @@ class TestAnnotator < TestCase
     })
 
     annotator = Annotator::Models::Recognizers::Mallet.new
+
     text = "Schizophrenia subjects demonstrate difficulties on tasks requiring saccadic inhibition, despite normal refixation saccade performance. Saccadic inhibition is ostensibly mediated via prefrontal cortex and associated cortical/subcortical circuitry. The current study tests hypotheses about the neural substrates of normal and abnormal saccadic performance among subjects with schizophrenia.Using functional magnetic resonance imaging, blood oxygenation level-dependent (BOLD) data were recorded while 13 normal and 14 schizophrenia subjects were engaged in refixation and antisaccade tasks.Schizophrenia subjects did not demonstrate the increased prefrontal cortex BOLD contrast during antisaccade performance that was apparent in the normal subjects. Schizophrenia subjects did, however, demonstrate normal BOLD contrast associated with refixation saccade performance in the frontal and supplementary eye fields, and posterior parietal cortex.Results from the current study support hypotheses of dysfunctional prefrontal cortex circuitry among schizophrenia subjects. Furthermore, this abnormality existed despite normal BOLD contrast observed during refixation saccade generation in the schizophrenia group."
     all_annotations = annotator.annotate(text)
-    assert_equal(3, all_annotations.length)
+    assert_equal(4, all_annotations.length)
 
     text = "Depression with cognitive impairment, so called depressive pseudodementia, is commonly mistaken for a neurodegenerative dementia. Using positron emission tomography (PET) derived measures of regional cerebral blood flow (rCBF) a cohort of 33 patients with major depression was studied. Ten patients displayed significant and reversible cognitive impairment. The patterns of rCBF of these patients were compared with a cohort of equally depressed non-cognitively impaired depressed patients. In the depressed cognitively impaired patients a profile of rCBF abnormalities was identified consisting of decreases in the left anterior medial prefrontal cortex and increases in the cerebellar vermis. These changes were additional to those seen in depression alone and are distinct from those described in neurodegenerative dementia. The cognitive impairment seen in a proportion of depressed patients would seem to be associated with dysfunction of neural systems distinct from those implicated in depression alone or the neurodegenerative dementias."
     all_annotations = annotator.annotate(text)
     assert_equal(2, all_annotations.length)
+    #  all_annotations.each do |ann|
+    #    cls = LinkedData::Models::Class.find(ann.annotatedClass.id).in(cogpo[0].submissions[0]).include(:prefLabel).first
+    #    puts cls.prefLabel
+    #  end
+
+    # check that the number of hits returned by mallet equals to the number of annotations for all existing abstracts
+    dir_path = $ncbo_annotator_project_bin + "CogPOTerms/Abstracts/*.txt"
+    not_found_labels = []
+    found_labels = []
+
+    Dir.glob(dir_path).each do |f|
+      text = File.open(f).read
+
+      stdout = annotator.mallet_java_call(text)
+      labels = stdout.split(" ")
+
+      labels.each do |label|
+        category, sub_category = annotator.parse_label(label)
+
+        unless (not_found_labels.include?(sub_category) || found_labels.include?(sub_category))
+          hit = annotator.search_query(sub_category)
+
+          if hit.nil?
+            not_found_labels << sub_category
+          else
+            found_labels << sub_category
+          end
+        end
+      end
+    end
   end
 
   def test_annotate
