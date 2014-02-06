@@ -16,11 +16,12 @@ module Annotator
     yield @settings if block_given?
 
     # Set defaults
-    @settings.mgrep_dictionary_file ||= "./test/tmp/dictionary.txt"
-    @settings.mgrep_host            ||= "localhost"
-    @settings.mgrep_port            ||= 55555
-    @settings.annotator_redis_host  ||="localhost"
-    @settings.annotator_redis_port  ||= 6379
+    @settings.mgrep_dictionary_file   ||= "./test/tmp/dictionary.txt"
+    @settings.mgrep_host              ||= "localhost"
+    @settings.mgrep_port              ||= 55555
+    @settings.annotator_redis_host    ||="localhost"
+    @settings.annotator_redis_port    ||= 6379
+    @settings.enable_recognizer_param ||= false
     puts "(AN) >> Using ANN Redis instance at "+
       "#{@settings.annotator_redis_host}:#{@settings.annotator_redis_port}"
     
