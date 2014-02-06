@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 5256f46e7e87bf1f3c664645e0bab7f398a62917
+  revision: c12c98e95bd8d1e74d9fb04189098d3ec7d3bd9a
   branch: mallet_recognizer
   specs:
     ontologies_linked_data (0.0.1)
