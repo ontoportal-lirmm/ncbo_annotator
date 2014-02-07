@@ -210,6 +210,7 @@ module Annotator
       #   min_term_size           = nil
       #   whole_word_only         = true
       #   with_synonyms           = true
+      #   longest_only            = false
       #######################################
       def annotate(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
@@ -237,6 +238,7 @@ module Annotator
         min_term_size = options[:min_term_size].is_a?(Integer) ? options[:min_term_size] : nil
         whole_word_only = options[:whole_word_only] == false ? false : true
         with_synonyms = options[:with_synonyms] == false ? false : true
+        longest_only = options[:longest_only] == true ? true : false
 
         client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
         rawAnnotations = client.annotate(text, false, whole_word_only)
@@ -262,6 +264,7 @@ module Annotator
             sleep(1.0 / 150.0)
           end
         end
+
         rawAnnotations.each do |ann|
           id = get_prefixed_id(ann.string_id)
           matches = redis_data[id][:future].value
@@ -291,6 +294,13 @@ module Annotator
             end
           end
         end
+
+        if (longest_only)
+          allAnnotations.sort! {|a, b| [b[:score], b[:ontology_rank]] <=> [a[:score], a[:ontology_rank]]}
+        end
+
+
+
         return allAnnotations
       end
 
