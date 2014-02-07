@@ -295,11 +295,9 @@ module Annotator
           end
         end
 
-        if (longest_only)
-          allAnnotations.sort! {|a, b| [b[:score], b[:ontology_rank]] <=> [a[:score], a[:ontology_rank]]}
-        end
-
-
+        #if (longest_only)
+        #  allAnnotations.sort! {|a, b| [b[:score], b[:ontology_rank]] <=> [a[:score], a[:ontology_rank]]}
+        #end
 
         return allAnnotations
       end
