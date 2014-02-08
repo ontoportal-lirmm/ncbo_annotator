@@ -136,6 +136,36 @@ class TestAnnotator < TestCase
     end
   end
 
+  def test_annotate_longest_only
+    text = "Ontology development and management of the initial research findings was limited to a basic set of terms and constructs. The ontology development was to be executed in stages, starting from the general concepts and working toward a more granular representation."
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true,
+        longest_only: true
+    })
+    assert_equal(2, annotations.length)
+
+    annotations = annotator.annotate(text, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true,
+        longest_only: false
+    })
+    assert_equal(3, annotations.length)
+  end
+
   def test_annotate
     ontologies = @@ontologies.dup
     class_page = TestAnnotator.all_classes(ontologies)

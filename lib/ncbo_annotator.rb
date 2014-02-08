@@ -245,11 +245,10 @@ module Annotator
 
         rawAnnotations.filter_integers() if filter_integers
         rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
-
         rawAnnotations.filter_stop_words(@stop_words)
 
         allAnnotations = {}
-
+        longest_hits = {}
         redis_data = Hash.new
 
         redis.pipelined {
@@ -259,7 +258,7 @@ module Annotator
           end
         }
         sleep(1.0 / 150.0)
-        redis_data.each do |k,v|
+        redis_data.each do |k, v|
           while v[:future].value.is_a?(Redis::FutureNotReady)
             sleep(1.0 / 150.0)
           end
@@ -291,8 +290,21 @@ module Annotator
                 allAnnotations[id_group] = Annotation.new(key, ontResourceId)
               end
               allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+              len = ann.offset_to - ann.offset_from + 1
+              longest_hits[ann.offset_from] = len if (longest_hits[ann.offset_from].nil? || longest_hits[ann.offset_from] < len)
             end
           end
+        end
+
+        if (longest_only)
+          allAnnotations.delete_if { |k, annotation|
+            flag = true
+            annotation.annotations.each do |ann|
+              len = ann[:to] - ann[:from] + 1
+              flag = false if longest_hits[ann[:from]] == len
+            end
+            flag
+          }
         end
 
         return allAnnotations
