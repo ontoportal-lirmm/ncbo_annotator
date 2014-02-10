@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 4217cbfafe425b8d1428aafd0b95daa3e4ee27fa
+  revision: d6a88ab765a48cef8395a4c0c96519e1e8ffc7b5
   branch: staging
   specs:
     goo (0.0.2)
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 0149fe739a39e4d754ae52089971b34810cfc6f7
+  revision: b983d252be8aa7778bbec1a0c5418a7c8ad315fc
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -33,7 +33,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: e1dfb143a3097066f81bfe13393ed93ec01c37ad
+  revision: a5ddcaa6a4997aaf740376c34c5f1000530862fd
   branch: staging
   specs:
     sparql-client (1.0.4.1)
@@ -73,7 +73,7 @@ GEM
     net-http-persistent (2.9.3)
     oj (2.5.4)
     polyglot (0.3.3)
-    pony (1.6.2)
+    pony (1.8)
       mail (>= 2.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
