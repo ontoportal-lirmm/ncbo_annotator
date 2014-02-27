@@ -136,6 +136,35 @@ class TestAnnotator < TestCase
     end
   end
 
+  def test_annotate_non_ascii
+    annotator = Annotator::Models::NcboAnnotator.new
+
+    text_fr = "Le Web sémantique a pour objectif le partage de connaissances contenues dans des silos d'informations, appelés aussi bases de données. Les données contenues dans une base de données classique sont dites non structurées vis-à-vis d'autres bases de données s'il n'existe aucune grammaire commune entre elles. Comme c'est le cas pour le langage humain, la ontology structuration syntaxique et grammaticale permet la création de phrases, éléments complexes d'où peut émerger un sens compréhensible par d'autres personnes. Sans grammaire, il ne peut y avoir de dialogues entre les différentes bases de données, et sans dialogues, aucune connaissance pérenne due à des synergies cognitives ou des partages ne peut émerger. L'existence d'une grammaire commune entre bases de données est la condition de structuration des données, donc du dialogue et de la confrontation productive des données. La recommandation OWL 5, en tant que grammaire commune, permet d'une part la vérification des données par la confrontation, leur fiabilité, et d'autre part une augmentation du volume de l'information. Cela signifie que la confrontation des données, rendue possible par le langage OWL, permet la création de nouvelles données (par exemple, lorsque deux informations lacunaires appartenant chacune à deux bases de données séparées sont mises en relation et se révèlent être complémentaires, la donnée qui en résulte est à la fois plus sûre et ouvre la porte à des avancées ultérieures)."
+    annotations = annotator.annotate(text_fr, {
+        ontologies: [],
+        semantic_types: [],
+        filter_integers: false,
+        expand_hierarchy_levels: 0,
+        expand_with_mappings: false,
+        min_term_size: nil,
+        whole_word_only: true,
+        with_synonyms: true,
+        longest_only: false
+    })
+
+    assert_equal(2, annotations.length)
+
+    positions = annotations[0].annotations
+    assert_equal(78, positions[0][:from])
+    assert_equal(80, positions[0][:to])
+    assert_equal(811, positions[3][:from])
+    assert_equal(813, positions[3][:to])
+
+    positions = annotations[1].annotations
+    assert_equal(354, positions[0][:from])
+    assert_equal(361, positions[0][:to])
+  end
+
   def test_annotate_longest_only
     text = "Ontology development and management of the initial research findings was limited to a basic set of terms and constructs. The ontology development was to be executed in stages, starting from the general concepts and working toward a more granular representation."
     annotator = Annotator::Models::NcboAnnotator.new
@@ -330,15 +359,6 @@ class TestAnnotator < TestCase
     end
     assert must_be_next.length > 0 && filter_out_next.length > 0
   end
-
-
-  def test_annotate_extended_character_sets
-    # https://bmir-jira.stanford.edu/browse/NCBO-539
-    # TODO: Add tests for annotation of extended character sets in UTF-8 and/or UTF-16.
-    #  "Ĉ @ ß œ ɛ ö ô" +  is "%C4%88%20%40%20%C3%9F%20%C5%93%20%C9%9B%20%C3%B6%20%C3%B4%20%2B%0A"
-    assert true
-  end
-
 
   def test_annotate_stop_words
     ontologies = @@ontologies.dup
