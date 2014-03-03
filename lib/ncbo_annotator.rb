@@ -42,9 +42,9 @@ module Annotator
         stop_input = stop_input.is_a?(String) ? stop_input.split(/\s*,\s*/) : stop_input.is_a?(Array) ? stop_input : [stop_input]
         @stop_words = Set.new(stop_input.map { |x| x.upcase })
       end
-      
+
       def redis
-        @redis ||= Redis.new(:host => Annotator.settings.annotator_redis_host, 
+        @redis ||= Redis.new(:host => Annotator.settings.annotator_redis_host,
                              :port => Annotator.settings.annotator_redis_port,
                              :timeout => 30)
         @redis
@@ -60,7 +60,7 @@ module Annotator
 
           # remove old dictionary structure
           redis.del(DICTHOLDER)
-          
+
           # remove all the stored keys
           class_keys = redis.lrange(KEY_STORAGE, 0, CHUNK_SIZE)
 
@@ -121,19 +121,21 @@ module Annotator
             end
 
             class_page.each do |cls|
-              
+
               resourceId = cls.id.to_s
               prefLabel = nil
               synonyms = []
               semanticTypes = []
-              
+
               begin
                 prefLabel = cls.prefLabel
                 synonyms = cls.synonym || []
                 semanticTypes = cls.semanticType || []
               rescue Goo::Base::AttributeNotLoaded =>  e
                 #TODO: improve this logging with a logger
-                puts "Error loading attributes for class #{cls.id.to_s}"
+                msg = "Error loading attributes for class #{cls.id.to_s}"
+                logger.error(msg)
+                puts msg
                 puts e.backtrace
                 next
               end
