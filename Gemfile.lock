@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: b949811e725c0e51ef17f7efaa7c6f91eaad85cb
+  revision: 20d333b89e3d9918badad1c31ed9655c9e7c8c6e
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -93,7 +93,7 @@ GEM
       builder (>= 2.1.2)
     rubyzip (1.1.0)
     slop (3.4.7)
-    systemu (2.6.3)
+    systemu (2.6.4)
     thread_safe (0.2.0)
       atomic (>= 1.1.7, < 2)
     treetop (1.4.15)
