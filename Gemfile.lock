@@ -99,7 +99,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.38)
+    tzinfo (0.3.39)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
