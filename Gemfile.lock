@@ -15,7 +15,11 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
+<<<<<<< HEAD
   revision: 8adedc8fc63336f9f4c36fc4d2ac5f31463b92a6
+=======
+  revision: b824619fd90d3e8e7550aae2f31f0fdf3ec12134
+>>>>>>> Gemfile.lock update
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
