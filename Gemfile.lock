@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: a95f0272dcd82299cfe43f51f131086c31af2e91
+  revision: 96b789173332809b37b79626744abebda793786f
   branch: master
   specs:
     goo (0.0.2)
@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 6d2ce78b45932c3ad8d856532d1babf3b6673eac
+  revision: 986987b47799bcfef6a667327b57528454f334e4
   branch: master
   specs:
     ontologies_linked_data (0.0.1)
@@ -34,7 +34,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 245ca3abdb4c1c72bff1b150e7fe6f0d4922356f
+  revision: bfec1e7222c1f54100000dc988b27d8f0ff9ca46
   branch: master
   specs:
     sparql-client (1.0.4.1)
@@ -70,7 +70,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.1)
     minitest (4.7.5)
-    multi_json (1.8.4)
+    multi_json (1.9.0)
     net-http-persistent (2.9.4)
     oj (2.5.5)
     polyglot (0.3.4)
@@ -99,7 +99,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.38)
+    tzinfo (0.3.39)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
