@@ -4,6 +4,7 @@ gem 'rake', '~> 10.0'
 gem 'redis', '~> 3.0'
 gem 'minitest', '~> 4.0'
 gem 'cube-ruby', require: "cube"
+gem 'addressable', '= 2.3.5'
 
 # Development
 gem 'pry', group: :development
