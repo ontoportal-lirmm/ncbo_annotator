@@ -1,9 +1,10 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 5bfbd9b562c93b44d132f69a801e824ba102fc7c
+  revision: 72847bee918b24fcdda4a65b811282e1234bae52
   branch: staging
   specs:
     goo (0.0.2)
+      addressable (= 2.3.5)
       pry
       rdf (= 1.0.8)
       redis
@@ -15,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 657cfb84b6faeb624fb16f78fe7dd34dbb59a495
+  revision: 2d5680db73c738b4a3049f240d56b86eb3afb04d
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -106,7 +107,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  addressable (= 2.3.5)
   cube-ruby
   goo!
   minitest (~> 4.0)
