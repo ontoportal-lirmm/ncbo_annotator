@@ -1,10 +1,5 @@
 require_relative 'test_case'
-
-
-
 require_relative "../lib/ncbo_annotator/recognizers/mallet"
-
-
 require 'json'
 require 'redis'
 
@@ -13,12 +8,14 @@ class TestAnnotator < TestCase
   def self.before_suite
     @@redis = Annotator::Models::NcboAnnotator.new.redis
     db_size = @@redis.dbsize
+
     if db_size > 5000
       puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
       return
     end
 
     mappings = @@redis.keys.select { |x| x["mappings:"] }
+
     if mappings.length > 0
       @@redis.del(mappings)
     end
@@ -38,16 +35,19 @@ class TestAnnotator < TestCase
     class_pages = TestAnnotator.all_classes(@@ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
     assert class_pages.length > 100, "No classes in system ???"
+    cur_inst = annotator.redis_current_instance()
+    dict_holder = Annotator::Models::NcboAnnotator::DICTHOLDER.call(cur_inst)
+
     class_pages.each do |cls|
       prefLabel = cls.prefLabel
       resourceId = cls.id.to_s
-      prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
+      prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
 
       if prefLabel.length > 2
         assert @@redis.exists(prefixedId)
         assert @@redis.hexists(prefixedId, resourceId)
-        assert @@redis.hexists(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId)
-        assert_equal @@redis.hget(Annotator::Models::NcboAnnotator::DICTHOLDER, prefixedId), prefLabel
+        assert @@redis.hexists(dict_holder, prefixedId)
+        assert_equal @@redis.hget(dict_holder, prefixedId), prefLabel
         assert !@@redis.hget(prefixedId, resourceId).empty?
       else
         assert !@@redis.exists(prefixedId)
@@ -63,12 +63,13 @@ class TestAnnotator < TestCase
     annotator.generate_dictionary_file
     assert File.exists?(Annotator.settings.mgrep_dictionary_file), "The dictionary file did not get created successfully"
     lines = File.readlines(Annotator.settings.mgrep_dictionary_file)
+    cur_inst = annotator.redis_current_instance()
 
     class_pages.each do |cls|
       prefLabel = cls.prefLabel
       if prefLabel.length > 2
         resourceId = cls.id.to_s
-        prefixedId = annotator.get_prefixed_id_from_value(prefLabel)
+        prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
         index = lines.select{|e| e.strip().split("\t")[1] == prefLabel }
         assert index.length > 0, "The concept: #{resourceId} (#{prefLabel}) was not found in the dictionary file"
       end
