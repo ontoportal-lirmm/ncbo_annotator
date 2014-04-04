@@ -31,6 +31,28 @@ class TestAnnotator < TestCase
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
 
+  #TODO: REMOVE THESE IN A SUBSEQUENT RELEASE ##########################################
+  def _remove_new_redis_cache
+    _remove_cache_instance("inst1:")
+    _remove_cache_instance("inst2:")
+    @@redis.del(Annotator::Models::NcboAnnotator::REDIS_PREFIX_KEY)
+  end
+
+  def _remove_cache_instance(inst)
+    @@redis.del(Annotator::Models::NcboAnnotator::DICTHOLDER.call(inst))
+    key_storage = Annotator::Models::NcboAnnotator::KEY_STORAGE.call(inst)
+
+    # remove all the stored keys
+    class_keys = @@redis.lrange(key_storage, 0, Annotator::Models::NcboAnnotator::CHUNK_SIZE)
+
+    while !class_keys.empty?
+      @@redis.del(class_keys)
+      @@redis.ltrim(key_storage, Annotator::Models::NcboAnnotator::CHUNK_SIZE + 1, -1) # Remove what we just deleted
+      class_keys = @@redis.lrange(key_storage, 0, Annotator::Models::NcboAnnotator::CHUNK_SIZE) # Get next chunk
+    end
+  end
+  #END REMOVE THESE IN A SUBSEQUENT RELEASE############################################
+
   def test_all_classes_in_cache
     class_pages = TestAnnotator.all_classes(@@ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
@@ -39,7 +61,7 @@ class TestAnnotator < TestCase
     dict_holder = Annotator::Models::NcboAnnotator::DICTHOLDER.call(cur_inst)
 
     class_pages.each do |cls|
-      prefLabel = cls.prefLabel
+      prefLabel = cls.prefLabel.upcase()
       resourceId = cls.id.to_s
       prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
 
@@ -66,7 +88,8 @@ class TestAnnotator < TestCase
     cur_inst = annotator.redis_current_instance()
 
     class_pages.each do |cls|
-      prefLabel = cls.prefLabel
+      prefLabel = cls.prefLabel.upcase()
+
       if prefLabel.length > 2
         resourceId = cls.id.to_s
         prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
@@ -226,7 +249,6 @@ class TestAnnotator < TestCase
           with_synonyms: true
       })
       direct = annotations
-
       assert direct.length >= size && direct.length > 0
       found = 0
       class_page.each do |cls|

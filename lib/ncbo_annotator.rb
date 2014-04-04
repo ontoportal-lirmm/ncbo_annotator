@@ -59,6 +59,17 @@ module Annotator
       end
 
       def redis_current_instance()
+
+
+
+        # TODO: this is a hack code to allow a seamless transition
+        # from a single instance of cache to a redundant (double) cache
+        # this code is to be removed in a subsequent release
+        return "" unless redis.exists(REDIS_PREFIX_KEY)
+        # END hack code
+
+
+
         return redis.get(REDIS_PREFIX_KEY) || REDIS_INSTANCE_VAL[0]
       end
 
@@ -133,9 +144,20 @@ module Annotator
         end
 
         if delete_cache
+          last_inst = redis_current_instance()
           redis_switch_instance()
           cur_inst = redis_current_instance()
           alt_inst = redis_alternate_instance()
+
+
+
+          # TODO: this is a hack code to allow a seamless transition
+          # from a single instance of cache to a redundant (double) cache
+          # this code is to be removed in a subsequent release
+          alt_inst =  "" if last_inst.empty?
+          # END hack code
+
+
 
           @logger.info("Deleting old redis data in instance #{alt_inst}. The currently used instance is #{cur_inst}.")
           @logger.flush
@@ -414,7 +436,9 @@ module Annotator
       end
 
       def get_prefixed_id_from_value(instance_prefix, val)
-        intId = Zlib::crc32(val)
+        # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
+        intId = Zlib::crc32(val.upcase())
+        # intId = Zlib::crc32(val)
         return get_prefixed_id(instance_prefix, intId)
       end
 
@@ -423,6 +447,12 @@ module Annotator
       def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 2)
+
+
+          # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
+          val.upcase!()
+
+
           id = get_prefixed_id_from_value(instance_prefix, val)
           # populate dictionary structure
           redis.hset(DICTHOLDER.call(instance_prefix), id, val)
