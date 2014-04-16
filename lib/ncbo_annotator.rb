@@ -119,6 +119,11 @@ module Annotator
       end
 
       def create_term_cache_from_ontologies(ontologies, delete_cache=false)
+        if (ontologies.nil? || ontologies.empty?)
+          @logger.error("Error: The ontologies list appears to be empty. The term cache creation process is terminated.")
+          return
+        end
+
         redis = redis()
         inst = delete_cache ? redis_alternate_instance() : redis_current_instance()
 
@@ -127,21 +132,22 @@ module Annotator
           last = ont.latest_submission(status: [:rdf])
 
           unless last.nil?
-            #TODO: improve this logging with a logger
-            puts "#{i}/#{ontologies.length} Creating cache submission for ", last.id.to_s
+            @logger.info("#{i}/#{ontologies.length} Creating cache submission for #{last.id.to_s}")
+
             begin
               create_term_cache_for_submission(@logger, last, redis, inst)
             rescue => e
-              puts "Error caching #{ont.id.to_s}"
-              puts e.backtrace
+              @logger.error("Error caching #{ont.id.to_s}")
+              @logger.error(e.message)
+              @logger.error(e.backtrace.join("\n\t"))
             end
-            #TODO: improve this logging with a logger
-            puts "    Done with #{last.id.to_s}"
+            @logger.info("Finished creating cache submission for #{last.id.to_s}")
           else
-            #TODO: improve this logging with a logger
-            puts "Error: Not found last submission for #{ont.id.to_s}"
+            @logger.error("Error: Not found last submission for #{ont.id.to_s}")
           end
         end
+
+        @logger.info("Completed creating annotator term cache for all ontologies.")
 
         if delete_cache
           last_inst = redis_current_instance()
@@ -447,11 +453,8 @@ module Annotator
       def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 2)
-
-
           # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
           val.upcase!()
-
 
           id = get_prefixed_id_from_value(instance_prefix, val)
           # populate dictionary structure
