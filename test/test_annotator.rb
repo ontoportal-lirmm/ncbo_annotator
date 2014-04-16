@@ -33,8 +33,8 @@ class TestAnnotator < TestCase
 
   #TODO: REMOVE THESE IN A SUBSEQUENT RELEASE ##########################################
   def _remove_new_redis_cache
-    _remove_cache_instance("inst1:")
-    _remove_cache_instance("inst2:")
+    _remove_cache_instance("c1:")
+    _remove_cache_instance("c2:")
     @@redis.del(Annotator::Models::NcboAnnotator::REDIS_PREFIX_KEY)
   end
 

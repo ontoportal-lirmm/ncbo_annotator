@@ -26,7 +26,7 @@ module Annotator
       require_relative 'ncbo_annotator/recognizers/mgrep'
 
       REDIS_PREFIX_KEY = "current_instance"
-      REDIS_INSTANCE_VAL = ["inst1:", "inst2:"]
+      REDIS_INSTANCE_VAL = ["c1:", "c2:"]
 
       DICTHOLDER = lambda {|prefix| "#{prefix}dict"}
       IDPREFIX = lambda {|prefix| "#{prefix}term:"}
