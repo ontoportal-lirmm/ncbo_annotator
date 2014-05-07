@@ -12,9 +12,11 @@ LinkedData.config do |config|
 end
 
 Annotator.config do |config|
-  config.mgrep_dictionary_file = "./test/tmp/dictionary.txt"
-  config.mgrep_host            = "localhost"
-  config.mgrep_port            = 55555
-  config.annotator_redis_host  = "localhost"
-  config.annotator_redis_port  = 6379
+  config.mgrep_dictionary_file      = "./test/tmp/dictionary.txt"
+  config.mgrep_host                 = "localhost"
+  config.mgrep_port                 = 55555
+  config.annotator_redis_host       = "localhost"
+  config.annotator_redis_port       = 6379
+  config.annotator_redis_prefix     = "c1:"
+  config.annotator_redis_alt_prefix = "c2:"
 end

@@ -8,6 +8,7 @@ require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
 require 'logger'
+require 'benchmark'
 require_relative 'annotation'
 require_relative 'ncbo_annotator/mgrep/mgrep'
 require_relative 'ncbo_annotator/config'
@@ -26,7 +27,6 @@ module Annotator
       require_relative 'ncbo_annotator/recognizers/mgrep'
 
       REDIS_PREFIX_KEY = "current_instance"
-      REDIS_INSTANCE_VAL = ["c1:", "c2:"]
 
       DICTHOLDER = lambda {|prefix| "#{prefix}dict"}
       IDPREFIX = lambda {|prefix| "#{prefix}term:"}
@@ -54,41 +54,34 @@ module Annotator
         @redis
       end
 
-      def redis_switch_instance()
-        redis.set(REDIS_PREFIX_KEY, redis_alternate_instance())
-      end
-
       def redis_current_instance()
-
-
-
-        # TODO: this is a hack code to allow a seamless transition
-        # from a single instance of cache to a redundant (double) cache
-        # this code is to be removed in a subsequent release
-        return "" unless redis.exists(REDIS_PREFIX_KEY)
-        # END hack code
-
-
-
-        return redis.get(REDIS_PREFIX_KEY) || REDIS_INSTANCE_VAL[0]
+        cur_inst = redis.get(REDIS_PREFIX_KEY)
+        raise Exception, "The Annotator Redis prefix key is not found!!! The prefix is required for Annotator to operate properly." if cur_inst.nil?
+        return cur_inst
       end
 
-      def redis_alternate_instance()
+      def redis_default_alternate_instance()
         val = redis_current_instance()
-        return (val == REDIS_INSTANCE_VAL[0]) ? REDIS_INSTANCE_VAL[1] : REDIS_INSTANCE_VAL[0]
+        return (val == Annotator.settings.annotator_redis_alt_prefix) ? Annotator.settings.annotator_redis_prefix : Annotator.settings.annotator_redis_alt_prefix
       end
 
-      def create_term_cache(ontologies_filter=nil, delete_cache=false)
+      def create_term_cache(ontologies_filter=nil, delete_cache=false, redis_prefix=nil)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
 
         if ontologies_filter && ontologies_filter.length > 0
           in_list = []
+          in_list_acronyms = []
           ontologies.each do |ont|
-            in_list << ont if ontologies_filter.include?(ont.acronym)
+            if ontologies_filter.include?(ont.acronym)
+              in_list << ont
+              in_list_acronyms << ont.acronym
+            end
           end
           ontologies = in_list
+          not_found = ontologies_filter - in_list_acronyms
+          @logger.error("Error: The following ontologies were not found in the system: #{not_found}") unless (not_found.empty?)
         end
-        create_term_cache_from_ontologies(ontologies, delete_cache)
+        create_term_cache_from_ontologies(ontologies, delete_cache, redis_prefix)
       end
 
       def generate_dictionary_file()
@@ -110,6 +103,7 @@ module Annotator
         prefix_remove = Regexp.new(/^#{IDPREFIX.call(cur_inst)}/)
         windows_linebreak_remove = Regexp.new(/\r\n/)
         special_remove = Regexp.new(/[\r\n\t]/)
+
         all.each do |key, val|
           realKey = key.sub prefix_remove, ''
           realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
@@ -118,61 +112,55 @@ module Annotator
         outFile.close
       end
 
-      def create_term_cache_from_ontologies(ontologies, delete_cache=false)
+      def create_term_cache_from_ontologies(ontologies, delete_cache=false, redis_prefix=nil)
         if (ontologies.nil? || ontologies.empty?)
-          @logger.error("Error: The ontologies list appears to be empty. The term cache creation process is terminated.")
+          @logger.error("Error: The ontologies list appears to be empty. The Annotator cache creation process is terminated.")
           return
         end
 
+        remaining_ontologies = ontologies.length
+        @logger.info("There is a total of #{ontologies.length} ontolog#{ontologies.length > 1 ? "ies" : "y"} to cache.")
+
         redis = redis()
-        inst = delete_cache ? redis_alternate_instance() : redis_current_instance()
+        redis_prefix ||= (delete_cache) ? redis_default_alternate_instance() : redis_current_instance()
+        @logger.info("The caching process is using Redis prefix: #{redis_prefix}.")
+        delete_term_cache(redis_prefix) if (delete_cache)
 
         ontologies.each_index do |i|
           ont = ontologies[i]
           last = ont.latest_submission(status: [:rdf])
 
           unless last.nil?
-            @logger.info("#{i}/#{ontologies.length} Creating cache submission for #{last.id.to_s}")
+            @logger.info("Creating Annotator cache for #{ont.acronym} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
 
             begin
-              create_term_cache_for_submission(@logger, last, redis, inst)
+              create_term_cache_for_submission(@logger, last, redis, redis_prefix)
             rescue => e
               @logger.error("Error caching #{ont.id.to_s}")
               @logger.error(e.message)
               @logger.error(e.backtrace.join("\n\t"))
             end
-            @logger.info("Finished creating cache submission for #{last.id.to_s}")
           else
-            @logger.error("Error: Not found last submission for #{ont.id.to_s}")
+            @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
           end
+
+          remaining_ontologies -= 1
+          @logger.info("There is a total of #{remaining_ontologies} ontolog#{remaining_ontologies > 1 ? "ies" : "y"} remaining out of #{ontologies.length} ontologies") if (remaining_ontologies > 0)
         end
 
-        @logger.info("Completed creating annotator term cache for all ontologies.")
+        @logger.info("Completed creating Annotator cache for all ontologies in the set using Redis prefix: #{redis_prefix}")
+      end
 
-        if delete_cache
-          last_inst = redis_current_instance()
-          redis_switch_instance()
-          cur_inst = redis_current_instance()
-          alt_inst = redis_alternate_instance()
+      def delete_term_cache(redis_prefix)
+        cur_inst = redis_current_instance()
+        @logger.info("Deleting old redis data with Redis prefix: #{redis_prefix}. The Annotator currently uses Redis prefix: #{cur_inst}.")
+        # remove old dictionary structure
+        # use expire instead of del to allow potential clients to finish using the data
+        key_expire_time = 120 # seconds
 
-
-
-          # TODO: this is a hack code to allow a seamless transition
-          # from a single instance of cache to a redundant (double) cache
-          # this code is to be removed in a subsequent release
-          alt_inst =  "" if last_inst.empty?
-          # END hack code
-
-
-
-          @logger.info("Deleting old redis data in instance #{alt_inst}. The currently used instance is #{cur_inst}.")
-          @logger.flush
-
-          # remove old dictionary structure
-          # use expire instead of del to allow potential clients to finish using the data
-          key_expire_time = 120 # seconds
-          redis.expire(DICTHOLDER.call(alt_inst), key_expire_time)
-          key_storage = KEY_STORAGE.call(alt_inst)
+        time = Benchmark.realtime do
+          redis.expire(DICTHOLDER.call(redis_prefix), key_expire_time)
+          key_storage = KEY_STORAGE.call(redis_prefix)
 
           # remove all the stored keys
           class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE)
@@ -186,35 +174,50 @@ module Annotator
             class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
           end
         end
+        @logger.info("Completed deleting old redis data with Redis prefix: #{redis_prefix} in #{time} sec.")
       end
 
-      def create_term_cache_for_submission(logger, sub, redis=nil, instance_prefix=nil)
+      def create_term_cache_for_submission(logger, sub, redis=nil, redis_prefix=nil)
+        if (sub.nil?)
+          logger.error("Error from Annotator.create_term_cache_for_submission: submission is nil")
+          return
+        end
+
         redis ||= redis()
-        instance_prefix ||= redis_current_instance()
+        redis_prefix ||= redis_current_instance()
 
         page = 1
         size = 2500
-        sub.bring(:ontology) if sub.bring?(:ontology)
-        sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
-        ontResourceId = sub.ontology.id.to_s
-        logger.info("Caching classes from #{sub.ontology.acronym}")
-        logger.flush
+        count_classes = 0
 
-        paging = LinkedData::Models::Class.in(sub)
-            .include(:prefLabel, :synonym, :definition, :semanticType).page(1, size)
+        time = Benchmark.realtime do
+          sub.bring(:ontology) if sub.bring?(:ontology)
+          sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
+          ontResourceId = sub.ontology.id.to_s
+          logger.info("Caching classes of #{sub.ontology.acronym}")
+          logger.flush
 
-        if (!sub.nil?)
+          paging = LinkedData::Models::Class.in(sub)
+              .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
+
           begin
             class_page = nil
+            t0 = Time.now
 
             begin
               class_page = paging.all
-            rescue
+              count_classes += class_page.length
+            rescue Exception => e
               # If page fails, stop processing of this submission
-              logger.info("Failed caching classes for #{sub.ontology.acronym}")
-              logger.flush
+              msg = "Failed caching classes for #{sub.ontology.acronym}"
+              backtrace = e.backtrace.join("\n\t")
+              logger.error(msg)
+              logger.error(backtrace)
               return
             end
+
+            logger.info("Page #{page} of #{class_page.total_pages} classes retrieved in #{Time.now - t0} sec.")
+            t0 = Time.now
 
             class_page.each do |cls|
               resourceId = cls.id.to_s
@@ -227,18 +230,17 @@ module Annotator
                 synonyms = cls.synonym || []
                 semanticTypes = cls.semanticType || []
               rescue Goo::Base::AttributeNotLoaded =>  e
-                #TODO: improve this logging with a logger
                 msg = "Error loading attributes for class #{cls.id.to_s}"
+                backtrace = e.backtrace.join("\n\t")
                 logger.error(msg)
-                puts msg
-                puts e.backtrace
+                logger.error(backtrace)
                 next
               end
 
               next if prefLabel.nil? # Skip classes with no prefLabel
               synonyms.each do |syn|
                 create_term_entry(redis,
-                                  instance_prefix,
+                                  redis_prefix,
                                   ontResourceId,
                                   resourceId,
                                   Annotator::Annotation::MATCH_TYPES[:type_synonym],
@@ -246,20 +248,25 @@ module Annotator
                                   semanticTypes)
               end
               create_term_entry(redis,
-                                instance_prefix,
+                                redis_prefix,
                                 ontResourceId,
                                 resourceId,
                                 Annotator::Annotation::MATCH_TYPES[:type_preferred_name],
                                 prefLabel,
                                 semanticTypes)
             end
+
+            logger.info("Page #{page} of #{class_page.total_pages} cached in Annotator in #{Time.now - t0} sec.")
             page = class_page.next_page
 
             if page
               paging.page(page)
             end
           end while !page.nil?
+
         end
+
+        logger.info("Completed caching ontology: #{sub.ontology.acronym} (#{sub.id.to_s}) in #{time} sec. #{count_classes} classes.")
       end
 
       ########################################
