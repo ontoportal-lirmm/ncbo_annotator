@@ -37,9 +37,9 @@ module Annotator
       DATA_TYPE_DELIM = "@@"
       CHUNK_SIZE = 500_000
 
-      def initialize()
+      def initialize(logger=nil)
         @stop_words = Annotator.settings.stop_words_default_list
-        @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+        @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
       end
 
       def stop_words=(stop_input)
