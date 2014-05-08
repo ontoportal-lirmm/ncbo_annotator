@@ -65,6 +65,13 @@ module Annotator
         return (val == Annotator.settings.annotator_redis_alt_prefix) ? Annotator.settings.annotator_redis_prefix : Annotator.settings.annotator_redis_alt_prefix
       end
 
+
+
+
+
+
+
+
       def create_term_cache(ontologies_filter=nil, delete_cache=false, redis_prefix=nil)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
 
@@ -83,6 +90,13 @@ module Annotator
         end
         create_term_cache_from_ontologies(ontologies, delete_cache, redis_prefix)
       end
+
+
+
+
+
+
+
 
       def generate_dictionary_file()
         if Annotator.settings.mgrep_dictionary_file.nil?
@@ -122,26 +136,20 @@ module Annotator
         @logger.info("There is a total of #{ontologies.length} ontolog#{ontologies.length > 1 ? "ies" : "y"} to cache.")
 
         redis = redis()
-        redis_prefix ||= (delete_cache) ? redis_default_alternate_instance() : redis_current_instance()
-        @logger.info("The caching process is using Redis prefix: #{redis_prefix}.")
+        cur_inst = redis_current_instance()
+        redis_prefix ||= (delete_cache) ? redis_default_alternate_instance() : cur_inst
+        @logger.info("The caching process is using Redis prefix: #{redis_prefix}. The Annotator is using Redis prefix: #{cur_inst}.")
         delete_term_cache(redis_prefix) if (delete_cache)
 
         ontologies.each_index do |i|
           ont = ontologies[i]
           last = ont.latest_submission(status: [:rdf])
 
-          unless last.nil?
-            @logger.info("Creating Annotator cache for #{ont.acronym} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
-
-            begin
-              create_term_cache_for_submission(@logger, last, redis, redis_prefix)
-            rescue => e
-              @logger.error("Error caching #{ont.id.to_s}")
-              @logger.error(e.message)
-              @logger.error(e.backtrace.join("\n\t"))
-            end
-          else
+          if last.nil?
             @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
+          else
+            @logger.info("Creating Annotator cache for #{ont.acronym} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
+            create_term_cache_for_submission(@logger, last, redis, redis_prefix)
           end
 
           remaining_ontologies -= 1
@@ -189,84 +197,101 @@ module Annotator
         page = 1
         size = 2500
         count_classes = 0
+        status = LinkedData::Models::SubmissionStatus.find("ANNOTATOR").first
 
-        time = Benchmark.realtime do
-          sub.bring(:ontology) if sub.bring?(:ontology)
-          sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
-          ontResourceId = sub.ontology.id.to_s
-          logger.info("Caching classes of #{sub.ontology.acronym}")
-          logger.flush
+        begin
+          #remove ANNOTATOR status before starting
+          sub.bring_remaining()
+          sub.remove_submission_status(status)
+        rescue Exception => e
+          msg = "Failed bring_remaining while caching classes for #{sub.id.to_s}"
+          logger.error(msg)
+          logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+          return
+        end
 
-          paging = LinkedData::Models::Class.in(sub)
-              .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
+        begin
+          time = Benchmark.realtime do
+            sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
+            ontResourceId = sub.ontology.id.to_s
+            logger.info("Caching classes of #{sub.ontology.acronym}")
 
-          begin
-            class_page = nil
-            t0 = Time.now
+            paging = LinkedData::Models::Class.in(sub)
+                .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
 
             begin
-              class_page = paging.all
+              class_page = nil
+              t0 = Time.now
+              class_page = paging.all()
               count_classes += class_page.length
-            rescue Exception => e
-              # If page fails, stop processing of this submission
-              msg = "Failed caching classes for #{sub.ontology.acronym}"
-              backtrace = e.backtrace.join("\n\t")
-              logger.error(msg)
-              logger.error(backtrace)
-              return
-            end
+              logger.info("Page #{page} of #{class_page.total_pages} classes retrieved in #{Time.now - t0} sec.")
 
-            logger.info("Page #{page} of #{class_page.total_pages} classes retrieved in #{Time.now - t0} sec.")
-            t0 = Time.now
+              t0 = Time.now
 
-            class_page.each do |cls|
-              resourceId = cls.id.to_s
-              prefLabel = nil
-              synonyms = []
-              semanticTypes = []
+              class_page.each do |cls|
+                resourceId = cls.id.to_s
+                prefLabel = nil
+                synonyms = []
+                semanticTypes = []
 
-              begin
-                prefLabel = cls.prefLabel
-                synonyms = cls.synonym || []
-                semanticTypes = cls.semanticType || []
-              rescue Goo::Base::AttributeNotLoaded =>  e
-                msg = "Error loading attributes for class #{cls.id.to_s}"
-                backtrace = e.backtrace.join("\n\t")
-                logger.error(msg)
-                logger.error(backtrace)
-                next
-              end
+                begin
+                  prefLabel = cls.prefLabel
+                  synonyms = cls.synonym || []
+                  semanticTypes = cls.semanticType || []
+                rescue Goo::Base::AttributeNotLoaded =>  e
+                  msg = "Error loading attributes for class #{cls.id.to_s}"
+                  backtrace = e.backtrace.join("\n\t")
+                  logger.error(msg)
+                  logger.error(backtrace)
+                  next
+                end
 
-              next if prefLabel.nil? # Skip classes with no prefLabel
-              synonyms.each do |syn|
+                next if prefLabel.nil? # Skip classes with no prefLabel
+                synonyms.each do |syn|
+                  create_term_entry(redis,
+                                    redis_prefix,
+                                    ontResourceId,
+                                    resourceId,
+                                    Annotator::Annotation::MATCH_TYPES[:type_synonym],
+                                    syn,
+                                    semanticTypes)
+                end
                 create_term_entry(redis,
                                   redis_prefix,
                                   ontResourceId,
                                   resourceId,
-                                  Annotator::Annotation::MATCH_TYPES[:type_synonym],
-                                  syn,
+                                  Annotator::Annotation::MATCH_TYPES[:type_preferred_name],
+                                  prefLabel,
                                   semanticTypes)
               end
-              create_term_entry(redis,
-                                redis_prefix,
-                                ontResourceId,
-                                resourceId,
-                                Annotator::Annotation::MATCH_TYPES[:type_preferred_name],
-                                prefLabel,
-                                semanticTypes)
-            end
 
-            logger.info("Page #{page} of #{class_page.total_pages} cached in Annotator in #{Time.now - t0} sec.")
-            page = class_page.next_page
+              logger.info("Page #{page} of #{class_page.total_pages} cached in Annotator in #{Time.now - t0} sec.")
+              page = class_page.next_page
 
-            if page
-              paging.page(page)
-            end
-          end while !page.nil?
+              if page
+                paging.page(page)
+              end
+            end while !page.nil?
+          end
 
+          # update submission status for Annotator
+          sub.add_submission_status(status)
+          sub.save()
+          logger.info("Completed caching ontology: #{sub.ontology.acronym} (#{sub.id.to_s}) in #{time} sec. #{count_classes} classes.")
+        rescue Exception => e
+          msg = "Failed caching classes for #{sub.ontology.acronym} (#{sub.id.to_s})"
+          logger.error(msg)
+          logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+
+          begin
+            sub.add_submission_status(status.get_error_status())
+            sub.save()
+          rescue Exception => e
+            msg = "Also, unable to add ANNOTATOR_ERROR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
+            logger.error(msg)
+            logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+          end
         end
-
-        logger.info("Completed caching ontology: #{sub.ontology.acronym} (#{sub.id.to_s}) in #{time} sec. #{count_classes} classes.")
       end
 
       ########################################
