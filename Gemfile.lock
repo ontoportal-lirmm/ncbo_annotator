@@ -1,9 +1,10 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: b62913940061ea056bf6fa7bfcc815e896e79f60
+  revision: 6393f2d7233053e030b6ecbe4874eca4e68a4537
   branch: staging
   specs:
     goo (0.0.2)
+      addressable (= 2.3.5)
       pry
       rdf (= 1.0.8)
       redis
@@ -15,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 89aa0aed871a08517722b0e68461eeba463d0cc9
+  revision: 4c4c53e65eef354d52b1dccc2a149ca8efbb3ee1
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -34,7 +35,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: e6a2d6b4fda4e23d77a70c440f058bd08c801e26
+  revision: 106fa6f32c88b0845037a551705c09dd782f7de0
   branch: staging
   specs:
     sparql-client (1.0.4.1)
@@ -45,14 +46,13 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.0.3)
-      i18n (~> 0.6, >= 0.6.4)
+    activesupport (4.0.4)
+      i18n (~> 0.6, >= 0.6.9)
       minitest (~> 4.2)
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    atomic (1.1.15)
     bcrypt (3.1.7)
     builder (3.2.2)
     coderay (1.1.0)
@@ -61,7 +61,7 @@ GEM
     json (1.8.1)
     json_pure (1.8.1)
     libxml-ruby (2.7.0)
-    macaddr (1.6.7)
+    macaddr (1.7.1)
       systemu (~> 2.6.2)
     mail (2.2.7)
       activesupport (>= 2.3.6)
@@ -70,9 +70,9 @@ GEM
     method_source (0.8.2)
     mime-types (2.2)
     minitest (4.7.5)
-    multi_json (1.9.0)
+    multi_json (1.9.3)
     net-http-persistent (2.9.4)
-    oj (2.6.0)
+    oj (2.8.1)
     polyglot (0.3.4)
     pony (1.8)
       mail (>= 2.0)
@@ -83,20 +83,19 @@ GEM
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.1.1)
+    rake (10.3.1)
     rdf (1.0.8)
       addressable (>= 2.2)
     redis (3.0.7)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rsolr (1.0.9)
+    rsolr (1.0.10)
       builder (>= 2.1.2)
-    rubyzip (1.1.0)
+    rubyzip (1.1.3)
     slop (3.5.0)
     systemu (2.6.4)
-    thread_safe (0.2.0)
-      atomic (>= 1.1.7, < 2)
-    treetop (1.5.1)
+    thread_safe (0.3.3)
+    treetop (1.5.3)
       polyglot (~> 0.3)
     tzinfo (0.3.39)
     uuid (2.3.7)

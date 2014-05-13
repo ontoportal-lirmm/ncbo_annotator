@@ -8,6 +8,7 @@ require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
 require 'logger'
+require 'benchmark'
 require_relative 'annotation'
 require_relative 'ncbo_annotator/mgrep/mgrep'
 require_relative 'ncbo_annotator/config'
@@ -25,17 +26,20 @@ module Annotator
       require_relative 'ncbo_annotator/recognizers/mallet'
       require_relative 'ncbo_annotator/recognizers/mgrep'
 
-      DICTHOLDER = "dict"
-      IDPREFIX = "term:"
+      REDIS_PREFIX_KEY = "current_instance"
+
+      DICTHOLDER = lambda {|prefix| "#{prefix}dict"}
+      IDPREFIX = lambda {|prefix| "#{prefix}term:"}
+      KEY_STORAGE = lambda {|prefix| "#{prefix}annotator:keys"}
+
       OCCURRENCE_DELIM = "|"
       LABEL_DELIM = ","
       DATA_TYPE_DELIM = "@@"
-      KEY_STORAGE = "annotator:keys"
       CHUNK_SIZE = 500_000
 
-      def initialize()
+      def initialize(logger=nil)
         @stop_words = Annotator.settings.stop_words_default_list
-        @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+        @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
       end
 
       def stop_words=(stop_input)
@@ -50,156 +54,244 @@ module Annotator
         @redis
       end
 
-      def create_term_cache_from_ontologies(ontologies, delete_cache=false)
-        page = 1
-        size = 2500
-
-        if delete_cache
-          @logger.info("Deleting old redis data")
-          @logger.flush
-
-          # remove old dictionary structure
-          redis.del(DICTHOLDER)
-
-          # remove all the stored keys
-          class_keys = redis.lrange(KEY_STORAGE, 0, CHUNK_SIZE)
-
-          while !class_keys.empty?
-            redis.del(class_keys)
-            redis.ltrim(KEY_STORAGE, CHUNK_SIZE + 1, -1) # Remove what we just deleted
-            class_keys = redis.lrange(KEY_STORAGE, 0, CHUNK_SIZE) # Get next chunk
-          end
-        end
-
-        ontologies.each_index do |i|
-          ont = ontologies[i]
-          last = ont.latest_submission(status: [:rdf])
-
-          unless last.nil?
-            #TODO: improve this logging with a logger
-            puts "#{i}/#{ontologies.length} Creating cache submission for ", last.id.to_s
-            begin
-              create_cache_for_submission(@logger, last, redis)
-            rescue => e
-              puts "Error caching #{ont.id.to_s}"
-              puts e.backtrace
-            end
-            #TODO: improve this logging with a logger
-            puts "    Done with #{last.id.to_s}"
-          else
-            #TODO: improve this logging with a logger
-            puts "Error: Not found last submission for #{ont.id.to_s}"
-          end
-        end
+      def redis_current_instance()
+        cur_inst = redis.get(REDIS_PREFIX_KEY)
+        raise Exception, "The Annotator Redis prefix key is not found!!! The prefix is required for Annotator to operate properly." if cur_inst.nil?
+        return cur_inst
       end
 
-      def create_cache_for_submission(logger, sub, redis=nil)
-        redis ||= redis()
-        page = 1
-        size = 2500
-        sub.bring(:ontology) if sub.bring?(:ontology)
-        sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
-        ontResourceId = sub.ontology.id.to_s
-        logger.info("Caching classes from #{sub.ontology.acronym}")
-        logger.flush
-
-        paging = LinkedData::Models::Class.in(sub)
-            .include(:prefLabel, :synonym, :definition, :semanticType)
-            .page(1, size)
-
-        if (!sub.nil?)
-          begin
-            class_page = nil
-
-            begin
-              class_page = paging.all
-            rescue
-              # If page fails, stop processing of this submission
-              logger.info("Failed caching classes for #{sub.ontology.acronym}")
-              logger.flush
-              return
-            end
-
-            class_page.each do |cls|
-
-              resourceId = cls.id.to_s
-              prefLabel = nil
-              synonyms = []
-              semanticTypes = []
-
-              begin
-                prefLabel = cls.prefLabel
-                synonyms = cls.synonym || []
-                semanticTypes = cls.semanticType || []
-              rescue Goo::Base::AttributeNotLoaded =>  e
-                #TODO: improve this logging with a logger
-                msg = "Error loading attributes for class #{cls.id.to_s}"
-                logger.error(msg)
-                puts msg
-                puts e.backtrace
-                next
-              end
-
-              next if prefLabel.nil? # Skip classes with no prefLabel
-              synonyms.each do |syn|
-                create_term_entry(redis,
-                                  ontResourceId,
-                                  resourceId,
-                                  Annotator::Annotation::MATCH_TYPES[:type_synonym],
-                                  syn,
-                                  semanticTypes)
-              end
-              create_term_entry(redis,
-                                ontResourceId,
-                                resourceId,
-                                Annotator::Annotation::MATCH_TYPES[:type_preferred_name],
-                                prefLabel,
-                                semanticTypes)
-            end
-            page = class_page.next_page
-
-            if page
-              paging.page(page)
-            end
-          end while !page.nil?
-        end
+      def redis_default_alternate_instance()
+        val = redis_current_instance()
+        return (val == Annotator.settings.annotator_redis_alt_prefix) ? Annotator.settings.annotator_redis_prefix : Annotator.settings.annotator_redis_alt_prefix
       end
 
-      def create_term_cache(ontologies_filter=nil, delete_cache=false)
+
+
+
+
+
+
+
+      def create_term_cache(ontologies_filter=nil, delete_cache=false, redis_prefix=nil)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
 
         if ontologies_filter && ontologies_filter.length > 0
           in_list = []
+          in_list_acronyms = []
           ontologies.each do |ont|
-            in_list << ont if ontologies_filter.include?(ont.acronym)
+            if ontologies_filter.include?(ont.acronym)
+              in_list << ont
+              in_list_acronyms << ont.acronym
+            end
           end
           ontologies = in_list
+          not_found = ontologies_filter - in_list_acronyms
+          @logger.error("Error: The following ontologies were not found in the system: #{not_found}") unless (not_found.empty?)
         end
-        create_term_cache_from_ontologies(ontologies, delete_cache=delete_cache)
+        create_term_cache_from_ontologies(ontologies, delete_cache, redis_prefix)
       end
+
+
+
+
+
+
+
 
       def generate_dictionary_file()
         if Annotator.settings.mgrep_dictionary_file.nil?
           raise Exception, "mgrep_dictionary_file setting is nil"
         end
 
-        if (!redis.exists(DICTHOLDER))
-          create_term_cache()
+        cur_inst = redis_current_instance()
+        dict_holder = DICTHOLDER.call(cur_inst)
+
+        if (!redis.exists(dict_holder))
+          raise Exception, "Generating an mgrep dictionary file requires a fully populated term cache. Please re-generate the cache and then re-run the dictionary generation."
         end
 
-        all = redis.hgetall(DICTHOLDER)
+        all = redis.hgetall(dict_holder)
         # Create dict file
         outFile = File.new(Annotator.settings.mgrep_dictionary_file, "w")
 
-        prefix_remove = Regexp.new(/^#{IDPREFIX}/)
+        prefix_remove = Regexp.new(/^#{IDPREFIX.call(cur_inst)}/)
         windows_linebreak_remove = Regexp.new(/\r\n/)
         special_remove = Regexp.new(/[\r\n\t]/)
+
         all.each do |key, val|
           realKey = key.sub prefix_remove, ''
           realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
           outFile.puts("#{realKey}\t#{realVal}")
         end
         outFile.close
+      end
+
+      def create_term_cache_from_ontologies(ontologies, delete_cache=false, redis_prefix=nil)
+        if (ontologies.nil? || ontologies.empty?)
+          @logger.error("Error: The ontologies list appears to be empty. The Annotator cache creation process is terminated.")
+          return
+        end
+
+        remaining_ontologies = ontologies.length
+        @logger.info("There is a total of #{ontologies.length} ontolog#{ontologies.length > 1 ? "ies" : "y"} to cache.")
+
+        redis = redis()
+        cur_inst = redis_current_instance()
+        redis_prefix ||= (delete_cache) ? redis_default_alternate_instance() : cur_inst
+        @logger.info("The caching process is using Redis prefix: #{redis_prefix}. The Annotator is using Redis prefix: #{cur_inst}.")
+        delete_term_cache(redis_prefix) if (delete_cache)
+
+        ontologies.each_index do |i|
+          ont = ontologies[i]
+          last = ont.latest_submission(status: [:rdf])
+
+          if last.nil?
+            @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
+          else
+            @logger.info("Creating Annotator cache for #{ont.acronym} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
+            create_term_cache_for_submission(@logger, last, redis, redis_prefix)
+          end
+
+          remaining_ontologies -= 1
+          @logger.info("There is a total of #{remaining_ontologies} ontolog#{remaining_ontologies > 1 ? "ies" : "y"} remaining out of #{ontologies.length} ontologies") if (remaining_ontologies > 0)
+        end
+
+        @logger.info("Completed creating Annotator cache for all ontologies in the set using Redis prefix: #{redis_prefix}")
+      end
+
+      def delete_term_cache(redis_prefix)
+        cur_inst = redis_current_instance()
+        @logger.info("Deleting old redis data with Redis prefix: #{redis_prefix}. The Annotator currently uses Redis prefix: #{cur_inst}.")
+        # remove old dictionary structure
+        # use expire instead of del to allow potential clients to finish using the data
+        key_expire_time = 120 # seconds
+
+        time = Benchmark.realtime do
+          redis.expire(DICTHOLDER.call(redis_prefix), key_expire_time)
+          key_storage = KEY_STORAGE.call(redis_prefix)
+
+          # remove all the stored keys
+          class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE)
+
+          while !class_keys.empty?
+            # use expire instead of del to allow potential clients to finish using the data
+            redis.pipelined {
+              class_keys.each {|key| redis.expire(key, key_expire_time)}
+            }
+            redis.ltrim(key_storage, CHUNK_SIZE + 1, -1) # Remove what we just deleted
+            class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
+          end
+        end
+        @logger.info("Completed deleting old redis data with Redis prefix: #{redis_prefix} in #{time} sec.")
+      end
+
+      def create_term_cache_for_submission(logger, sub, redis=nil, redis_prefix=nil)
+        if (sub.nil?)
+          logger.error("Error from Annotator.create_term_cache_for_submission: submission is nil")
+          return
+        end
+
+        redis ||= redis()
+        redis_prefix ||= redis_current_instance()
+
+        page = 1
+        size = 2500
+        count_classes = 0
+        status = LinkedData::Models::SubmissionStatus.find("ANNOTATOR").first
+
+        begin
+          #remove ANNOTATOR status before starting
+          sub.bring_remaining()
+          sub.remove_submission_status(status)
+        rescue Exception => e
+          msg = "Failed bring_remaining while caching classes for #{sub.id.to_s}"
+          logger.error(msg)
+          logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+          return
+        end
+
+        begin
+          time = Benchmark.realtime do
+            sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
+            ontResourceId = sub.ontology.id.to_s
+            logger.info("Caching classes of #{sub.ontology.acronym}")
+
+            paging = LinkedData::Models::Class.in(sub)
+                .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
+
+            begin
+              class_page = nil
+              t0 = Time.now
+              class_page = paging.all()
+              count_classes += class_page.length
+              logger.info("Page #{page} of #{class_page.total_pages} classes retrieved in #{Time.now - t0} sec.")
+
+              t0 = Time.now
+
+              class_page.each do |cls|
+                resourceId = cls.id.to_s
+                prefLabel = nil
+                synonyms = []
+                semanticTypes = []
+
+                begin
+                  prefLabel = cls.prefLabel
+                  synonyms = cls.synonym || []
+                  semanticTypes = cls.semanticType || []
+                rescue Goo::Base::AttributeNotLoaded =>  e
+                  msg = "Error loading attributes for class #{cls.id.to_s}"
+                  backtrace = e.backtrace.join("\n\t")
+                  logger.error(msg)
+                  logger.error(backtrace)
+                  next
+                end
+
+                next if prefLabel.nil? # Skip classes with no prefLabel
+                synonyms.each do |syn|
+                  create_term_entry(redis,
+                                    redis_prefix,
+                                    ontResourceId,
+                                    resourceId,
+                                    Annotator::Annotation::MATCH_TYPES[:type_synonym],
+                                    syn,
+                                    semanticTypes)
+                end
+                create_term_entry(redis,
+                                  redis_prefix,
+                                  ontResourceId,
+                                  resourceId,
+                                  Annotator::Annotation::MATCH_TYPES[:type_preferred_name],
+                                  prefLabel,
+                                  semanticTypes)
+              end
+
+              logger.info("Page #{page} of #{class_page.total_pages} cached in Annotator in #{Time.now - t0} sec.")
+              page = class_page.next_page
+
+              if page
+                paging.page(page)
+              end
+            end while !page.nil?
+          end
+
+          # update submission status for Annotator
+          sub.add_submission_status(status)
+          sub.save()
+          logger.info("Completed caching ontology: #{sub.ontology.acronym} (#{sub.id.to_s}) in #{time} sec. #{count_classes} classes.")
+        rescue Exception => e
+          msg = "Failed caching classes for #{sub.ontology.acronym} (#{sub.id.to_s})"
+          logger.error(msg)
+          logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+
+          begin
+            sub.add_submission_status(status.get_error_status())
+            sub.save()
+          rescue Exception => e
+            msg = "Also, unable to add ANNOTATOR_ERROR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
+            logger.error(msg)
+            logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+          end
+        end
       end
 
       ########################################
@@ -252,10 +344,11 @@ module Annotator
         allAnnotations = {}
         longest_hits = {}
         redis_data = Hash.new
+        cur_inst = redis_current_instance()
 
         redis.pipelined {
           rawAnnotations.each do |ann|
-            id = get_prefixed_id(ann.string_id)
+            id = get_prefixed_id(cur_inst, ann.string_id)
             redis_data[id] = { future: redis.hgetall(id) }
           end
         }
@@ -267,7 +360,7 @@ module Annotator
         end
 
         rawAnnotations.each do |ann|
-          id = get_prefixed_id(ann.string_id)
+          id = get_prefixed_id(cur_inst, ann.string_id)
           matches = redis_data[id][:future].value
 
           # key = resourceId (class)
@@ -316,9 +409,9 @@ module Annotator
         current_level = 1
 
         while current_level <= levels do
-
           indirect = {}
           level_ids = []
+
           annotations.each do |k,a|
             if current_level == 1
               level_ids << a.annotatedClass.id.to_s
@@ -337,6 +430,7 @@ module Annotator
           end
           return if level_ids.length == 0
           query = hierarchy_query(level_ids)
+
           Goo.sparql_query_client.query(query,query_options: {rules: :NONE})
               .each do |sol|
             id = sol[:id].to_s
@@ -344,9 +438,11 @@ module Annotator
             ontology = sol[:graph].to_s
             ontology = ontology[0..ontology.index("submissions")-2]
             id_group = ontology + id
+
             if annotations.include? id_group
               annotations[id_group].add_parent(parent, current_level)
             end
+
             if indirect[id_group]
               indirect[id_group].each do |k|
                 annotations[k].add_parent(parent, current_level)
@@ -357,7 +453,7 @@ module Annotator
         end
       end
 
-      def expand_mappings(annotations,ontologies)
+      def expand_mappings(annotations, ontologies)
         class_ids = []
         annotations.each do |k,a|
           class_ids << a.annotatedClass.id.to_s
@@ -369,6 +465,7 @@ module Annotator
             next if mapped_term.length == mapping.terms.length || mapped_term.length == 0
             mapped_term = mapped_term.first
             acronym = mapped_term.ontology.id.to_s.split("/")[-1]
+
             if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
               a.add_mapping(mapped_term.term.first.to_s, mapped_term.ontology.id.to_s)
             end
@@ -376,19 +473,24 @@ module Annotator
         end
       end
 
-      def get_prefixed_id_from_value(val)
-        intId = Zlib::crc32(val)
-        return get_prefixed_id(intId)
+      def get_prefixed_id_from_value(instance_prefix, val)
+        # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
+        intId = Zlib::crc32(val.upcase())
+        # intId = Zlib::crc32(val)
+        return get_prefixed_id(instance_prefix, intId)
       end
 
       private
 
-      def create_term_entry(redis, ontResourceId, resourceId, label_type, val, semanticTypes)
+      def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 2)
-          id = get_prefixed_id_from_value(val)
+          # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
+          val.upcase!()
+
+          id = get_prefixed_id_from_value(instance_prefix, val)
           # populate dictionary structure
-          redis.hset(DICTHOLDER, id, val)
+          redis.hset(DICTHOLDER.call(instance_prefix), id, val)
           entry = "#{label_type}#{LABEL_DELIM}#{ontResourceId}"
 
           # parse out semanticTypeCodes
@@ -409,7 +511,7 @@ module Annotator
             end
           end
 
-          redis.rpush(KEY_STORAGE, id) # Store key for easy delete
+          redis.rpush(KEY_STORAGE.call(instance_prefix), id) # Store key for easy delete
         end
       end
 
@@ -427,8 +529,8 @@ module Annotator
         return semanticTypeCodes
       end
 
-      def get_prefixed_id(intId)
-        return "#{IDPREFIX}#{intId}"
+      def get_prefixed_id(instance_prefix, intId)
+        return "#{IDPREFIX.call(instance_prefix)}#{intId}"
       end
 
       def mappings_for_class_ids(class_ids)
