@@ -23,6 +23,8 @@ class TestAnnotator < TestCase
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     annotator = Annotator::Models::NcboAnnotator.new
+    cur_inst = @@redis.get(Annotator::Models::NcboAnnotator::REDIS_PREFIX_KEY)
+    @@redis.set(Annotator::Models::NcboAnnotator::REDIS_PREFIX_KEY, Annotator.settings.annotator_redis_prefix) unless cur_inst
     annotator.create_term_cache_from_ontologies(@@ontologies, false)
     mapping_test_set
   end

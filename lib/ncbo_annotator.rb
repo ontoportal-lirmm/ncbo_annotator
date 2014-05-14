@@ -27,6 +27,8 @@ module Annotator
       require_relative 'ncbo_annotator/recognizers/mgrep'
 
       REDIS_PREFIX_KEY = "current_instance"
+      MGREP_DICTIONARY_REFRESH_TIMESTAMP = "mgrep_dict_refresh_stamp"
+      LAST_MGREP_RESTART_TIMESTAMP = "last_mgrep_restart_stamp"
 
       DICTHOLDER = lambda {|prefix| "#{prefix}dict"}
       IDPREFIX = lambda {|prefix| "#{prefix}term:"}
@@ -40,6 +42,7 @@ module Annotator
       def initialize(logger=nil)
         @stop_words = Annotator.settings.stop_words_default_list
         @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
+        redis_last_mgrep_restart_default_timestamp()
       end
 
       def stop_words=(stop_input)
@@ -55,6 +58,7 @@ module Annotator
       end
 
       def redis_current_instance()
+        redis = redis()
         cur_inst = redis.get(REDIS_PREFIX_KEY)
         raise Exception, "The Annotator Redis prefix key is not found!!! The prefix is required for Annotator to operate properly." if cur_inst.nil?
         return cur_inst
@@ -89,6 +93,7 @@ module Annotator
           raise Exception, "mgrep_dictionary_file setting is nil"
         end
 
+        redis = redis()
         cur_inst = redis_current_instance()
         dict_holder = DICTHOLDER.call(cur_inst)
 
@@ -110,6 +115,7 @@ module Annotator
           outFile.puts("#{realKey}\t#{realVal}")
         end
         outFile.close
+        redis_mgrep_dict_refresh_timestamp()
       end
 
       def create_term_cache_from_ontologies(ontologies, delete_cache=false, redis_prefix=nil)
@@ -467,6 +473,17 @@ module Annotator
       end
 
       private
+
+      def redis_mgrep_dict_refresh_timestamp()
+        redis = redis()
+        redis.set(MGREP_DICTIONARY_REFRESH_TIMESTAMP, Time.now)
+      end
+
+      def redis_last_mgrep_restart_default_timestamp()
+        redis = redis()
+        last_timestamp = redis.get(LAST_MGREP_RESTART_TIMESTAMP)
+        redis.set(LAST_MGREP_RESTART_TIMESTAMP, Time.at(0)) unless last_timestamp
+      end
 
       def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
         # exclude single-character or empty/null values
