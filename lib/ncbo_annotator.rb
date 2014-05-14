@@ -472,6 +472,12 @@ module Annotator
         return get_prefixed_id(instance_prefix, intId)
       end
 
+      def init_redis_for_tests()
+        redis = redis()
+        cur_inst = redis.get(REDIS_PREFIX_KEY)
+        redis.set(REDIS_PREFIX_KEY, Annotator.settings.annotator_redis_prefix) unless cur_inst
+      end
+
       private
 
       def redis_mgrep_dict_refresh_timestamp()
