@@ -33,10 +33,9 @@ class TestAnnotator < TestCase
     LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
 
-  #TODO: REMOVE THESE IN A SUBSEQUENT RELEASE ##########################################
-  def _remove_new_redis_cache
-    _remove_cache_instance("c1:")
-    _remove_cache_instance("c2:")
+  def _remove_term_redis_cache
+    _remove_cache_instance(Annotator.settings.annotator_redis_prefix)
+    _remove_cache_instance(Annotator.settings.annotator_redis_alt_prefix)
     @@redis.del(Annotator::Models::NcboAnnotator::REDIS_PREFIX_KEY)
   end
 
@@ -53,7 +52,6 @@ class TestAnnotator < TestCase
       class_keys = @@redis.lrange(key_storage, 0, Annotator::Models::NcboAnnotator::CHUNK_SIZE) # Get next chunk
     end
   end
-  #END REMOVE THESE IN A SUBSEQUENT RELEASE############################################
 
   def test_all_classes_in_cache
     class_pages = TestAnnotator.all_classes(@@ontologies)
