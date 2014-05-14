@@ -65,13 +65,6 @@ module Annotator
         return (val == Annotator.settings.annotator_redis_alt_prefix) ? Annotator.settings.annotator_redis_prefix : Annotator.settings.annotator_redis_alt_prefix
       end
 
-
-
-
-
-
-
-
       def create_term_cache(ontologies_filter=nil, delete_cache=false, redis_prefix=nil)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
 
@@ -90,13 +83,6 @@ module Annotator
         end
         create_term_cache_from_ontologies(ontologies, delete_cache, redis_prefix)
       end
-
-
-
-
-
-
-
 
       def generate_dictionary_file()
         if Annotator.settings.mgrep_dictionary_file.nil?
