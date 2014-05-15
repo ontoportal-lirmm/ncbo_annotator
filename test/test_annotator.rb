@@ -24,7 +24,7 @@ class TestAnnotator < TestCase
     @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
     annotator = Annotator::Models::NcboAnnotator.new
     annotator.init_redis_for_tests()
-    annotator.create_term_cache_from_ontologies(@@ontologies, false)
+    annotator.create_term_cache_from_ontologies(@@ontologies, true)
     mapping_test_set
   end
 
