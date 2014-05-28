@@ -334,7 +334,8 @@ module Annotator
         rawAnnotations.filter_stop_words(@stop_words)
 
         allAnnotations = {}
-        longest_hits = {}
+        flattenedAnnotations = Array.new
+
         redis_data = Hash.new
         cur_inst = redis_current_instance()
 
@@ -372,26 +373,46 @@ module Annotator
               acronym = ontResourceId.to_s.split('/')[-1]
               next if !ontologies.empty? && !ontologies.include?(ontResourceId) && !ontologies.include?(acronym)
 
-              id_group = ontResourceId + key
-              unless allAnnotations.include?(id_group)
-                allAnnotations[id_group] = Annotation.new(key, ontResourceId)
+              if (longest_only)
+                annotation = Annotation.new(key, ontResourceId)
+                annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                flattenedAnnotations << annotation
+              else
+                id_group = ontResourceId + key
+
+                unless allAnnotations.include?(id_group)
+                  allAnnotations[id_group] = Annotation.new(key, ontResourceId)
+                end
+                allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
               end
-              allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
-              len = ann.offset_to - ann.offset_from + 1
-              longest_hits[ann.offset_from] = len if (longest_hits[ann.offset_from].nil? || longest_hits[ann.offset_from] < len)
             end
           end
         end
 
         if (longest_only)
-          allAnnotations.delete_if { |k, annotation|
+          flattenedAnnotations.sort! {|a, b| [a.annotations[0][:from], b.annotations[0][:to]] <=> [b.annotations[0][:from], a.annotations[0][:to]]}
+          cur_max = 0;
+
+          flattenedAnnotations.delete_if { |annotation|
             flag = true
-            annotation.annotations.each do |ann|
-              len = ann[:to] - ann[:from] + 1
-              flag = false if longest_hits[ann[:from]] == len
+            new_max = annotation.annotations[0][:to]
+
+            if new_max > cur_max
+              flag = false
+              cur_max = new_max
             end
             flag
           }
+
+          flattenedAnnotations.each do |annotation|
+            id_group = annotation.annotatedClass.submission.ontology.id.to_s + annotation.annotatedClass.id.to_s
+
+            if allAnnotations.include?(id_group)
+              allAnnotations[id_group].add_annotation(annotation.annotations[0][:from], annotation.annotations[0][:to], annotation.annotations[0][:matchType], annotation.annotations[0][:text])
+            else
+              allAnnotations[id_group] = annotation
+            end
+          end
         end
 
         return allAnnotations
