@@ -77,6 +77,7 @@ class TestAnnotator < TestCase
   end
 
   def test_generate_dictionary_file
+    start_timestamp = Time.now
     ontologies = @@ontologies.dup
     class_pages = TestAnnotator.all_classes(ontologies)
     assert class_pages.length > 100, "No classes in system ???"
@@ -100,6 +101,10 @@ class TestAnnotator < TestCase
     lines.each do |line|
       assert line.strip().split("\t")[1].length > 2
     end
+    assert @@redis.exists(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
+    assert @@redis.exists(Annotator::Models::NcboAnnotator::LAST_MGREP_RESTART_TIMESTAMP)
+    refresh_timestamp = @@redis.get(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
+    assert refresh_timestamp > start_timestamp
   end
 
   def test_mallet_recognizer
