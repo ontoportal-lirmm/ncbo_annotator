@@ -43,6 +43,7 @@ module Annotator
         @stop_words = Annotator.settings.stop_words_default_list
         @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
         redis_last_mgrep_restart_default_timestamp()
+        redis_mgrep_dict_refresh_default_timestamp()
       end
 
       def stop_words=(stop_input)
@@ -504,6 +505,12 @@ module Annotator
       def redis_mgrep_dict_refresh_timestamp()
         redis = redis()
         redis.set(MGREP_DICTIONARY_REFRESH_TIMESTAMP, Time.now)
+      end
+
+      def redis_mgrep_dict_refresh_default_timestamp()
+        redis = redis()
+        refresh_timestamp = redis.get(MGREP_DICTIONARY_REFRESH_TIMESTAMP)
+        redis.set(MGREP_DICTIONARY_REFRESH_TIMESTAMP, Time.at(0)) unless refresh_timestamp
       end
 
       def redis_last_mgrep_restart_default_timestamp()
