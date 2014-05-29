@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 44205368e3a4d5765e12a59c8f1bc8ef320ff14a
+  revision: f699a59d2da5c2401193cda8b20c826094cc8978
   branch: staging
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 246a4262ca1cd6da59d1c6344b83bf9773321fc4
+  revision: 40a5537c4e4251cb4315d3f03177f122ba7d04ab
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -68,11 +68,11 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     method_source (0.8.2)
-    mime-types (2.2)
+    mime-types (2.3)
     minitest (4.7.5)
     multi_json (1.10.1)
     net-http-persistent (2.9.4)
-    oj (2.9.3)
+    oj (2.9.4)
     polyglot (0.3.4)
     pony (1.8)
       mail (>= 2.0)
@@ -94,7 +94,7 @@ GEM
     rubyzip (1.1.3)
     slop (3.5.0)
     systemu (2.6.4)
-    thread_safe (0.3.3)
+    thread_safe (0.3.4)
     treetop (1.5.3)
       polyglot (~> 0.3)
     tzinfo (0.3.39)
