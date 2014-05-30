@@ -27,12 +27,24 @@ require 'minitest/unit'
 MiniTest::Unit.autorun
 
 class AnnotatorUnit < MiniTest::Unit
+
+  def self.ontologies
+    @@ontologies
+  end
+
   def before_suites
     # code to run before the very first test
+    LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
+    @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
+    annotator = Annotator::Models::NcboAnnotator.new
+    annotator.init_redis_for_tests()
+    annotator.create_term_cache_from_ontologies(@@ontologies, true)
+    annotator.redis_switch_instance()
   end
 
   def after_suites
     # code to run after the very last test
+    LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
 
   def _run_suites(suites, type)

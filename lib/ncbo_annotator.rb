@@ -70,6 +70,14 @@ module Annotator
         return (val == Annotator.settings.annotator_redis_alt_prefix) ? Annotator.settings.annotator_redis_prefix : Annotator.settings.annotator_redis_alt_prefix
       end
 
+      def redis_switch_instance(inst=nil)
+        redis = redis()
+        val = redis_current_instance()
+        inst ||= redis_default_alternate_instance()
+        redis.set(REDIS_PREFIX_KEY, inst)
+        @logger.info("Swapping Annotator Redis instance from #{val} to #{inst}.")
+      end
+
       def create_term_cache(ontologies_filter=nil, delete_cache=false, redis_prefix=nil)
         ontologies = LinkedData::Models::Ontology.where.include(:acronym).all
 
@@ -155,24 +163,36 @@ module Annotator
       def delete_term_cache(redis_prefix)
         cur_inst = redis_current_instance()
         @logger.info("Deleting old redis data with Redis prefix: #{redis_prefix}. The Annotator currently uses Redis prefix: #{cur_inst}.")
+
         # remove old dictionary structure
-        # use expire instead of del to allow potential clients to finish using the data
-        key_expire_time = 120 # seconds
-
         time = Benchmark.realtime do
-          redis.expire(DICTHOLDER.call(redis_prefix), key_expire_time)
           key_storage = KEY_STORAGE.call(redis_prefix)
-
           # remove all the stored keys
           class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE)
 
-          while !class_keys.empty?
-            # use expire instead of del to allow potential clients to finish using the data
-            redis.pipelined {
-              class_keys.each {|key| redis.expire(key, key_expire_time)}
-            }
-            redis.ltrim(key_storage, CHUNK_SIZE + 1, -1) # Remove what we just deleted
-            class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
+          # if current instance is being deleted, use expire instead of del to allow potential clients to finish using the data
+          if (cur_inst == redis_prefix)
+            key_expire_time = 120 # seconds
+            # remove old dictionary structure
+            redis.expire(DICTHOLDER.call(redis_prefix), key_expire_time)
+
+            while !class_keys.empty?
+              # use expire instead of del to allow potential clients to finish using the data
+              redis.pipelined {
+                class_keys.each {|key| redis.expire(key, key_expire_time)}
+              }
+              redis.ltrim(key_storage, CHUNK_SIZE + 1, -1) # Remove what we just deleted
+              class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
+            end
+          else
+            # remove old dictionary structure
+            redis.del(DICTHOLDER.call(redis_prefix))
+
+            while !class_keys.empty?
+              redis.del(class_keys)
+              redis.ltrim(key_storage, CHUNK_SIZE + 1, -1) # Remove what we just deleted
+              class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
+            end
           end
         end
         @logger.info("Completed deleting old redis data with Redis prefix: #{redis_prefix} in #{time} sec.")
