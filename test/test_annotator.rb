@@ -19,17 +19,10 @@ class TestAnnotator < TestCase
     if mappings.length > 0
       @@redis.del(mappings)
     end
-
-    LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
-    @@ontologies = LinkedData::SampleData::Ontology.sample_owl_ontologies
-    annotator = Annotator::Models::NcboAnnotator.new
-    annotator.init_redis_for_tests()
-    annotator.create_term_cache_from_ontologies(@@ontologies, true)
     mapping_test_set
   end
 
   def self.after_suite
-    LinkedData::SampleData::Ontology.delete_ontologies_and_submissions
   end
 
   def _remove_term_redis_cache
@@ -53,7 +46,7 @@ class TestAnnotator < TestCase
   end
 
   def test_all_classes_in_cache
-    class_pages = TestAnnotator.all_classes(@@ontologies)
+    class_pages = TestAnnotator.all_classes(AnnotatorUnit.ontologies)
     annotator = Annotator::Models::NcboAnnotator.new
     assert class_pages.length > 100, "No classes in system ???"
     cur_inst = annotator.redis_current_instance()
@@ -78,7 +71,7 @@ class TestAnnotator < TestCase
 
   def test_generate_dictionary_file
     start_timestamp = Time.now
-    ontologies = @@ontologies.dup
+    ontologies = AnnotatorUnit.ontologies.dup
     class_pages = TestAnnotator.all_classes(ontologies)
     assert class_pages.length > 100, "No classes in system ???"
     annotator = Annotator::Models::NcboAnnotator.new
@@ -224,7 +217,7 @@ class TestAnnotator < TestCase
   end
 
   def test_annotate
-    ontologies = @@ontologies.dup
+    ontologies = AnnotatorUnit.ontologies.dup
     class_page = TestAnnotator.all_classes(ontologies)
     class_page = class_page[0..150]
     text = []
@@ -319,7 +312,7 @@ class TestAnnotator < TestCase
   end
 
   def test_annotate_minsize_term
-    ontologies = @@ontologies.dup
+    ontologies = AnnotatorUnit.ontologies.dup
     class_page = TestAnnotator.all_classes(ontologies)
     class_page = class_page[0..150]
     text = []
@@ -388,7 +381,7 @@ class TestAnnotator < TestCase
   end
 
   def test_annotate_stop_words
-    ontologies = @@ontologies.dup
+    ontologies = AnnotatorUnit.ontologies.dup
     text = "Aggregate Human Data, Resource deletion, chromosomal chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text, {
@@ -446,7 +439,7 @@ class TestAnnotator < TestCase
   end
 
   def test_annotate_hierarchy
-    ontologies = @@ontologies.dup
+    ontologies = AnnotatorUnit.ontologies.dup
     text = "Aggregate Human Data Aggregate Human Data"
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text)
@@ -502,7 +495,7 @@ class TestAnnotator < TestCase
   end
 
   def test_annotate_hierachy_terms_multiple
-    ontologies = @@ontologies.dup
+    ontologies = AnnotatorUnit.ontologies.dup
     text = "Aggregate Human Data chromosomal mutation Aggregate Human Data chromosomal deletion Aggregate Human Data Resource Federal Funding Resource receptor antagonists chromosomal mutation"
     annotator = Annotator::Models::NcboAnnotator.new
     annotations = annotator.annotate(text, {
