@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: d6891dda0cebddd244d172d8fec2b2f44986bd6c
+  revision: 7e1e24dba8320465def7c920e7e433d9ae27eeb8
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -63,14 +63,14 @@ GEM
     libxml-ruby (2.7.0)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
-    mail (2.6.0)
+    mail (2.6.1)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.3)
     minitest (4.7.5)
     multi_json (1.10.1)
     net-http-persistent (2.9.4)
-    oj (2.9.4)
+    oj (2.9.5)
     pony (1.8)
       mail (>= 2.0)
     pry (0.9.12.6)
