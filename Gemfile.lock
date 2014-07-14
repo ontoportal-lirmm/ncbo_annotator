@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 12f60058a7938c3a0e2b3968cf477652e21697cb
+  revision: f675ef0641f594a9599ef915774afe24fbcd63de
   branch: staging
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 28aaf5567b0816613cdb2e072eb1bd7fbe61e0e6
+  revision: c0a6a8f2ec9bf38748ba79802a6b6bd899f75214
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -57,7 +57,7 @@ GEM
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
-    i18n (0.6.9)
+    i18n (0.6.11)
     json (1.8.1)
     json_pure (1.8.1)
     libxml-ruby (2.7.0)
@@ -72,7 +72,7 @@ GEM
     net-http-persistent (2.9.4)
     netrc (0.7.7)
     oj (2.9.9)
-    pony (1.9)
+    pony (1.10)
       mail (>= 2.0)
     pry (0.10.0)
       coderay (~> 1.1.0)
@@ -94,7 +94,7 @@ GEM
     slop (3.5.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
-    tzinfo (0.3.39)
+    tzinfo (0.3.40)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
