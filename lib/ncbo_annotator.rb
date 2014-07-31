@@ -61,7 +61,12 @@ module Annotator
       def redis_current_instance()
         redis = redis()
         cur_inst = redis.get(REDIS_PREFIX_KEY)
-        raise Exception, "The Annotator Redis prefix key is not found!!! The prefix is required for Annotator to operate properly." if cur_inst.nil?
+
+        if (cur_inst.nil?)
+          redis.set(REDIS_PREFIX_KEY, Annotator.settings.annotator_redis_prefix)
+          cur_inst = redis.get(REDIS_PREFIX_KEY)
+        end
+
         return cur_inst
       end
 
@@ -543,14 +548,17 @@ module Annotator
       end
 
       def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
-        # NCBO-832 - SCTSPA Annotator Cache building error (UTF-8)
-        val = val.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+        begin
+          # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
+          val.upcase!()
+        rescue ArgumentError => e
+          # NCBO-832 - SCTSPA Annotator Cache building error (UTF-8)
+          val = val.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+          val.upcase!()
+        end
 
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 2)
-          # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
-          val.upcase!()
-
           id = get_prefixed_id_from_value(instance_prefix, val)
           # populate dictionary structure
           redis.hset(DICTHOLDER.call(instance_prefix), id, val)

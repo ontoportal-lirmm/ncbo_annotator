@@ -58,7 +58,7 @@ class TestAnnotator < TestCase
       prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
 
       if prefLabel.length > 2
-        assert @@redis.exists(prefixedId)
+        assert @@redis.exists(prefixedId), "The entry: #{resourceId} (PrefLabel: #{prefLabel}, PrefixedId: #{prefixedId}) does not exist"
         assert @@redis.hexists(prefixedId, resourceId)
         assert @@redis.hexists(dict_holder, prefixedId)
         assert_equal @@redis.hget(dict_holder, prefixedId), prefLabel
@@ -86,8 +86,8 @@ class TestAnnotator < TestCase
       if prefLabel.length > 2
         resourceId = cls.id.to_s
         prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
-        index = lines.select{|e| e.strip().split("\t")[1] == prefLabel }
-        assert index.length > 0, "The concept: #{resourceId} (#{prefLabel}) was not found in the dictionary file"
+        index = lines.select{ |e| e.strip().split("\t")[1] == prefLabel }
+        assert index.length > 0, "The concept: #{resourceId} (PrefLabel: #{prefLabel}, PrefixedId: #{prefixedId}) was not found in the dictionary file"
       end
     end
     #make sure length term is > 2
