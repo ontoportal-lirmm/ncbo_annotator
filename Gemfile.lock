@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 33ba5defdf08ca8d4f0eb271dd06e5468666a9a8
+  revision: 14cff03e744c9fafea2010261532a1f58a498946
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: b10a95fa33b1bb92e6a322f6517b250e85e709fe
+  revision: 23d512984095b74858b7bc1d7de6c60a32042007
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
