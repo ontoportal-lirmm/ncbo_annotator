@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: a1c2db71ce6fa1dc8308cf2fd71ae31621122ba4
+  revision: 7165555d166d1d1248acde701b9b93919ef0e86a
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -100,7 +100,7 @@ GEM
     mysql2 (0.3.16)
     net-http-persistent (2.9.4)
     netrc (0.7.7)
-    oj (2.10.1)
+    oj (2.10.2)
     pony (1.10)
       mail (>= 2.0)
     pry (0.10.1)
