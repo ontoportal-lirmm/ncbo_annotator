@@ -23,6 +23,8 @@ module Annotator
   module Models
 
     class NcboAnnotator
+      class BadSemanticTypeError < StandardError; end
+
       require_relative 'ncbo_annotator/recognizers/mallet'
       require_relative 'ncbo_annotator/recognizers/mgrep'
 
@@ -312,18 +314,19 @@ module Annotator
         end
       end
 
-      ########################################
+      ##########################################
       # Possible options with their defaults:
-      #   ontologies              = []
-      #   semantic_types          = []
-      #   filter_integers         = false
-      #   expand_hierarchy_levels = 0
-      #   expand_with_mappings    = false
-      #   min_term_size           = nil
-      #   whole_word_only         = true
-      #   with_synonyms           = true
-      #   longest_only            = false
-      #######################################
+      #   ontologies                   = []
+      #   semantic_types               = []
+      #   use_semantic_types_hierarchy = false
+      #   filter_integers              = false
+      #   expand_hierarchy_levels      = 0
+      #   expand_with_mappings         = false
+      #   min_term_size                = nil
+      #   whole_word_only              = true
+      #   with_synonyms                = true
+      #   longest_only                 = false
+      ##########################################
       def annotate(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
         expand_hierarchy_levels = options[:expand_hierarchy_levels].is_a?(Integer) ? options[:expand_hierarchy_levels] : 0
@@ -346,6 +349,7 @@ module Annotator
       def annotate_direct(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
         semantic_types = options[:semantic_types].is_a?(Array) ? options[:semantic_types] : []
+        use_semantic_types_hierarchy = options[:use_semantic_types_hierarchy] == true ? true : false
         filter_integers = options[:filter_integers] == true ? true : false
         min_term_size = options[:min_term_size].is_a?(Integer) ? options[:min_term_size] : nil
         whole_word_only = options[:whole_word_only] == false ? false : true
@@ -358,6 +362,10 @@ module Annotator
         rawAnnotations.filter_integers() if filter_integers
         rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
         rawAnnotations.filter_stop_words(@stop_words)
+
+        if (use_semantic_types_hierarchy)
+          semantic_types = expand_semantic_types_hierarchy(semantic_types)
+        end
 
         allAnnotations = {}
         flattenedAnnotations = Array.new
@@ -529,6 +537,25 @@ module Annotator
       end
 
       private
+
+      def expand_semantic_types_hierarchy(semantic_types)
+        all_semantic_types = semantic_types.dup()
+        sub = LinkedData::Models::Ontology.find("STY").first.latest_submission
+        raise LinkedData::Models::Ontology::ParsedSubmissionError, "There doesn't appear to be a valid Semantic Types ontology in the system." unless sub
+
+        semantic_types.each do |semantic_type|
+          f = Goo::Filter.new(:notation) == semantic_type
+          cls = LinkedData::Models::Class.where.filter(f).in(sub).first
+          raise BadSemanticTypeError, "Unable to find semantic type information with notation #{semantic_type}." if cls.nil?
+          cls.bring(:children) if cls.bring?(:children)
+
+          cls.children.each do |child|
+            child.bring(:notation) if child.bring?(:notation)
+            all_semantic_types << child.notation
+          end
+        end
+        all_semantic_types
+      end
 
       def redis_mgrep_dict_refresh_timestamp()
         redis = redis()

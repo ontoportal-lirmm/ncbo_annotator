@@ -308,7 +308,28 @@ class TestAnnotator < TestCase
         whole_word_only: true,
         with_synonyms: true
     })
-    # test for specific ontologies
+  end
+
+  def test_annotate_semantic_types_hierarchy
+    text = "Funding Resource"
+    ontologies = ["http://data.bioontology.org/ontologies/BROTEST-0"]
+    annotator = Annotator::Models::NcboAnnotator.new
+
+    annotations = annotator.annotate(text, {
+      ontologies: ontologies,
+      semantic_types: ["T021"],
+      use_semantic_types_hierarchy: false
+    })
+
+    assert_empty(annotations)
+
+    annotations = annotator.annotate(text, {
+        ontologies: ontologies,
+        semantic_types: ["T021"],
+        use_semantic_types_hierarchy: true
+    })
+
+    assert_equal(1, annotations.length)
   end
 
   def test_annotate_minsize_term

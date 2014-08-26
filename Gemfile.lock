@@ -26,7 +26,6 @@ GIT
       json
       libxml-ruby
       multi_json
-      ncbo_resource_index
       oj
       pony
       rack
