@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: f9fa5c9ec322248ead81f8f93c0bab1fb4b030bc
+  revision: b4e3f559573758e959bd4e55b0ef321ae69e1c78
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -26,6 +26,7 @@ GIT
       json
       libxml-ruby
       multi_json
+      ncbo_resource_index
       oj
       pony
       rack
@@ -35,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: ad24c871c9663b8bfa8d37d29bd8d99bc4d74f3f
+  revision: fac13ae5059d38fefa266de5f92a2d6382fbdc69
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
