@@ -632,6 +632,8 @@ module Annotator
       end
 
       def mappings_for_class_ids(class_ids)
+        mappings = LinkedData::Mappings.mappings_for_classids(class_ids)
+        binding.pry
         mappings = []
         class_ids.each do |c|
           query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(c) ])
