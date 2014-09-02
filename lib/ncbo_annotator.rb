@@ -511,13 +511,20 @@ module Annotator
         mappings = mappings_for_class_ids(class_ids)
         mappings.each do |mapping|
           annotations.each do |k,a|
-            mapped_term = mapping.terms.select { |t| t.term.first.to_s != a.annotatedClass.id.to_s }
-            next if mapped_term.length == mapping.terms.length || mapped_term.length == 0
+            mapped_term = mapping.classes
+                            .select { |c| c.id.to_s != a.annotatedClass.id.to_s }
+            if  mapped_term.length == mapping.classes.length || 
+                    mapped_term.length == 0
+              next
+            end
             mapped_term = mapped_term.first
-            acronym = mapped_term.ontology.id.to_s.split("/")[-1]
+            acronym = mapped_term.submission.ontology.acronym
 
-            if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
-              a.add_mapping(mapped_term.term.first.to_s, mapped_term.ontology.id.to_s)
+            if ontologies.length == 0 || 
+               ontologies.include?(mapped_term.submission.ontology.id.to_s) || 
+               ontologies.include?(acronym)
+                a.add_mapping(mapped_term.id.to_s,
+                              mapped_term.submission.ontology.id.to_s)
             end
           end
         end
@@ -633,39 +640,6 @@ module Annotator
 
       def mappings_for_class_ids(class_ids)
         mappings = LinkedData::Mappings.mappings_for_classids(class_ids)
-        binding.pry
-        mappings = []
-        class_ids.each do |c|
-          query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(c) ])
-          query.include(:process)
-          query.include(terms: [ :ontology, :term ])
-          mappings.select { |m| !m.to_s }
-          maps_to_filter = query.all
-          maps = []
-          maps_to_filter.each do |m|
-            m.process.each do |p|
-              if !(p.id.to_s["loom"] || p.id.to_s["same_uris"])
-                maps << m
-                break
-              end
-            end
-          end
-          mappings += maps
-        end
-
-        #TODO there is a bug in the data
-        #and some mappings do not have two terms
-        #this can be removed once the data is fixed
-        result = []
-        mappings.each do |m|
-          count = 0
-          m.terms.each do |t|
-            count += 1 if t.loaded_attributes.include?(:term)
-          end
-          result << m if count == 2
-        end
-        mappings = result
-        #end TODO
         return mappings
       end
 
