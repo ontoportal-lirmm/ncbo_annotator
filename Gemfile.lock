@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: eb7bdedd118004001e4c9c5a3aa218f81e3ad25c
+  revision: 7b70cd12a129e16a93a3dec479d0b5e89e23773c
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -71,12 +71,12 @@ GEM
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
-    elasticsearch (1.0.4)
-      elasticsearch-api (= 1.0.4)
-      elasticsearch-transport (= 1.0.4)
-    elasticsearch-api (1.0.4)
+    elasticsearch (1.0.5)
+      elasticsearch-api (= 1.0.5)
+      elasticsearch-transport (= 1.0.5)
+    elasticsearch-api (1.0.5)
       multi_json
-    elasticsearch-transport (1.0.4)
+    elasticsearch-transport (1.0.5)
       faraday
       multi_json
     ethon (0.7.1)
