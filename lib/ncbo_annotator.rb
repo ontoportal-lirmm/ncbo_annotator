@@ -23,6 +23,8 @@ module Annotator
   module Models
 
     class NcboAnnotator
+      class BadSemanticTypeError < StandardError; end
+
       require_relative 'ncbo_annotator/recognizers/mallet'
       require_relative 'ncbo_annotator/recognizers/mgrep'
 
@@ -312,18 +314,19 @@ module Annotator
         end
       end
 
-      ########################################
+      ##########################################
       # Possible options with their defaults:
-      #   ontologies              = []
-      #   semantic_types          = []
-      #   filter_integers         = false
-      #   expand_hierarchy_levels = 0
-      #   expand_with_mappings    = false
-      #   min_term_size           = nil
-      #   whole_word_only         = true
-      #   with_synonyms           = true
-      #   longest_only            = false
-      #######################################
+      #   ontologies                   = []
+      #   semantic_types               = []
+      #   use_semantic_types_hierarchy = false
+      #   filter_integers              = false
+      #   expand_hierarchy_levels      = 0
+      #   expand_with_mappings         = false
+      #   min_term_size                = nil
+      #   whole_word_only              = true
+      #   with_synonyms                = true
+      #   longest_only                 = false
+      ##########################################
       def annotate(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
         expand_hierarchy_levels = options[:expand_hierarchy_levels].is_a?(Integer) ? options[:expand_hierarchy_levels] : 0
@@ -346,6 +349,7 @@ module Annotator
       def annotate_direct(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
         semantic_types = options[:semantic_types].is_a?(Array) ? options[:semantic_types] : []
+        use_semantic_types_hierarchy = options[:use_semantic_types_hierarchy] == true ? true : false
         filter_integers = options[:filter_integers] == true ? true : false
         min_term_size = options[:min_term_size].is_a?(Integer) ? options[:min_term_size] : nil
         whole_word_only = options[:whole_word_only] == false ? false : true
@@ -358,6 +362,10 @@ module Annotator
         rawAnnotations.filter_integers() if filter_integers
         rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
         rawAnnotations.filter_stop_words(@stop_words)
+
+        if (use_semantic_types_hierarchy)
+          semantic_types = expand_semantic_types_hierarchy(semantic_types)
+        end
 
         allAnnotations = {}
         flattenedAnnotations = Array.new
@@ -503,13 +511,20 @@ module Annotator
         mappings = mappings_for_class_ids(class_ids)
         mappings.each do |mapping|
           annotations.each do |k,a|
-            mapped_term = mapping.terms.select { |t| t.term.first.to_s != a.annotatedClass.id.to_s }
-            next if mapped_term.length == mapping.terms.length || mapped_term.length == 0
+            mapped_term = mapping.classes
+                            .select { |c| c.id.to_s != a.annotatedClass.id.to_s }
+            if  mapped_term.length == mapping.classes.length || 
+                    mapped_term.length == 0
+              next
+            end
             mapped_term = mapped_term.first
-            acronym = mapped_term.ontology.id.to_s.split("/")[-1]
+            acronym = mapped_term.submission.ontology.acronym
 
-            if ontologies.length == 0 || ontologies.include?(mapped_term.ontology.id.to_s) || ontologies.include?(acronym)
-              a.add_mapping(mapped_term.term.first.to_s, mapped_term.ontology.id.to_s)
+            if ontologies.length == 0 || 
+               ontologies.include?(mapped_term.submission.ontology.id.to_s) || 
+               ontologies.include?(acronym)
+                a.add_mapping(mapped_term.id.to_s,
+                              mapped_term.submission.ontology.id.to_s)
             end
           end
         end
@@ -529,6 +544,25 @@ module Annotator
       end
 
       private
+
+      def expand_semantic_types_hierarchy(semantic_types)
+        all_semantic_types = semantic_types.dup()
+        sub = LinkedData::Models::Ontology.find("STY").first.latest_submission
+        raise LinkedData::Models::Ontology::ParsedSubmissionError, "There doesn't appear to be a valid Semantic Types ontology in the system." unless sub
+
+        semantic_types.each do |semantic_type|
+          f = Goo::Filter.new(:notation) == semantic_type
+          cls = LinkedData::Models::Class.where.filter(f).in(sub).first
+          raise BadSemanticTypeError, "Unable to find semantic type information with notation #{semantic_type}." if cls.nil?
+          cls.bring(:children) if cls.bring?(:children)
+
+          cls.children.each do |child|
+            child.bring(:notation) if child.bring?(:notation)
+            all_semantic_types << child.notation
+          end
+        end
+        all_semantic_types
+      end
 
       def redis_mgrep_dict_refresh_timestamp()
         redis = redis()
@@ -605,38 +639,7 @@ module Annotator
       end
 
       def mappings_for_class_ids(class_ids)
-        mappings = []
-        class_ids.each do |c|
-          query = LinkedData::Models::Mapping.where(terms: [ term: RDF::URI.new(c) ])
-          query.include(:process)
-          query.include(terms: [ :ontology, :term ])
-          mappings.select { |m| !m.to_s }
-          maps_to_filter = query.all
-          maps = []
-          maps_to_filter.each do |m|
-            m.process.each do |p|
-              if !(p.id.to_s["loom"] || p.id.to_s["same_uris"])
-                maps << m
-                break
-              end
-            end
-          end
-          mappings += maps
-        end
-
-        #TODO there is a bug in the data
-        #and some mappings do not have two terms
-        #this can be removed once the data is fixed
-        result = []
-        mappings.each do |m|
-          count = 0
-          m.terms.each do |t|
-            count += 1 if t.loaded_attributes.include?(:term)
-          end
-          result << m if count == 2
-        end
-        mappings = result
-        #end TODO
+        mappings = LinkedData::Mappings.mappings_for_classids(class_ids)
         return mappings
       end
 
