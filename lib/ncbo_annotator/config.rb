@@ -22,9 +22,10 @@ module Annotator
     @settings.annotator_redis_host       ||= "localhost"
     @settings.annotator_redis_port       ||= 6379
     @settings.enable_recognizer_param    ||= false
+    @settings.supported_recognizers      ||= [:mgrep] # :mgrep, :mallet
     puts "(AN) >> Using ANN Redis instance at "+
       "#{@settings.annotator_redis_host}:#{@settings.annotator_redis_port}"
-    
+
     # Stop words
     stop_words_path = File.expand_path("../../../test/data/default_stop_words.txt", __FILE__)
     @settings.stop_words_default_file    ||= stop_words_path
