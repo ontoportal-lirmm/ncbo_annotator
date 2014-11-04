@@ -1,5 +1,6 @@
 require 'open3'
 require 'logger'
+require "addressable/uri"
 
 module Annotator
   module Models
@@ -24,9 +25,11 @@ module Annotator
           @mallet_deps_jar_path = $ncbo_annotator_project_bin + "mallet_deps.jar"
         end
 
-        def mallet_java_call(text)
+        def mallet_java_call(text, params="")
           #command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}mallet.jar:#{$ncbo_annotator_project_bin}mallet-deps.jar:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"hello world\""
-          command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"#{Shellwords.escape(text)}\""
+          params_str = "params \"\""
+          params_str = "params \"#{Shellwords.escape(params)}\"" unless params.empty?
+          command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"#{Shellwords.escape(text)}\" #{params_str}"
           stdout, stderr, status = Open3.capture3(command_call)
 
           if not status.success?
@@ -40,7 +43,11 @@ module Annotator
         end
 
         def annotate_direct(text, options={})
-          stdout = mallet_java_call(text)
+          uri = Addressable::URI.new
+          uri.query_values = options
+          params = uri.query
+
+          stdout = mallet_java_call(text, params)
           labels = stdout.split(" ")
           allAnnotations = {}
 

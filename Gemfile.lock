@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: ad524940b287f4e6f08b442f8e85cdd45bf809e8
+  revision: 0742faf5a3e2dcf9f25b9b311ddb8c7041a9fbe2
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: a3faa39c7a94e7eaabb654d8a324a662e6397e2c
+  revision: 334c8fe428f4da24426a5490337251cd35b062fe
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -67,16 +67,16 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    bcrypt (3.1.7)
+    bcrypt (3.1.9)
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
-    elasticsearch (1.0.5)
-      elasticsearch-api (= 1.0.5)
-      elasticsearch-transport (= 1.0.5)
-    elasticsearch-api (1.0.5)
+    elasticsearch (1.0.6)
+      elasticsearch-api (= 1.0.6)
+      elasticsearch-transport (= 1.0.6)
+    elasticsearch-api (1.0.6)
       multi_json
-    elasticsearch-transport (1.0.5)
+    elasticsearch-transport (1.0.6)
       faraday
       multi_json
     ethon (0.7.1)
@@ -93,14 +93,14 @@ GEM
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.4.2)
+    mime-types (2.4.3)
     minitest (4.7.5)
     multi_json (1.10.1)
     multipart-post (2.0.0)
     mysql2 (0.3.16)
     net-http-persistent (2.9.4)
     netrc (0.8.0)
-    oj (2.10.3)
+    oj (2.10.4)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.1)
@@ -128,7 +128,7 @@ GEM
     thread_safe (0.3.4)
     typhoeus (0.6.9)
       ethon (>= 0.7.1)
-    tzinfo (0.3.41)
+    tzinfo (0.3.42)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
