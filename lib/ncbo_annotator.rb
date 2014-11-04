@@ -274,7 +274,7 @@ module Annotator
                                     resourceId,
                                     Annotator::Annotation::MATCH_TYPES[:type_synonym],
                                     syn,
-                                    semanticTypes)
+                                    semanticTypes) unless (syn.casecmp(prefLabel) == 0)
                 end
                 create_term_entry(redis,
                                   redis_prefix,
