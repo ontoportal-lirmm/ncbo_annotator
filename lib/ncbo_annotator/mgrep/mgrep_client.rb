@@ -3,24 +3,43 @@ require 'socket'
 module Annotator
   module Mgrep
     class Client
-      def initialize(host,port)
-        @host=host
-        @port=port
-        @socket = TCPSocket.open(@host,@port.to_i)
-        self.annotate("init",true,true)
+      def initialize(host, port, alt_host, alt_port)
+        hosts = [host, alt_host]
+        ports = [port, alt_port]
+        use_ind = [0, 1].sample
+        alt_ind = use_ind == 0 ? 1 : 0
+        @socket = nil
+
+        begin
+          @socket = TCPSocket.open(hosts[use_ind], ports[use_ind].to_i)
+        rescue Errno::ECONNREFUSED
+          begin
+            @socket = TCPSocket.open(hosts[alt_ind], ports[alt_ind].to_i)
+          rescue Exception
+            # try one final time, though we really shouldn't be here
+            # one of the servers should always be up
+            begin
+              @socket = TCPSocket.open(hosts[use_ind], ports[use_ind].to_i)
+            rescue Exception => e
+              raise StandardError, "Unable to establish mgrep connection due to exception #{e.class}: #{e.message}\n#{e.backtrace.join("\n\t")}"
+            end
+          end
+        end
+
+        self.annotate("init", true, true)
       end
 
       def close()
         @socket.close()
       end
       
-      def annotate(text,longword,wholeword=true)
-        text = text.upcase.gsub("\n"," ")
+      def annotate(text, longword, wholeword=true)
+        text = text.upcase.gsub("\n", " ")
         if text.strip().length == 0
-          return  AnnotatedText(text, [])
+          return AnnotatedText(text, [])
         end
-        message = self.message(text,longword,wholeword)
-        @socket.send(message,0)
+        message = self.message(text, longword, wholeword)
+        @socket.send(message, 0)
         annotations = []
         line = "init"
         while line.length > 0 do
@@ -35,7 +54,7 @@ module Annotator
         return AnnotatedText.new(text, annotations)
       end
 
-      def message(text,longword,wholeword)
+      def message(text, longword, wholeword)
         flags = "A"
         flags += longword ? "Y" : "N" 
         flags += wholeword ? "Y" : "N" 
