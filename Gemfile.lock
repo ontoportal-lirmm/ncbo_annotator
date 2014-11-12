@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: d407d1aeec1eec86e312c6de16a5b6301c96edfd
+  revision: 06013c31bfe00ca55e5ee7ad7a720addbe03937f
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 36128148661efcc47b072c6060712623157077f3
+  revision: 85c3150a01584542ea09582fbc32953030096f77
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -97,7 +97,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.16)
+    mysql2 (0.3.17)
     net-http-persistent (2.9.4)
     netrc (0.8.0)
     oj (2.11.1)
