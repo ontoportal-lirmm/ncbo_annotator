@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 06013c31bfe00ca55e5ee7ad7a720addbe03937f
+  revision: ebfe4766beedee830150e0150ec5d4d000a38c65
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: c37c182ec7615066976baf73ceaf038d140dac15
+  revision: 05dc252d3e16513fd622aae3a154fb2dcd4bcc84
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -60,7 +60,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.0.11)
+    activesupport (4.0.12)
       i18n (~> 0.6, >= 0.6.9)
       minitest (~> 4.2)
       multi_json (~> 1.3)
@@ -110,7 +110,7 @@ GEM
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.3.2)
+    rake (10.4.0)
     rdf (1.0.8)
       addressable (>= 2.2)
     redis (3.1.0)
@@ -122,7 +122,7 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.1.1)
     rubyzip (1.1.6)
-    sequel (4.16.0)
+    sequel (4.17.0)
     slop (3.6.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
