@@ -320,6 +320,7 @@ module Annotator
       #   semantic_types               = []
       #   use_semantic_types_hierarchy = false
       #   filter_integers              = false
+      #   expand_class_hierarchy       = false
       #   expand_hierarchy_levels      = 0
       #   expand_with_mappings         = false
       #   min_term_size                = nil
@@ -329,13 +330,14 @@ module Annotator
       ##########################################
       def annotate(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
+        expand_class_hierarchy = options[:expand_class_hierarchy] == true ? true : false
         expand_hierarchy_levels = options[:expand_hierarchy_levels].is_a?(Integer) ? options[:expand_hierarchy_levels] : 0
         expand_with_mappings = options[:expand_with_mappings] == true ? true : false
 
         annotations = annotate_direct(text, options)
         return annotations.values if annotations.length == 0
 
-        if expand_hierarchy_levels > 0
+        if expand_class_hierarchy && expand_hierarchy_levels > 0
           hierarchy_annotations = []
           expand_hierarchies(annotations, expand_hierarchy_levels, ontologies)
         end
@@ -356,7 +358,7 @@ module Annotator
         with_synonyms = options[:with_synonyms] == false ? false : true
         longest_only = options[:longest_only] == true ? true : false
 
-        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port)
+        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port)
         rawAnnotations = client.annotate(text, false, whole_word_only)
 
         rawAnnotations.filter_integers() if filter_integers

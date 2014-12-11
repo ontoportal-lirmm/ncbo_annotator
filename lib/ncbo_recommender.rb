@@ -19,6 +19,7 @@ module Recommender
             ontologies: ontologies,
             semantic_types: [],
             filter_integers: false,
+            expand_class_hierarchy: true,
             expand_hierarchy_levels: DEFAULT_HIERARCHY_LEVELS,
             expand_with_mappings: false,
             min_term_size: nil,

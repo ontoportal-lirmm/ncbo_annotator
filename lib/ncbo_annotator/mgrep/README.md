@@ -3,7 +3,7 @@
 The class `Annotator::Mgrep::Client` encapsulates the interactions with mgrep. To instantiate this client use:
 
 ```
-client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host,Annotator.settings.mgrep_port)
+client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port)
 ```
 
 **Notice:** This client is not thread safe, one cannot get hold of a reference an use it in a multi-threaded environment. You can pipeline multiple annotation calls, that is safe. One could also instantiate multiple clients and make concurrent calls to a mgrep server.
@@ -32,7 +32,7 @@ Each annotation is a `Struct` with the following fields:
 
 
 ```
-client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host,Annotator.settings.mgrep_port)
+client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port)
 annotations = client.annotate("Legal occupations Officer of the court",true)
 annotations.each do |ann|
   puts ann.offset_from

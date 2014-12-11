@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 6d76c08b34a3e5e11c0c0c59394f98bb92dec092
-  branch: master
+  revision: 1f8e2266a54bcd03520057d3fb1ba0ac21a3c8b9
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: be30214ce68d8abb8568bbfe26478ddd72e75e11
-  branch: master
+  revision: 85c49722f9e9f6a114ae71cdc99e5a245fa7e192
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 36128148661efcc47b072c6060712623157077f3
+  revision: 5607a1a76cc02c4ffc668044f26577467588d984
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -49,8 +49,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 1bfd9bf0e5ff4dbf121d96517e41fa22e1df35e8
-  branch: master
+  revision: a5251d5902f84ab108e37fa17f7374ac12887e3a
+  branch: staging
   specs:
     sparql-client (1.0.4.1)
       json_pure (>= 1.4)
@@ -60,7 +60,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.0.11)
+    activesupport (4.0.12)
       i18n (~> 0.6, >= 0.6.9)
       minitest (~> 4.2)
       multi_json (~> 1.3)
@@ -97,10 +97,10 @@ GEM
     minitest (4.7.5)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.16)
+    mysql2 (0.3.17)
     net-http-persistent (2.9.4)
-    netrc (0.8.0)
-    oj (2.11.0)
+    netrc (0.9.0)
+    oj (2.11.1)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.1)
@@ -110,7 +110,7 @@ GEM
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.3.2)
+    rake (10.4.2)
     rdf (1.0.8)
       addressable (>= 2.2)
     redis (3.1.0)
@@ -120,9 +120,9 @@ GEM
       netrc (~> 0.7)
     rsolr (1.0.10)
       builder (>= 2.1.2)
-    ruby-xxHash (0.1.1)
+    ruby-xxHash (0.3.0)
     rubyzip (1.1.6)
-    sequel (4.16.0)
+    sequel (4.17.0)
     slop (3.6.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
