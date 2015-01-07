@@ -40,7 +40,8 @@ module Annotator
       LABEL_DELIM = ","
       DATA_TYPE_DELIM = "@@"
       CHUNK_SIZE = 500_000
-
+      DEFAULT_HIERARCHY_LEVEL = 3
+  
       def initialize(logger=nil)
         @stop_words = Annotator.settings.stop_words_default_list
         @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
@@ -337,7 +338,8 @@ module Annotator
         annotations = annotate_direct(text, options)
         return annotations.values if annotations.length == 0
 
-        if expand_class_hierarchy && expand_hierarchy_levels > 0
+        if expand_class_hierarchy || expand_hierarchy_levels > 0
+          expand_hierarchy_levels = DEFAULT_HIERARCHY_LEVEL if expand_hierarchy_levels <= 0
           hierarchy_annotations = []
           expand_hierarchies(annotations, expand_hierarchy_levels, ontologies)
         end
