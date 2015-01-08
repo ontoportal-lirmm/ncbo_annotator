@@ -16,13 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-<<<<<<< HEAD
-  revision: bfd16a57b967f979c5a20c5ae741d1d1f74a87ef
+  revision: 1113fe088c28923db3b73a5927d347f71972eef7
   branch: master
-=======
-  revision: b59d438c7a362858cd6eb127fb083d2bc36e98d6
-  branch: staging
->>>>>>> 09eb1c4... fixed NCBO-1175: Annotation with 'include ancestors' doesn't actually include them
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -41,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 42f8901e56f1f6b7c625b123ead635ea55b54e17
+  revision: 5607a1a76cc02c4ffc668044f26577467588d984
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -104,11 +99,7 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.3.17)
     net-http-persistent (2.9.4)
-<<<<<<< HEAD
-    netrc (0.10.0)
-=======
     netrc (0.10.2)
->>>>>>> 09eb1c4... fixed NCBO-1175: Annotation with 'include ancestors' doesn't actually include them
     oj (2.11.1)
     pony (1.11)
       mail (>= 2.0)
@@ -135,7 +126,7 @@ GEM
     slop (3.6.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
-    typhoeus (0.6.9)
+    typhoeus (0.7.0)
       ethon (>= 0.7.1)
     tzinfo (0.3.42)
     uuid (2.3.7)
