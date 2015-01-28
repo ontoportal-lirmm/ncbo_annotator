@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 9b5b9cac70faf952642c279ad9fc2637fb7c6d63
+  revision: 90b565af14877c2e5d479fec9f295259fc7c7dce
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 42f8901e56f1f6b7c625b123ead635ea55b54e17
+  revision: a3735ff490c10a1092d346cc6382c9542112d1cb
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -85,9 +85,9 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
     i18n (0.7.0)
-    json (1.8.1)
-    json_pure (1.8.1)
-    libxml-ruby (2.7.0)
+    json (1.8.2)
+    json_pure (1.8.2)
+    libxml-ruby (2.8.0)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
     mail (2.6.3)
@@ -100,7 +100,7 @@ GEM
     mysql2 (0.3.17)
     net-http-persistent (2.9.4)
     netrc (0.10.2)
-    oj (2.11.1)
+    oj (2.11.4)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.1)
@@ -108,7 +108,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (1.6.0)
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
     rdf (1.0.8)
@@ -126,7 +126,7 @@ GEM
     slop (3.6.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
-    typhoeus (0.6.9)
+    typhoeus (0.7.0)
       ethon (>= 0.7.1)
     tzinfo (0.3.42)
     uuid (2.3.7)
