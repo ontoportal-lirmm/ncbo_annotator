@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: bb133e733381e769e062fe0963787cb14a726e31
-  branch: staging
+  revision: 79715b41fa414ea9795afd412e282fd829f1a693
+  branch: master
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -67,7 +67,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    bcrypt (3.1.9)
+    bcrypt (3.1.10)
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
@@ -121,14 +121,14 @@ GEM
     rsolr (1.0.10)
       builder (>= 2.1.2)
     ruby-xxHash (0.3.0)
-    rubyzip (1.1.6)
-    sequel (4.18.0)
+    rubyzip (1.1.7)
+    sequel (4.19.0)
     slop (3.6.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
-    typhoeus (0.7.0)
+    typhoeus (0.7.1)
       ethon (>= 0.7.1)
-    tzinfo (0.3.42)
+    tzinfo (0.3.43)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
