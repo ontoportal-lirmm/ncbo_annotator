@@ -613,8 +613,9 @@ module Annotator
             redis.hset(id, resourceId, "#{entry}#{semanticTypeCodes}")
           else
             rawMatches = matches.split(DATA_TYPE_DELIM)
+            arrMatches = rawMatches[0].split('|')
 
-            if (!rawMatches[0].include? entry)
+            if (!arrMatches.include? entry)
               redis.hset(id, resourceId,
                          "#{rawMatches[0]}#{OCCURRENCE_DELIM}#{entry}#{semanticTypeCodes}")
             end
