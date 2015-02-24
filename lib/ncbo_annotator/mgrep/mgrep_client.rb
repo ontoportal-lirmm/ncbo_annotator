@@ -34,7 +34,14 @@ module Annotator
       end
       
       def annotate(text, longword, wholeword=true)
-        text = text.upcase.gsub("\n", " ")
+        begin
+          text = text.upcase.gsub("\n", " ")
+        rescue ArgumentError => e
+          # NCBO-1230 - Annotation failure after repeated calls
+          text = text.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+          text = text.upcase.gsub("\n", " ")
+        end
+
         if text.strip().length == 0
           return AnnotatedText(text, [])
         end

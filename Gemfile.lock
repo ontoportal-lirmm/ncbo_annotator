@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: bb133e733381e769e062fe0963787cb14a726e31
+  revision: 9e0a7d1d5503bddc69708f66a0d2f8a322310241
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -49,7 +49,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: a5251d5902f84ab108e37fa17f7374ac12887e3a
+  revision: ead7d226ff679969cbbb789c33d5660b45d5a521
   branch: staging
   specs:
     sparql-client (1.0.4.1)
@@ -67,7 +67,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    bcrypt (3.1.9)
+    bcrypt (3.1.10)
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
@@ -121,14 +121,14 @@ GEM
     rsolr (1.0.10)
       builder (>= 2.1.2)
     ruby-xxHash (0.3.0)
-    rubyzip (1.1.6)
-    sequel (4.18.0)
+    rubyzip (1.1.7)
+    sequel (4.19.0)
     slop (3.6.0)
     systemu (2.6.4)
     thread_safe (0.3.4)
-    typhoeus (0.7.0)
+    typhoeus (0.7.1)
       ethon (>= 0.7.1)
-    tzinfo (0.3.42)
+    tzinfo (0.3.43)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
