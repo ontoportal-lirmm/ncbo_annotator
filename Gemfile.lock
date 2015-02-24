@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 1f8e2266a54bcd03520057d3fb1ba0ac21a3c8b9
+  revision: c382b9e5b118c4ea502dd5cb5f0a324b2df7f725
   branch: staging
   specs:
     goo (0.0.2)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: a3735ff490c10a1092d346cc6382c9542112d1cb
+  revision: b39a3ab6673c73c7f725799fc258386995c4cbdc
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -79,7 +79,7 @@ GEM
     elasticsearch-transport (1.0.6)
       faraday
       multi_json
-    ethon (0.7.2)
+    ethon (0.7.3)
       ffi (>= 1.3.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -97,7 +97,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.17)
+    mysql2 (0.3.18)
     net-http-persistent (2.9.4)
     netrc (0.10.2)
     oj (2.11.4)
@@ -113,9 +113,9 @@ GEM
     rake (10.4.2)
     rdf (1.0.8)
       addressable (>= 2.2)
-    redis (3.2.0)
+    redis (3.2.1)
     ref (1.0.5)
-    rest-client (1.7.2)
+    rest-client (1.7.3)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rsolr (1.0.10)
