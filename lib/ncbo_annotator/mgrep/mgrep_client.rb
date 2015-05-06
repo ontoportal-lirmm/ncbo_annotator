@@ -12,7 +12,7 @@ module Annotator
 
         begin
           @socket = TCPSocket.open(hosts[use_ind], ports[use_ind].to_i)
-        rescue Errno::ECONNREFUSED
+        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
           begin
             @socket = TCPSocket.open(hosts[alt_ind], ports[alt_ind].to_i)
           rescue Exception
