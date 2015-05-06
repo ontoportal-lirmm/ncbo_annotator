@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: accd0f2b186aa1cf286ee10c497fec78fb2d17ce
+  revision: 03acf5fb96964cdd20e52651ef07a98657220ca1
   branch: staging
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: fc6f38d53eb961e16a2c6ab2d4dc4dfd929b63c5
+  revision: 502b8d10f557896b9760103b5ba276c617318db4
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -71,7 +71,7 @@ GEM
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
-    domain_name (0.5.23)
+    domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.8)
       elasticsearch-api (= 1.0.7)
@@ -97,21 +97,21 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.4.3)
+    mime-types (2.5)
     minitest (4.7.5)
     multi_json (1.11.0)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
     net-http-persistent (2.9.4)
     netrc (0.10.3)
-    oj (2.12.1)
+    oj (2.12.6)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (1.6.0)
+    rack (1.6.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
@@ -127,16 +127,16 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.3.0)
     rubyzip (1.1.7)
-    sequel (4.21.0)
+    sequel (4.22.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.5)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
-    tzinfo (0.3.43)
+    tzinfo (0.3.44)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.1)
     uuid (2.3.7)
       macaddr (~> 1.0)
 
