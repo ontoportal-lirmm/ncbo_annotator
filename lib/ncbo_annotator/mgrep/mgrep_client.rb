@@ -3,25 +3,27 @@ require 'socket'
 module Annotator
   module Mgrep
     class Client
-      def initialize(host, port, alt_host, alt_port)
+      def initialize(host, port, alt_host, alt_port, logger=nil)
+        @socket = nil
+        @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
         hosts = [host, alt_host]
         ports = [port, alt_port]
         use_ind = [0, 1].sample
         alt_ind = use_ind == 0 ? 1 : 0
-        @socket = nil
 
         begin
           @socket = TCPSocket.open(hosts[use_ind], ports[use_ind].to_i)
-        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+        rescue Exception => e
+          @logger.error("Can't connect to mgrep host #{hosts[use_ind]}:#{ports[use_ind]}: #{e.class}: #{e.message}. Now trying #{hosts[alt_ind]}:#{ports[alt_ind]}...")
           begin
             @socket = TCPSocket.open(hosts[alt_ind], ports[alt_ind].to_i)
-          rescue Exception
+          rescue Exception => e1
             # try one final time, though we really shouldn't be here
             # one of the servers should always be up
             begin
               @socket = TCPSocket.open(hosts[use_ind], ports[use_ind].to_i)
-            rescue Exception => e
-              raise StandardError, "Unable to establish mgrep connection due to exception #{e.class}: #{e.message}\n#{e.backtrace.join("\n\t")}"
+            rescue Exception => e2
+              raise StandardError, "Unable to establish mgrep connection to #{hosts[use_ind]}:#{ports[use_ind]} or #{hosts[alt_ind]}:#{ports[alt_ind]} due to exception #{e2.class}: #{e2.message}\n#{e2.backtrace.join("\n\t")}"
             end
           end
         end

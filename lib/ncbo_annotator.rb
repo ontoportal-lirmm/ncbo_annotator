@@ -360,7 +360,7 @@ module Annotator
         with_synonyms = options[:with_synonyms] == false ? false : true
         longest_only = options[:longest_only] == true ? true : false
 
-        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port)
+        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
         rawAnnotations = client.annotate(text, false, whole_word_only)
 
         rawAnnotations.filter_integers() if filter_integers
