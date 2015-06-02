@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 03acf5fb96964cdd20e52651ef07a98657220ca1
+  revision: 322fd6374f57d8bb99d1921063bb4ad75ff8e9c5
   branch: staging
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: f3dfb3b7e8fc08cd4c948d6742146f81f60687c9
+  revision: 28d07f2fc3ac432c2f49805b342715949264739f
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: b39a3ab6673c73c7f725799fc258386995c4cbdc
+  revision: a680c51507d68eb6f174e5c20b53c7637ab13d95
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -73,12 +73,12 @@ GEM
     cube-ruby (0.0.3)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
-    elasticsearch (1.0.9)
-      elasticsearch-api (= 1.0.9)
-      elasticsearch-transport (= 1.0.9)
-    elasticsearch-api (1.0.9)
+    elasticsearch (1.0.12)
+      elasticsearch-api (= 1.0.12)
+      elasticsearch-transport (= 1.0.12)
+    elasticsearch-api (1.0.12)
       multi_json
-    elasticsearch-transport (1.0.9)
+    elasticsearch-transport (1.0.12)
       faraday
       multi_json
     ethon (0.7.3)
@@ -89,7 +89,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
-    json (1.8.2)
+    json (1.8.3)
     json_pure (1.8.2)
     libxml-ruby (2.8.0)
     macaddr (1.7.1)
@@ -97,14 +97,14 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.5)
+    mime-types (2.6.1)
     minitest (4.7.5)
     multi_json (1.11.0)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
     net-http-persistent (2.9.4)
     netrc (0.10.3)
-    oj (2.12.8)
+    oj (2.12.9)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.1)
@@ -127,7 +127,7 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.3.0)
     rubyzip (1.1.7)
-    sequel (4.22.0)
+    sequel (4.23.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.5)
