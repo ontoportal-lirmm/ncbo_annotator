@@ -537,7 +537,7 @@ module Annotator
 
       def get_prefixed_id_from_value(instance_prefix, val)
         # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
-        intId = unsigned_to_signed(XXhash.xxh64(val.upcase, LinkedData::HASH_SEED))
+        intId = unsigned_to_signed(XXhash.xxh64(val.upcase, 112233))
         return get_prefixed_id(instance_prefix, intId)
       end
 
