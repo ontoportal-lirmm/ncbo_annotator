@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 28d07f2fc3ac432c2f49805b342715949264739f
+  revision: da7a4ddc98eb084a37670b6c4f7b7378a4dece94
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -32,7 +32,6 @@ GIT
       rack
       rack-test
       rsolr
-      ruby-xxHash
       rubyzip
 
 GIT
