@@ -9,6 +9,7 @@ require 'redis'
 require 'ontologies_linked_data'
 require 'logger'
 require 'benchmark'
+require 'ruby-xxhash'
 require_relative 'annotation'
 require_relative 'ncbo_annotator/mgrep/mgrep'
 require_relative 'ncbo_annotator/config'
@@ -41,7 +42,7 @@ module Annotator
       DATA_TYPE_DELIM = "@@"
       CHUNK_SIZE = 500_000
       DEFAULT_HIERARCHY_LEVEL = 3
-  
+
       def initialize(logger=nil)
         @stop_words = Annotator.settings.stop_words_default_list
         @logger = logger ||= Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
@@ -517,15 +518,15 @@ module Annotator
           annotations.each do |k,a|
             mapped_term = mapping.classes
                             .select { |c| c.id.to_s != a.annotatedClass.id.to_s }
-            if  mapped_term.length == mapping.classes.length || 
+            if  mapped_term.length == mapping.classes.length ||
                     mapped_term.length == 0
               next
             end
             mapped_term = mapped_term.first
             acronym = mapped_term.submission.ontology.acronym
 
-            if ontologies.length == 0 || 
-               ontologies.include?(mapped_term.submission.ontology.id.to_s) || 
+            if ontologies.length == 0 ||
+               ontologies.include?(mapped_term.submission.ontology.id.to_s) ||
                ontologies.include?(acronym)
                 a.add_mapping(mapped_term.id.to_s,
                               mapped_term.submission.ontology.id.to_s)
@@ -536,9 +537,17 @@ module Annotator
 
       def get_prefixed_id_from_value(instance_prefix, val)
         # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
-        intId = Zlib::crc32(val.upcase())
-        # intId = Zlib::crc32(val)
+        intId = unsigned_to_signed(XXhash.xxh64(val.upcase, LinkedData::HASH_SEED))
         return get_prefixed_id(instance_prefix, intId)
+      end
+
+      ##
+      # mgrep only supports signed 64bit integers as keys
+      # Ruby has no notion of signed/unsigned so we convert manually
+      def unsigned_to_signed(n, bits = 64)
+        mid = 2**(bits-1)
+        max_unsigned = 2**bits
+        n >= mid ? n - max_unsigned : n
       end
 
       def init_redis_for_tests()
