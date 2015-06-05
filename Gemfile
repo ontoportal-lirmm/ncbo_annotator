@@ -4,6 +4,7 @@ gem 'rake', '~> 10.0'
 gem 'redis', '~> 3.0'
 gem 'minitest', '~> 4.0'
 gem 'cube-ruby', require: "cube"
+gem 'ruby-xxHash'
 
 # Development
 gem 'pry', group: :development
