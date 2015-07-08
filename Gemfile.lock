@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 8bf9662b0ebf088723205a4f3cb4629ff1c2c1c4
-  branch: master
+  revision: 4ee570d0bd67844c5e86fed83fdbe825f88057d9
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 8a7206667e9b8139b295390c97bff69818492e8b
-  branch: master
+  revision: 4e3836616c8b8606ff065939bffa14824b5ce09f
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -99,7 +99,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.6.1)
     minitest (4.7.5)
-    multi_json (1.11.0)
+    multi_json (1.11.1)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
     net-http-persistent (2.9.4)
@@ -111,7 +111,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (1.6.1)
+    rack (1.6.2)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
@@ -137,7 +137,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    uuid (2.3.7)
+    uuid (2.3.8)
       macaddr (~> 1.0)
 
 PLATFORMS
@@ -152,4 +152,5 @@ DEPENDENCIES
   pry
   rake (~> 10.0)
   redis (~> 3.0)
+  ruby-xxHash
   sparql-client!
