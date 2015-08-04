@@ -65,7 +65,7 @@ module Annotator
         end
 
         def search_query(label)
-          query = "\"#{RSolr.escape(label)}\""
+          query = "\"#{solr_escape(label)}\""
           params = Hash.new
           params["defType"] = "edismax"
           params["stopwords"] = "true"
@@ -79,6 +79,10 @@ module Annotator
           hit = (total_found > 0) ? resp["response"]["docs"][0] : nil
 
           return hit
+        end
+
+        def solr_escape(text)
+          RSolr.solr_escape(text).gsub(/\s+/,"\\ ")
         end
 
         def parse_label(full_label)
