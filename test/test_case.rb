@@ -2,8 +2,6 @@ require "ontologies_linked_data"
 require_relative "../lib/ncbo_annotator"
 require_relative "../config/config.rb"
 
-require "test/unit"
-
 # Check to make sure you want to run if not pointed at localhost
 safe_host = Regexp.new(/localhost|ncbo-dev*|ncbo-unittest*|ncbo-stg-app-22*/)
 unless LinkedData.settings.goo_host.match(safe_host) && LinkedData.settings.search_server_url.match(safe_host) && Annotator.settings.annotator_redis_host.match(safe_host)

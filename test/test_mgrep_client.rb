@@ -1,10 +1,10 @@
 require "pry"
-require "test/unit"
+require "minitest/unit"
 
 require_relative "../lib/ncbo_annotator.rb"
 require_relative "../config/config.rb"
 
-class TestMgrepClient < Test::Unit::TestCase
+class TestMgrepClient < MiniTest::Unit
 
   def test_mgrep
     client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port)

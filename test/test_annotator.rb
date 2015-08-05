@@ -9,7 +9,7 @@ class TestAnnotator < TestCase
     @@redis = Annotator::Models::NcboAnnotator.new.redis
     db_size = @@redis.dbsize
 
-    if db_size > 5000
+    if db_size > 10_000
       puts "   This test cannot be run. You are probably pointing to the wrong redis backend. "
       return
     end
