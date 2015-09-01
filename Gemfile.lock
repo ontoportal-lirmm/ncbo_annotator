@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 36888d38d2a80f05e3849f6e082e6ac6e3d71fa6
+  revision: 1d076b3a4755501146721edf28606e0b3efcebf4
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -101,10 +101,10 @@ GEM
     minitest (4.7.5)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    mysql2 (0.3.19)
+    mysql2 (0.3.20)
     net-http-persistent (2.9.4)
     netrc (0.10.3)
-    oj (2.12.11)
+    oj (2.12.12)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.1)
@@ -127,11 +127,11 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.4.0.1)
     rubyzip (1.1.7)
-    sequel (4.25.0)
+    sequel (4.26.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.5)
-    typhoeus (0.7.2)
+    typhoeus (0.7.3)
       ethon (>= 0.7.4)
     tzinfo (0.3.44)
     unf (0.1.4)
