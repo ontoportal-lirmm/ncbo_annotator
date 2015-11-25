@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: f5516e491cd7f672bb197b3e5b90714c1133e4d3
+  revision: ef61db4d6ce4d729bccb7ad959880d386b366021
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -97,7 +97,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.6.2)
+    mime-types (2.99)
     minitest (4.7.5)
     multi_json (1.11.2)
     multipart-post (2.0.0)
