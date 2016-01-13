@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 9ec34bf0b4f3cbcc38d31edbf8b77849d527b3c9
+  revision: c1991d8dc37516869ab51464b5102b786398fbd6
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -114,7 +114,7 @@ GEM
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
-    rake (10.4.2)
+    rake (10.5.0)
     rdf (1.0.8)
       addressable (>= 2.2)
     redis (3.2.2)
