@@ -309,7 +309,7 @@ module Annotator
             sub.add_submission_status(status.get_error_status())
             sub.save()
           rescue Exception => e
-            msg = "Also, unable to add ANNOTATOR_ERROR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
+            msg = "Also, unable to add ERROR_ANNOTATOR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
             logger.error(msg)
             logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
           end
