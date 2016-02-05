@@ -158,7 +158,7 @@ module Annotator
           if last.nil?
             @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
           else
-            @logger.info("Creating Annotator cache for #{ont.acronym} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
+            @logger.info("Creating Annotator cache for #{ont.id.to_s} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
             create_term_cache_for_submission(@logger, last, redis, redis_prefix)
           end
 
