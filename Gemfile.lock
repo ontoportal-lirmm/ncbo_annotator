@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 30e12708258b2c08cfcc2f5790160fa703ac4ec2
-  branch: master
+  revision: 2296faa432e62918437c8b943122e0ec87e7d961
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -71,7 +71,7 @@ GEM
     builder (3.2.2)
     coderay (1.1.0)
     cube-ruby (0.0.3)
-    domain_name (0.5.25)
+    domain_name (0.5.20160128)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
@@ -104,7 +104,7 @@ GEM
     mysql2 (0.4.2)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.14.3)
+    oj (2.14.4)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.3)
@@ -127,7 +127,7 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.4.0.1)
     rubyzip (1.1.7)
-    sequel (4.30.0)
+    sequel (4.31.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.5)
@@ -136,7 +136,7 @@ GEM
     tzinfo (0.3.46)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.1)
+    unf_ext (0.0.7.2)
     uuid (2.3.8)
       macaddr (~> 1.0)
 
