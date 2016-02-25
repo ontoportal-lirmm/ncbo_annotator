@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: de6fceb58ecc1d17fe426586b62db4d8a1543137
-  branch: master
+  revision: ba85ef7d83788be89d4850e95db2a8068f0b2311
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 57e14477b55a295348565063955c12928557a17d
-  branch: master
+  revision: dcb237b5af17c82eecbe8846a66ba35a499ac41a
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -71,7 +71,7 @@ GEM
     builder (3.2.2)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20160128)
+    domain_name (0.5.20160216)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
@@ -101,7 +101,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    mysql2 (0.4.2)
+    mysql2 (0.4.3)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
     oj (2.14.5)
