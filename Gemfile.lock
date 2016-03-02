@@ -127,7 +127,7 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.4.0.1)
     rubyzip (1.2.0)
-    sequel (4.31.0)
+    sequel (4.32.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.5)
