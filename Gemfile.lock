@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: d43bd6a6c8b014ebd69eabeda843740b66560ebb
+  revision: 5ab2d63cd2d54f447507b00317924adf97fd76bb
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -67,11 +67,11 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    bcrypt (3.1.10)
+    bcrypt (3.1.11)
     builder (3.2.2)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20160216)
+    domain_name (0.5.20160309)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
