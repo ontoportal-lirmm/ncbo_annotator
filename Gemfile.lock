@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 44c1702aeb7cc20878828734a538b9f9520c77a7
+  revision: 7fa37ac992bd014d6f2dc996055a38b965c3f825
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -49,7 +49,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 41dab44973c3f086bf335c2513cc208144e99a74
+  revision: ead7d226ff679969cbbb789c33d5660b45d5a521
   branch: staging
   specs:
     sparql-client (1.0.4.1)
