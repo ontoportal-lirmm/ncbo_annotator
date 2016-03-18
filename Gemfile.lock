@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 7fa37ac992bd014d6f2dc996055a38b965c3f825
+  revision: 16889536dfd73807db6703821e0afa9ff516a033
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -49,7 +49,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: ead7d226ff679969cbbb789c33d5660b45d5a521
+  revision: 41dab44973c3f086bf335c2513cc208144e99a74
   branch: staging
   specs:
     sparql-client (1.0.4.1)
@@ -71,7 +71,7 @@ GEM
     builder (3.2.2)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20160309)
+    domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
