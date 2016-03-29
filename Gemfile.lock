@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 2f69bdf6ee1e91aa974fe844b5097e465a2fe596
+  revision: f6fab1c3b993a2ea521af22086a34ba1feeffd02
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -104,7 +104,7 @@ GEM
     mysql2 (0.4.3)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.14.6)
+    oj (2.15.0)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.3)
@@ -154,3 +154,6 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
+
+BUNDLED WITH
+   1.11.2
