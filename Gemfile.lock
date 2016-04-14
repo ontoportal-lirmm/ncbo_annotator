@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 1f1615649d8f1f73d85e8ffa9ec75c19f0c008e3
+  revision: 6ba21f6b183f2c653d35cf7b7bc042aafc6ecb54
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 882b3c22e6b8f979bbda64abfec610ca259776b3
+  revision: cadb052f3b00993331b993ffcb1dc1b2aad11c42
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -73,12 +73,12 @@ GEM
     cube-ruby (0.0.3)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
-    elasticsearch (1.0.15)
-      elasticsearch-api (= 1.0.15)
-      elasticsearch-transport (= 1.0.15)
-    elasticsearch-api (1.0.15)
+    elasticsearch (1.0.17)
+      elasticsearch-api (= 1.0.17)
+      elasticsearch-transport (= 1.0.17)
+    elasticsearch-api (1.0.17)
       multi_json
-    elasticsearch-transport (1.0.15)
+    elasticsearch-transport (1.0.17)
       faraday
       multi_json
     ethon (0.8.1)
@@ -154,6 +154,3 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
-
-BUNDLED WITH
-   1.11.2
