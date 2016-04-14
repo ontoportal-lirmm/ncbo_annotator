@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 33df6f4bfdf4af1a740baf818780ab5170291bfb
+  revision: 3591c98ed60ed78e2828209ff0e512019b1dc5f2
   branch: staging
   specs:
     goo (0.0.2)
@@ -154,3 +154,6 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
+
+BUNDLED WITH
+   1.11.2
