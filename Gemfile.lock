@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: a772b2a235b424e6b31b68667c961d55bb750b6c
+  revision: 0e38954bf84f8cb06318a37a491f70e3e5537d55
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -154,3 +154,6 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
+
+BUNDLED WITH
+   1.11.2
