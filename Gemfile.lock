@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 26c6190f7b9c7438be4f2cd33ec6fd1a88fd70af
+  revision: 95b31daa186d5a99ad43c0ce94ca9213b9a553b5
   branch: staging
   specs:
     goo (0.0.2)
@@ -101,7 +101,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    mysql2 (0.4.3)
+    mysql2 (0.4.4)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
     oj (2.15.0)
@@ -117,7 +117,7 @@ GEM
     rake (10.5.0)
     rdf (1.0.8)
       addressable (>= 2.2)
-    redis (3.2.2)
+    redis (3.3.0)
     ref (2.0.0)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -133,7 +133,7 @@ GEM
     thread_safe (0.3.5)
     typhoeus (1.0.1)
       ethon (>= 0.8.0)
-    tzinfo (0.3.48)
+    tzinfo (0.3.49)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
@@ -154,6 +154,3 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
-
-BUNDLED WITH
-   1.11.2
