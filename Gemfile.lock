@@ -154,6 +154,3 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
-
-BUNDLED WITH
-   1.11.2
