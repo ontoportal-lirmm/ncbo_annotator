@@ -240,6 +240,8 @@ module Annotator
 
             paging = LinkedData::Models::Class.in(sub)
                 .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
+            cls_count = sub.class_count(logger)
+            paging.page_count_set(cls_count) unless cls_count < 0
 
             begin
               class_page = nil
