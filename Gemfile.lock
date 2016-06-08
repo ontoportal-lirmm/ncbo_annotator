@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 4a522dd294a82b3af87a3f0a395060aec3d3e01c
+  revision: bc0d04b67bb4ad70df0f2d2b61c6903bd4b33b71
   branch: staging
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 4f5fd00fdd2eb41daa39907139fd600340f24e46
+  revision: 3a56b2a2ce1cffad25857739f876fbecabdae65f
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -154,3 +154,6 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
+
+BUNDLED WITH
+   1.11.2
