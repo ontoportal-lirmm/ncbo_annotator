@@ -49,8 +49,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 5c3bbd2c9d28d1c2f3efcc8c26de969c2fd4a433
-  branch: master
+  revision: a0076dedc65d6620b88223c7f69dbe5c5ada3b56
+  branch: staging
   specs:
     sparql-client (1.0.4.1)
       json_pure (>= 1.4)
@@ -97,14 +97,14 @@ GEM
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
-    mime-types (2.99.1)
+    mime-types (2.99.2)
     minitest (4.7.5)
-    multi_json (1.12.0)
+    multi_json (1.12.1)
     multipart-post (2.0.0)
     mysql2 (0.4.4)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.15.0)
+    oj (2.15.1)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.3)
@@ -127,7 +127,7 @@ GEM
       builder (>= 2.1.2)
     ruby-xxHash (0.4.0.1)
     rubyzip (1.2.0)
-    sequel (4.34.0)
+    sequel (4.35.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.5)
