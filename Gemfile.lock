@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: c75913939427a9265e1c047a31c5faee60e2eaea
+  revision: c8cc22b62c09ab0fe415e4a3c206ef02da78dafd
   branch: master
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: c23f2d0695bd9fa232b19936318eb6206afa28c2
+  revision: 5985b89b7b60989e00ef83c42ae63d5d2a83ea46
   branch: master
   specs:
     ontologies_linked_data (0.0.1)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 27d89e4c3ed950935da97214bf5c1b5b76f7ac9a
+  revision: 00221f132d3c3c1961f65dbfc093ff83a95cc1d5
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch
@@ -49,12 +49,12 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 7a2265337f71e0e312be76b08ce6d45685983146
+  revision: 07ec7b130319035bf2bff40dd4bf094a6946ec61
   branch: master
   specs:
     sparql-client (1.0.4.1)
       json_pure (>= 1.4)
-      net-http-persistent (>= 1.4)
+      net-http-persistent (= 2.9.4)
       rdf (>= 1.0)
 
 GEM
@@ -70,7 +70,6 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     coderay (1.1.1)
-    connection_pool (2.2.0)
     cube-ruby (0.0.3)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
@@ -105,8 +104,7 @@ GEM
     multi_json (1.12.1)
     multipart-post (2.0.0)
     mysql2 (0.4.4)
-    net-http-persistent (3.0.0)
-      connection_pool (~> 2.2)
+    net-http-persistent (2.9.4)
     netrc (0.11.0)
     oj (2.17.4)
     pony (1.11)
