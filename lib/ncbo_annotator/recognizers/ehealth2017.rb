@@ -1,6 +1,7 @@
 require 'open3'
 require 'logger'
-require "addressable/uri"
+require 'addressable/uri'
+require_relative '../rabbitmq/recognizer_client'
 
 module Annotator
   module Models
@@ -11,45 +12,30 @@ module Annotator
 
         def initialize
           super()
-          @mallet_jar_path = $ncbo_annotator_project_bin + "mallet.jar"
-          @mallet_deps_jar_path = $ncbo_annotator_project_bin + "mallet_deps.jar"
+          @client = RecognizerClient.new(Annotator.settings.rabbitmq_host, Annotator.settings.rabbitmq_port)
+          @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
         end
 
-        def mallet_java_call(text, params="")
-          #command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}mallet.jar:#{$ncbo_annotator_project_bin}mallet-deps.jar:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"hello world\""
-          params_str = "params \"\""
-          params_str = "params \"#{Shellwords.escape(params)}\"" unless params.empty?
-          command_call = "java -cp \"#{$ncbo_annotator_project_bin}.:#{$ncbo_annotator_project_bin}*\" BasicClassifier string \"#{Shellwords.escape(text)}\" #{params_str}"
-          stdout, stderr, status = Open3.capture3(command_call)
-
-          if not status.success?
-            @logger.error("Error executing Mallet recognizer")
-            @logger.error(stderr)
-            @logger.error(stdout)
-            raise Exception, "Mallet java command exited with #{status.exitstatus}. Check the log for a more detailed description of the error."
-          end
-
-          return stdout
-        end
 
         def annotate_direct(text, options={})
           uri = Addressable::URI.new
           uri.query_values = options
           params = uri.query
 
-          stdout = mallet_java_call(text, params)
+          stdout = @client.call(text)
           labels = stdout.split(" ")
+          @logger.info(labels)
           allAnnotations = {}
 
-          labels.each do |label|
-            category, sub_category = parse_label(label)
-            hit = search_query(sub_category) unless (sub_category.nil?)
+          #labels.each do |label|
+          #  category, sub_category = parse_label(label)
+          #  hit = search_query(sub_category) unless (sub_category.nil?)
 
-            unless hit.nil?
-              resource_id = hit["resource_id"]
-              allAnnotations[resource_id] = Annotation.new(resource_id, COGPO_RESOURCE_ID)
-            end
-          end
+          #  unless hit.nil?
+          #    resource_id = hit["resource_id"]
+          #    allAnnotations[resource_id] = Annotation.new(resource_id, COGPO_RESOURCE_ID)
+          #  end
+          #end
 
           return allAnnotations
         end
