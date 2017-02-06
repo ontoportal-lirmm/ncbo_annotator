@@ -133,6 +133,14 @@ module Annotator
           outFile.puts("#{realKey}\t#{realVal}")
         end
         outFile.close
+        # Create lemmatized dic file
+        indexStop=Annotator.settings.mgrep_dictionary_file.lengh-5;
+        dicName=Annotator.settings.mgrep_dictionary_file[1..indexStop]
+        wasGood = system( "java -jar LemmatizerDic.jar "+dicName+".txt "+dicName+"-lem.txt")
+        if (!wasGood)
+          raise Exception, "Generating lemmatized dictionary failed."
+        end
+        # Redis
         redis_mgrep_dict_refresh_timestamp()
       end
 
