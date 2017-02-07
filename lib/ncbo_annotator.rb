@@ -134,9 +134,9 @@ module Annotator
         end
         outFile.close
         # Create lemmatized dic file
-        indexStop=Annotator.settings.mgrep_dictionary_file.lengh-5;
-        dicName=Annotator.settings.mgrep_dictionary_file[1..indexStop]
-        wasGood = system( "java -jar LemmatizerDic.jar "+dicName+".txt "+dicName+"-lem.txt")
+        indexStop=Annotator.settings.mgrep_dictionary_file.length-5;
+        dicName=Annotator.settings.mgrep_dictionary_file[0..indexStop]
+        wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/LemmatizerDic.jar "+dicName+".txt "+dicName+"-lem.txt")
         if (!wasGood)
           raise Exception, "Generating lemmatized dictionary failed."
         end
