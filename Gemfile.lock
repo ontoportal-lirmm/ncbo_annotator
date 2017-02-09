@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: ab5b3a7dce606da71e4b016c6e1428f8276988b6
+  revision: af56f000d50eca13e2a3afba6cdcb31bb20a2d4e
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -128,7 +128,7 @@ GEM
     rsolr (1.1.2)
       builder (>= 2.1.2)
     ruby-xxHash (0.4.0.1)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     sequel (4.43.0)
     slop (3.6.0)
     systemu (2.6.5)
@@ -158,4 +158,4 @@ DEPENDENCIES
   sparql-client!
 
 BUNDLED WITH
-   1.12.5
+   1.13.7
