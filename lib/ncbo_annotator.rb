@@ -371,12 +371,26 @@ module Annotator
         lemmatize = options[:lemmatize] == "true" ? true : false
 
         if (lemmatize)
+          # Lunch Mgrep with the lemmatized dictionary
           client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_lem_host, Annotator.settings.mgrep_lem_port, Annotator.settings.mgrep_lem_alt_host, Annotator.settings.mgrep_lem_alt_port, @logger)
+          # Lemmatize the input text
+          temp = Tempfile.new("text")
+          temp.puts "key \t"+text
+          temp.close
+          tempLem = Tempfile.new("lem")
+          tempLem.close
+          wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/LemmatizerDic.jar "+temp.path+" "+tempLem.path)
+          if (!wasGood)
+            raise Exception, "Lemmatizing the text failed."
+          end
+          tempLem.open
+          text = tempLem.gets.split("\t")[1]
+          temp.close!
+          tempLem.close!
         else
           client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
         end
 
-        #TODO: lemmatize text
 
         rawAnnotations = client.annotate(text, false, whole_word_only)
 
