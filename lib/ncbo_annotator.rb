@@ -368,8 +368,16 @@ module Annotator
         whole_word_only = options[:whole_word_only] == false ? false : true
         with_synonyms = options[:with_synonyms] == false ? false : true
         longest_only = options[:longest_only] == true ? true : false
+        lemmatize = options[:lemmatize] == "true" ? true : false
 
-        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
+        if (lemmatize)
+          client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_lem_host, Annotator.settings.mgrep_lem_port, Annotator.settings.mgrep_lem_alt_host, Annotator.settings.mgrep_lem_alt_port, @logger)
+        else
+          client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
+        end
+
+        #TODO: lemmatize text
+
         rawAnnotations = client.annotate(text, false, whole_word_only)
 
         rawAnnotations.filter_integers() if filter_integers
