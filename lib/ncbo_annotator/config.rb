@@ -21,6 +21,11 @@ module Annotator
     @settings.mgrep_port                 ||= 55555
     @settings.mgrep_alt_host             ||= @settings.mgrep_host
     @settings.mgrep_alt_port             ||= @settings.mgrep_port
+    @settings.mgrep_dictionary_file      ||= "./test/tmp/dictionary.txt"
+    @settings.mgrep_host                 ||= "localhost"
+    @settings.mgrep_port                 ||= 55555
+    @settings.mgrep_alt_host             ||= @settings.mgrep_host
+    @settings.mgrep_alt_port             ||= @settings.mgrep_port
     @settings.annotator_redis_host       ||= "localhost"
     @settings.annotator_redis_port       ||= 6379
     @settings.enable_recognizer_param    ||= false
