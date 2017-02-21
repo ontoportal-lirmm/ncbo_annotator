@@ -33,7 +33,19 @@ module Annotator
 
     def add_annotation(from, to, matchType, text)
       raise ArgumentError, "Invalid annotation type: #{matchType}" unless MATCH_TYPES.values.include?(matchType)
-      @annotations << { from: from, to: to, matchType: matchType, text: text }
+      if (contains(from, to, text) == false)
+        @annotations << { from: from, to: to, matchType: matchType, text: text }
+      end
+    end
+
+    def contains(from, to, text)
+      bool = false
+      @annotations.each do |annotation|
+        if (annotation[:from]==from and annotation[:to]==to and annotation[:text]==text)
+          bool=true
+        end
+      end
+      return bool
     end
 
     def add_parent(parent, distance)
