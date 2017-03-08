@@ -153,13 +153,19 @@ module Annotator
 
         ontologies.each_index do |i|
           ont = ontologies[i]
-          last = ont.latest_submission(status: [:rdf])
 
-          if last.nil?
-            @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
-          else
-            @logger.info("Creating Annotator cache for #{ont.id.to_s} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
-            create_term_cache_for_submission(@logger, last, redis, redis_prefix)
+          begin
+            ont.bring(:submissions) if ont.bring?(:submissions)
+            last = ont.latest_submission(status: [:rdf])
+
+            if last.nil?
+              @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
+            else
+              @logger.info("Creating Annotator cache for #{ont.id.to_s} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
+              create_term_cache_for_submission(@logger, last, redis, redis_prefix)
+            end
+          rescue Exception => e
+            @logger.error("Error: exception while creating Annotator cache for #{ont.id.to_s}: #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
           end
 
           remaining_ontologies -= 1
@@ -220,6 +226,7 @@ module Annotator
         size = 2500
         count_classes = 0
         status = LinkedData::Models::SubmissionStatus.find("ANNOTATOR").first
+        error_status = status.get_error_status
 
         begin
           #remove ANNOTATOR status before starting
@@ -308,7 +315,7 @@ module Annotator
           logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
 
           begin
-            sub.add_submission_status(status.get_error_status())
+            sub.add_submission_status(error_status)
             sub.save()
           rescue Exception => e
             msg = "Also, unable to add ERROR_ANNOTATOR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
