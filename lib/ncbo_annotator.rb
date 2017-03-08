@@ -437,7 +437,7 @@ module Annotator
           end
         end
 
-        if (longest_only)
+        if longest_only
           flattenedAnnotations.sort! {|a, b| [a.annotations[0][:from], b.annotations[0][:to]] <=> [b.annotations[0][:from], a.annotations[0][:to]]}
           cur_min = 0;
           cur_max = 0;
@@ -447,7 +447,7 @@ module Annotator
             new_min = annotation.annotations[0][:from]
             new_max = annotation.annotations[0][:to]
 
-            if (new_max > cur_max || (cur_min == new_min && cur_max == new_max))
+            if new_max > cur_max || (cur_min == new_min && cur_max == new_max)
               flag = false
               cur_min = new_min
               cur_max = new_max
@@ -466,7 +466,7 @@ module Annotator
           end
         end
 
-        return allAnnotations
+        allAnnotations
       end
 
       def expand_hierarchies(annotations, levels, ontologies)
