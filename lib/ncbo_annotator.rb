@@ -158,8 +158,21 @@ module Annotator
             ont.bring(:submissions) if ont.bring?(:submissions)
             last = ont.latest_submission(status: [:rdf])
 
+            # TODO: this code was added to deal with intermittent issues with 4store, where last
+            # was being returned as nil for no apparent reason!!!
+            j = 0
+            num_calls = 3
+
+            while last.nil? && j < num_calls do
+              j += 1
+              @logger.info("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}. Retrying #{j} times...")
+              sleep(1)
+              last = ont.latest_submission(status: [:rdf])
+              @logger.info("Success getting latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s} after retrying #{j} times...") unless last.nil?
+            end
+
             if last.nil?
-              @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
+              @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s} after retrying #{j} times...")
             else
               @logger.info("Creating Annotator cache for #{ont.id.to_s} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
               create_term_cache_for_submission(@logger, last, redis, redis_prefix)
@@ -255,7 +268,7 @@ module Annotator
               t0 = Time.now
               class_page = paging.all()
               count_classes += class_page.length
-              logger.info("Page #{page} of #{class_page.total_pages} classes retrieved in #{Time.now - t0} sec.")
+              logger.info("Page #{page} of #{class_page.total_pages} - #{class_page.length} classes retrieved in #{Time.now - t0} sec.")
 
               t0 = Time.now
 
@@ -269,12 +282,37 @@ module Annotator
                   prefLabel = cls.prefLabel
                   synonyms = cls.synonym || []
                   semanticTypes = cls.semanticType || []
-                rescue Goo::Base::AttributeNotLoaded =>  e
-                  msg = "Error loading attributes for class #{cls.id.to_s}"
-                  backtrace = e.backtrace.join("\n\t")
-                  logger.error(msg)
-                  logger.error(backtrace)
-                  next
+                rescue Exception => e
+                  i = 0
+                  num_calls = 3
+                  prefLabel = nil
+                  synonyms = []
+                  semanticTypes = []
+
+                  while prefLabel.nil? && i < num_calls do
+                    i += 1
+                    puts "Exception while loading attributes for #{resourceId}. Retrying #{i} times..."
+                    sleep(1)
+
+                    begin
+                      cls.bring(:prefLabel)
+                      cls.bring(:synonym)
+                      cls.bring(:semanticType)
+                      prefLabel = cls.prefLabel
+                      synonyms = cls.synonym || []
+                      semanticTypes = cls.semanticType || []
+                      puts "Success getting attributes for #{resourceId} after retrying #{i} times..."
+                    rescue Exception => e1
+                      prefLabel = nil
+                      synonyms = []
+                      semanticTypes = []
+
+                      if i == num_calls
+                        logger.error("Error loading attributes for class #{resourceId} after retrying #{i} times: #{e1.class}: #{e1.message}\n#{e1.backtrace.join("\n")}")
+                        next
+                      end
+                    end
+                  end
                 end
 
                 next if prefLabel.nil? # Skip classes with no prefLabel
@@ -318,7 +356,7 @@ module Annotator
             sub.add_submission_status(error_status)
             sub.save()
           rescue Exception => e
-            msg = "Also, unable to add ERROR_ANNOTATOR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
+            msg = "Also, unable to save ERROR_ANNOTATOR status to #{sub.ontology.acronym} (#{sub.id.to_s}). Status: #{status.id.to_s}. Error Status: #{error_status}."
             logger.error(msg)
             logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
           end
