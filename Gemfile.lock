@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: b31fa7d3270d29bf7d8011dc7a4090faa3178ee8
+  revision: 90992af8e5687144ba97b6461426fcc572ecc5f8
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -28,6 +28,7 @@ GIT
       multi_json
       ncbo_resource_index
       oj
+      omni_logger
       pony
       rack
       rack-test
@@ -92,6 +93,7 @@ GEM
     json (2.0.3)
     json_pure (2.0.3)
     libxml-ruby (3.0.0)
+    logger (1.2.8)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
     mail (2.6.4)
@@ -106,7 +108,9 @@ GEM
     mysql2 (0.4.5)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.18.3)
+    oj (2.18.5)
+    omni_logger (0.1.4)
+      logger
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.4)
