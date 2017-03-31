@@ -24,7 +24,7 @@ GIT
 GIT
   remote: git://github.com/sifrproject/goo.git
   revision: 0d042a1eb4bba24c873dd87afa0a672df653c9af
-  branch: lirmm
+  branch: agroportal
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -39,8 +39,8 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 841c8e0ae1b976a3b18055f0af07c048395bc8f8
-  branch: lirmm
+  revision: 752f1e80cb5c89a2ed243d1c4413d03f06922bb9
+  branch: agroportal
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
