@@ -447,7 +447,11 @@ module Annotator
 
               if (longest_only)
                 annotation = Annotation.new(key, ontResourceId)
-                annotation.add_annotation(convert_from(regexIndexes,ann.offset_from), convert_to(regexIndexes,ann.offset_to), typeAndOnt[0], ann.value)
+                if (lemmatize)
+                  annotation.add_annotation(convert_from(regexIndexes,ann.offset_from), convert_to(regexIndexes,ann.offset_to), typeAndOnt[0], ann.value)
+                else
+                  annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                end
                 flattenedAnnotations << annotation
               else
                 id_group = ontResourceId + key
