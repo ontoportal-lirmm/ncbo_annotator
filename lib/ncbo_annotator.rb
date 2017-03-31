@@ -139,6 +139,8 @@ module Annotator
         wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+dicName+".txt "+dicName+"-lem.txt false")
         if (!wasGood)
           raise Exception, "Generating lemmatized dictionary failed."
+        else
+          @logger.info("Lemmatized dictionary generated successfully!")
         end
         # Redis
         redis_mgrep_dict_refresh_timestamp()
