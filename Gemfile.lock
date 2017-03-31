@@ -1,40 +1,4 @@
 GIT
-  remote: git://github.com/ncbo/goo.git
-  revision: f191d81c63b22e2a0ff9f30daa43303320ab6ff4
-  branch: master
-  specs:
-    goo (0.0.2)
-      addressable (= 2.3.5)
-      pry
-      rdf (= 1.0.8)
-      redis
-      rest-client
-      rsolr
-      sparql-client
-      systemu
-      uuid
-
-GIT
-  remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: c9387cb5a1dc82d768a00f40f1a089c7415fe21f
-  branch: master
-  specs:
-    ontologies_linked_data (0.0.1)
-      activesupport
-      bcrypt
-      goo
-      json
-      libxml-ruby
-      multi_json
-      ncbo_resource_index
-      oj
-      pony
-      rack
-      rack-test
-      rsolr
-      rubyzip
-
-GIT
   remote: git://github.com/ncbo/resource_index.git
   revision: d43bd6a6c8b014ebd69eabeda843740b66560ebb
   specs:
@@ -57,6 +21,42 @@ GIT
       net-http-persistent (>= 1.4)
       rdf (>= 1.0)
 
+GIT
+  remote: git://github.com/sifrproject/goo.git
+  revision: 0d042a1eb4bba24c873dd87afa0a672df653c9af
+  branch: lirmm
+  specs:
+    goo (0.0.2)
+      addressable (= 2.3.5)
+      pry
+      rdf (= 1.0.8)
+      redis
+      rest-client
+      rsolr
+      sparql-client
+      systemu
+      uuid
+
+GIT
+  remote: git://github.com/sifrproject/ontologies_linked_data.git
+  revision: 841c8e0ae1b976a3b18055f0af07c048395bc8f8
+  branch: lirmm
+  specs:
+    ontologies_linked_data (0.0.1)
+      activesupport
+      bcrypt
+      goo
+      json
+      libxml-ruby
+      multi_json
+      ncbo_resource_index
+      oj
+      pony
+      rack
+      rack-test
+      rsolr
+      rubyzip
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,11 +67,11 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    bcrypt (3.1.10)
-    builder (3.2.2)
+    bcrypt (3.1.11)
+    builder (3.2.3)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20160216)
+    domain_name (0.5.20170223)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
@@ -86,12 +86,12 @@ GEM
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.10)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.7.0)
-    json (1.8.3)
+    i18n (0.8.1)
+    json (2.0.3)
     json_pure (1.8.3)
-    libxml-ruby (2.8.0)
+    libxml-ruby (3.0.0)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
     mail (2.6.3)
@@ -104,14 +104,14 @@ GEM
     mysql2 (0.4.3)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.14.6)
+    oj (2.18.5)
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (1.6.4)
+    rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.5.0)
@@ -119,21 +119,21 @@ GEM
       addressable (>= 2.2)
     redis (3.2.2)
     ref (2.0.0)
-    rest-client (1.8.0)
+    rest-client (2.0.1)
       http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
-    rsolr (1.1.1)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    rsolr (1.1.2)
       builder (>= 2.1.2)
     ruby-xxHash (0.4.0.1)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     sequel (4.32.0)
     slop (3.6.0)
     systemu (2.6.5)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     typhoeus (1.0.1)
       ethon (>= 0.8.0)
-    tzinfo (0.3.46)
+    tzinfo (0.3.53)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
@@ -154,3 +154,6 @@ DEPENDENCIES
   redis (~> 3.0)
   ruby-xxHash
   sparql-client!
+
+BUNDLED WITH
+   1.14.6
