@@ -10,7 +10,7 @@ gem 'ruby-xxHash'
 gem 'pry', group: :development
 
 # NCBO gems (can be from a local dev path or from rubygems/git)
-gem 'goo', github: 'sifrproject/goo', branch: 'lirmm'
+gem 'goo', github: 'sifrproject/goo', branch: 'sifr'
 gem 'sparql-client', github: 'ncbo/sparql-client', branch: 'master'
-gem 'ontologies_linked_data', github: 'sifrproject/ontologies_linked_data', branch: 'lirmm'
+gem 'ontologies_linked_data', github: 'sifrproject/ontologies_linked_data', branch: 'sifr'
 gem 'ncbo_resource_index', github: 'ncbo/resource_index'

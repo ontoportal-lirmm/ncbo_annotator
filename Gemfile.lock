@@ -23,8 +23,8 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/goo.git
-  revision: 0d042a1eb4bba24c873dd87afa0a672df653c9af
-  branch: lirmm
+  revision: c923eeacaad737b37e1d757ee8957463e89601a8
+  branch: sifr
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -39,8 +39,8 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 841c8e0ae1b976a3b18055f0af07c048395bc8f8
-  branch: lirmm
+  revision: 144d8e528970dfdc2a3569bb4f71f36e2b441636
+  branch: sifr
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
