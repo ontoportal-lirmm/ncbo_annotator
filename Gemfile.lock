@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 42b1fb7875b5dd795445fb2e1fb695b8b599fa84
+  revision: 23f7730eaacc4d385b9a20ea5fd46183151ec435
   branch: agroportal
   specs:
     ontologies_linked_data (0.0.1)
@@ -71,7 +71,7 @@ GEM
     builder (3.2.3)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20170223)
+    domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
