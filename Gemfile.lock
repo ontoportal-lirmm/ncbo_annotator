@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 7a70327357a819d0b8b434955cbe1fb717413d21
+  revision: 72665ac80e68c5feb611e4d8850b7a127c21061a
   branch: sifr
   specs:
     ontologies_linked_data (0.0.1)
@@ -71,7 +71,7 @@ GEM
     builder (3.2.3)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20170223)
+    domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
