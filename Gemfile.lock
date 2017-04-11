@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 23f7730eaacc4d385b9a20ea5fd46183151ec435
+  revision: 018d786a7ebe8599b966f5c91c52c400bf52e81f
   branch: agroportal
   specs:
     ontologies_linked_data (0.0.1)
@@ -89,7 +89,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
-    json (2.0.3)
+    json (2.0.4)
     json_pure (1.8.3)
     libxml-ruby (3.0.0)
     macaddr (1.7.1)
@@ -136,7 +136,7 @@ GEM
     tzinfo (0.3.53)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.2)
+    unf_ext (0.0.7.3)
     uuid (2.3.8)
       macaddr (~> 1.0)
 
