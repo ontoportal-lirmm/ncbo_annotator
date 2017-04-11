@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: 7f1b081ffc8c37eed240c2dbd5255ec4821d5191
-  branch: master
+  revision: de90d22ec992dd8dea3ec97f6c9c69906de1ecc0
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 1ae02b302f6b8e9753538733f81251d96dabf187
-  branch: master
+  revision: 6991e74d38a8f1f79911cd5b9bb17c3fc82b436d
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -72,14 +72,14 @@ GEM
     builder (3.2.3)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20170223)
+    domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
-    elasticsearch (5.0.3)
-      elasticsearch-api (= 5.0.3)
-      elasticsearch-transport (= 5.0.3)
-    elasticsearch-api (5.0.3)
+    elasticsearch (5.0.4)
+      elasticsearch-api (= 5.0.4)
+      elasticsearch-transport (= 5.0.4)
+    elasticsearch-api (5.0.4)
       multi_json
-    elasticsearch-transport (5.0.3)
+    elasticsearch-transport (5.0.4)
       faraday
       multi_json
     ethon (0.10.1)
@@ -90,8 +90,8 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
-    json (2.0.3)
-    json_pure (2.0.3)
+    json (2.0.4)
+    json_pure (2.0.4)
     libxml-ruby (3.0.0)
     logger (1.2.8)
     macaddr (1.7.1)
@@ -142,7 +142,7 @@ GEM
     tzinfo (0.3.53)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.2)
+    unf_ext (0.0.7.3)
     uuid (2.3.8)
       macaddr (~> 1.0)
 
