@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: f9454b16d0123c21969a5554d76e7c15ed9881d3
-  branch: master
+  revision: d4c16f964e5a798e071769e627aaeed229c5c7f0
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: c37c5c4959d110a275a0c91eee1e29b1a553ba26
-  branch: master
+  revision: 79eace4afd194ed5fda2262dbd3564f1391c19bb
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -37,7 +37,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 76c3b3fe94e7670a4f4a1d0fc715445138ee0f14
+  revision: 87f34062d236c87ea4ba7e0035a1e0726ac83abb
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch (= 2.0.0)
@@ -84,19 +84,19 @@ GEM
       multi_json
     ethon (0.10.1)
       ffi (>= 1.3.0)
-    faraday (0.12.0.1)
+    faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
-    json (2.0.4)
-    json_pure (2.0.4)
+    json (2.1.0)
+    json_pure (2.1.0)
     libxml-ruby (3.0.0)
     logger (1.2.8)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
-    mail (2.6.4)
+    mail (2.6.5)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
     mime-types (3.1)
@@ -108,7 +108,7 @@ GEM
     mysql2 (0.4.5)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.18.5)
+    oj (3.0.4)
     omni_logger (0.1.4)
       logger
     pony (1.11)
@@ -125,15 +125,16 @@ GEM
       addressable (>= 2.2)
     redis (3.3.3)
     ref (2.0.0)
-    rest-client (2.0.1)
+    rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rsolr (1.1.2)
+    rsolr (2.0.0)
       builder (>= 2.1.2)
+      faraday
     ruby-xxHash (0.4.0.1)
     rubyzip (1.2.1)
-    sequel (4.45.0)
+    sequel (4.46.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.6)
@@ -142,7 +143,7 @@ GEM
     tzinfo (0.3.53)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.3)
+    unf_ext (0.0.7.4)
     uuid (2.3.8)
       macaddr (~> 1.0)
 
