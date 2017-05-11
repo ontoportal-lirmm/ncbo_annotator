@@ -28,6 +28,7 @@ module Annotator
 
       require_relative 'ncbo_annotator/recognizers/mallet'
       require_relative 'ncbo_annotator/recognizers/mgrep'
+      require_relative 'ncbo_annotator/recognizers/unitex'
 
       REDIS_PREFIX_KEY = "current_instance"
       MGREP_DICTIONARY_REFRESH_TIMESTAMP = "mgrep_dict_refresh_stamp"
