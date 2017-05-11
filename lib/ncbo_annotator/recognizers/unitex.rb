@@ -7,7 +7,7 @@ module Annotator
   module Models
     module Recognizers
 
-      class Ehealth2017 < Annotator::Models::NcboAnnotator
+      class Unitex < Annotator::Models::NcboAnnotator
 
 
         def initialize
