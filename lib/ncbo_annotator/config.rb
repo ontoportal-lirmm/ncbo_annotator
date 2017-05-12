@@ -33,6 +33,12 @@ module Annotator
     puts "(AN) >> Using ANN Redis instance at "+
       "#{@settings.annotator_redis_host}:#{@settings.annotator_redis_port}"
 
+    # Default config for Lemmatization
+    @settings.lemmatizer_jar             ||= "/srv/ncbo/Lemmatizer/"
+    @settings.mgrep_lem_dictionary_file  ||= "/srv/mgrep/dictionary/dictionary-lem.txt"
+    @settings.mgrep_lem_host             ||= "localhost"
+    @settings.mgrep_lem_port             ||= 55557
+
     # Stop words
     stop_words_path = File.expand_path("../../../test/data/default_stop_words.txt", __FILE__)
     @settings.stop_words_default_file    ||= stop_words_path
