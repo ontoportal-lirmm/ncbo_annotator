@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
+require "bundler/setup"
 require "bunny"
 require "thread"
 
@@ -17,10 +18,10 @@ class RecognizerClient
     conn.start
     ch   = conn.create_channel
     @ch             = ch
-    @x              = ch.default_exchange
+    @exchange              = ch.default_exchange
 
-    @server_queue   = "bioportal_recognizer"
-    @reply_queue    = ch.queue("", :exclusive => true)
+    @server_queue   = "unitex"
+    @reply_queue    = ch.queue("unitex_reply", :exclusive => true)
 
     @lock      = Mutex.new
     @condition = ConditionVariable.new
@@ -37,10 +38,10 @@ class RecognizerClient
   def call(text)
     self.call_id = self.generate_uuid
 
-    @x.publish(text,
-               :routing_key    => @server_queue,
-               :correlation_id => call_id,
-               :reply_to       => @reply_queue.name)
+    @exchange.publish(text,
+                      :routing_key    => @server_queue,
+                      :correlation_id => call_id,
+                      :reply_to       => @reply_queue.name)
 
     lock.synchronize{condition.wait(lock)}
     response
