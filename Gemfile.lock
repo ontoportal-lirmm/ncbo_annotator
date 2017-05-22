@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 36bdb6e16380c81acc6fdaa21bb46cb52b0400f8
-  branch: master
+  revision: 6203680cd914b4e92e5e74bf74bbf18d97ad01c0
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -105,10 +105,10 @@ GEM
     minitest (4.7.5)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    mysql2 (0.4.5)
+    mysql2 (0.4.6)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.0.4)
+    oj (3.0.9)
     omni_logger (0.1.4)
       logger
     pony (1.11)
@@ -117,7 +117,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (2.0.1)
+    rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.5.0)
@@ -129,7 +129,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rsolr (2.0.0)
+    rsolr (2.0.2)
       builder (>= 2.1.2)
       faraday
     ruby-xxHash (0.4.0.1)
