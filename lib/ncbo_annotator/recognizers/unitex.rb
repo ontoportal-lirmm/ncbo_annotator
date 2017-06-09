@@ -1,7 +1,7 @@
 require 'open3'
 require 'logger'
 require 'addressable/uri'
-require_relative '../unitex/unitex_rest_client'
+require_relative '../unitex/unitex_client'
 
 module Annotator
   module Models
