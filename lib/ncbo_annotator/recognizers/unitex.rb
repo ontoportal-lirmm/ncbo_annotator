@@ -12,7 +12,7 @@ module Annotator
 
         def initialize()
           super()
-          @client = Annotator::UnitexRecognizerClient.new(Annotator.settings.unitex_url)
+          @client = Annotator::Unitex::Client.new(Annotator.settings.unitex_host, Annotator.settings.unitex_port, Annotator.settings.unitex_host, Annotator.settings.unitex_port)
           @stop_words = Annotator.settings.stop_words_default_list
           @logger = Kernel.const_defined?("LOGGER") ? Kernel.const_get("LOGGER") : Logger.new(STDOUT)
         end
