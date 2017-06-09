@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/goo.git
-  revision: 5fafc98b2f4d174a68d295ecd3b27b6aad5fba04
+  revision: 172f7867aa9775866eda2ef43f9015f8611971f9
   branch: agroportal
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: ca095acc8067ae9ec2b3159bd5de0a8282237023
+  revision: d89f576958aa9a0f54ef4c0e5fb48c901f5e9495
   branch: agroportal
   specs:
     ontologies_linked_data (0.0.1)
@@ -89,7 +89,7 @@ GEM
     ffi (1.9.18)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.8.1)
+    i18n (0.8.4)
     json (2.1.0)
     json_pure (2.1.0)
     libxml-ruby (3.0.0)
@@ -108,7 +108,7 @@ GEM
     mysql2 (0.4.6)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.0.7)
+    oj (3.1.0)
     omni_logger (0.1.4)
       logger
     pony (1.11)
@@ -117,7 +117,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (2.0.2)
+    rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.5.0)
