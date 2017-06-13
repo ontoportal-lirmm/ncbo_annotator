@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/goo.git
-  revision: 0d042a1eb4bba24c873dd87afa0a672df653c9af
+  revision: 5447337613a4320da4bc3d9a70255c3e83089021
   branch: lirmm
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 841c8e0ae1b976a3b18055f0af07c048395bc8f8
+  revision: 1daa9f18589542b770a1685deb0927cf7fd61c27
   branch: lirmm
   specs:
     ontologies_linked_data (0.0.1)
@@ -51,6 +51,7 @@ GIT
       multi_json
       ncbo_resource_index
       oj
+      omni_logger
       pony
       rack
       rack-test
@@ -71,7 +72,7 @@ GEM
     builder (3.2.3)
     coderay (1.1.1)
     cube-ruby (0.0.3)
-    domain_name (0.5.20170223)
+    domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
@@ -88,10 +89,11 @@ GEM
     ffi (1.9.10)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.8.1)
-    json (2.0.3)
+    i18n (0.8.4)
+    json (2.1.0)
     json_pure (1.8.3)
     libxml-ruby (3.0.0)
+    logger (1.2.8)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
     mail (2.6.3)
@@ -104,14 +106,16 @@ GEM
     mysql2 (0.4.3)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (2.18.5)
+    oj (3.1.2)
+    omni_logger (0.1.4)
+      logger
     pony (1.11)
       mail (>= 2.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (2.0.1)
+    rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.5.0)
@@ -119,7 +123,7 @@ GEM
       addressable (>= 2.2)
     redis (3.2.2)
     ref (2.0.0)
-    rest-client (2.0.1)
+    rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
@@ -136,7 +140,7 @@ GEM
     tzinfo (0.3.53)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.2)
+    unf_ext (0.0.7.4)
     uuid (2.3.8)
       macaddr (~> 1.0)
 
