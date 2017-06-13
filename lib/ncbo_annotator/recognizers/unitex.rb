@@ -1,4 +1,4 @@
-lib/ncbo_annotator.rbrequire 'open3'
+require 'open3'
 require 'logger'
 require 'addressable/uri'
 require_relative '../unitex/unitex_client'
