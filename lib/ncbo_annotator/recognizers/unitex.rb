@@ -1,4 +1,4 @@
-require 'open3'
+lib/ncbo_annotator.rbrequire 'open3'
 require 'logger'
 require 'addressable/uri'
 require_relative '../unitex/unitex_client'
@@ -117,14 +117,27 @@ module Annotator
 
                 if (longest_only)
                   annotation = Annotation.new(key, ontResourceId)
-
-                  annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                  if (lemmatize)
+                    annotation.add_annotation(convert_from(regex_indexes, ann.offset_from), convert_to(regex_indexes, ann.offset_to), typeAndOnt[0], ann.value)
+                  else
+                    annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                  end
                   flattenedAnnotations << annotation
                 else
                   id_group = ontResourceId + key
 
                   unless allAnnotations.include?(id_group)
                     allAnnotations[id_group] = Annotation.new(key, ontResourceId)
+                  end
+                  if (lemmatize)
+                    indexFrom = convert_from(regex_indexes, ann.offset_from)
+                    indexTo = convert_to(regex_indexes, ann.offset_to)
+                    if (indexFrom==0 || indexTo==0)
+                      raise Exception, "Converting lemmatized index to original index failed."
+                    end
+                    allAnnotations[id_group].add_annotation(indexFrom, indexTo, typeAndOnt[0], ann.value)
+                  else
+                    allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
                   end
                 end
               end

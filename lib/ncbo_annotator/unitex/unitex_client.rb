@@ -1,5 +1,7 @@
 require 'socket'
 
+require 'ncbo_annotator/unitex/unitex_annotated_text'
+
 module Annotator
   module Unitex
     class Client
@@ -27,8 +29,6 @@ module Annotator
             end
           end
         end
-
-        self.annotate("init", true, true)
       end
 
       def close()
@@ -45,22 +45,42 @@ module Annotator
         end
 
         if text.strip.length == 0
-          return AnnotatedText(text, [])
+          return Annotator::Unitex::AnnotatedText(text, [])
         end
         message = self.message(text, longword, replace)
         @socket.send(message, 0)
         annotations = []
         line = "init"
-        while line.length > 0 do
-          line = self.get_line
+
+
+        current_response = @socket.gets
+        response = ''
+        while current_response !=nil
+          response+=current_response
+          current_response = @socket.gets
+        end
+
+        lines = response.split("\n")
+
+        for line in lines
           if line and line.strip.length > 0
-            ann = line.split("\t") 
-            if ann.length > 1
+            ann = line.split("\t")
+            if ann.length >1
               annotations << ann
             end
           end
         end
-        AnnotatedText.new(text, annotations)
+
+        # while line != nil and line.length > 0 do
+        #   line = self.get_line
+        #   if line and line.strip.length > 0
+        #     ann = line.split("\t")
+        #     if ann.length > 1
+        #       annotations << ann
+        #     end
+        #   end
+        # end
+        Annotator::Unitex::AnnotatedText.new(text, annotations)
       end
 
       def message(text, longword, replace=true)
@@ -69,19 +89,6 @@ module Annotator
         flags += replace ? "Y" : "N"
         message = flags + text + "\n"
         message.encode("utf-8")
-      end
-
-      def get_line()
-        cont = true
-        res = []
-        while cont do
-          data = @socket.read(1)
-          if data.empty?
-            return res.join('')
-          end
-          res << data
-        end
-        nil
       end
 
     end

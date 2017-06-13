@@ -24,7 +24,8 @@ module Annotator
   module Models
 
     class NcboAnnotator
-      class BadSemanticTypeError < StandardError; end
+      class BadSemanticTypeError < StandardError;
+      end
 
       require_relative 'ncbo_annotator/recognizers/mallet'
       require_relative 'ncbo_annotator/recognizers/mgrep'
@@ -34,9 +35,9 @@ module Annotator
       MGREP_DICTIONARY_REFRESH_TIMESTAMP = "mgrep_dict_refresh_stamp"
       LAST_MGREP_RESTART_TIMESTAMP = "last_mgrep_restart_stamp"
 
-      DICTHOLDER = lambda {|prefix| "#{prefix}dict"}
-      IDPREFIX = lambda {|prefix| "#{prefix}term:"}
-      KEY_STORAGE = lambda {|prefix| "#{prefix}annotator:keys"}
+      DICTHOLDER = lambda { |prefix| "#{prefix}dict" }
+      IDPREFIX = lambda { |prefix| "#{prefix}term:" }
+      KEY_STORAGE = lambda { |prefix| "#{prefix}annotator:keys" }
 
       OCCURRENCE_DELIM = "|"
       LABEL_DELIM = ","
@@ -137,7 +138,7 @@ module Annotator
         # Create lemmatized dic file
         indexStop=Annotator.settings.mgrep_dictionary_file.length-5;
         dicName=Annotator.settings.mgrep_dictionary_file[0..indexStop]
-        wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+dicName+".txt "+dicName+"-lem.txt false")
+        wasGood = system("java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+dicName+".txt "+dicName+"-lem.txt false")
         if (!wasGood)
           raise Exception, "Generating lemmatized dictionary failed."
         else
@@ -199,7 +200,7 @@ module Annotator
             while !class_keys.empty?
               # use expire instead of del to allow potential clients to finish using the data
               redis.pipelined {
-                class_keys.each {|key| redis.expire(key, key_expire_time)}
+                class_keys.each { |key| redis.expire(key, key_expire_time) }
               }
               redis.ltrim(key_storage, CHUNK_SIZE + 1, -1) # Remove what we just deleted
               class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
@@ -250,7 +251,7 @@ module Annotator
             logger.info("Caching classes of #{sub.ontology.acronym}")
 
             paging = LinkedData::Models::Class.in(sub)
-                .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
+                         .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
 
             begin
               class_page = nil
@@ -271,7 +272,7 @@ module Annotator
                   prefLabel = cls.prefLabel
                   synonyms = cls.synonym || []
                   semanticTypes = cls.semanticType || []
-                rescue Goo::Base::AttributeNotLoaded =>  e
+                rescue Goo::Base::AttributeNotLoaded => e
                   msg = "Error loading attributes for class #{cls.id.to_s}"
                   backtrace = e.backtrace.join("\n\t")
                   logger.error(msg)
@@ -382,7 +383,7 @@ module Annotator
           temp.close
           temp_lem = Tempfile.new("lem")
           temp_lem.close
-          was_good = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+temp.path+" "+temp_lem.path+" true")
+          was_good = system("java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+temp.path+" "+temp_lem.path+" true")
           unless was_good
             raise Exception, "Lemmatizing the text failed."
           end
@@ -415,7 +416,7 @@ module Annotator
         redis.pipelined {
           raw_annotations.each do |ann|
             id = get_prefixed_id(cur_inst, ann.string_id)
-            redis_data[id] = { future: redis.hgetall(id) }
+            redis_data[id] = {future: redis.hgetall(id)}
           end
         }
         sleep(1.0 / 150.0)
@@ -449,7 +450,7 @@ module Annotator
               if (longest_only)
                 annotation = Annotation.new(key, ontResourceId)
                 if (lemmatize)
-                  annotation.add_annotation(convert_from(regex_indexes,ann.offset_from), convert_to(regex_indexes,ann.offset_to), typeAndOnt[0], ann.value)
+                  annotation.add_annotation(convert_from(regex_indexes, ann.offset_from), convert_to(regex_indexes, ann.offset_to), typeAndOnt[0], ann.value)
                 else
                   annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
                 end
@@ -461,8 +462,8 @@ module Annotator
                   allAnnotations[id_group] = Annotation.new(key, ontResourceId)
                 end
                 if (lemmatize)
-                  indexFrom = convert_from(regex_indexes,ann.offset_from)
-                  indexTo = convert_to(regex_indexes,ann.offset_to)
+                  indexFrom = convert_from(regex_indexes, ann.offset_from)
+                  indexTo = convert_to(regex_indexes, ann.offset_to)
                   if (indexFrom==0 || indexTo==0)
                     raise Exception, "Converting lemmatized index to original index failed."
                   end
@@ -476,7 +477,7 @@ module Annotator
         end
 
         if (longest_only)
-          flattenedAnnotations.sort! {|a, b| [a.annotations[0][:from], b.annotations[0][:to]] <=> [b.annotations[0][:from], a.annotations[0][:to]]}
+          flattenedAnnotations.sort! { |a, b| [a.annotations[0][:from], b.annotations[0][:to]] <=> [b.annotations[0][:from], a.annotations[0][:to]] }
           cur_min = 0;
           cur_max = 0;
 
@@ -536,7 +537,7 @@ module Annotator
           indirect = {}
           level_ids = []
 
-          annotations.each do |k,a|
+          annotations.each do |k, a|
             if current_level == 1
               level_ids << a.annotatedClass.id.to_s
             else
@@ -555,7 +556,7 @@ module Annotator
           return if level_ids.length == 0
           query = hierarchy_query(level_ids)
 
-          Goo.sparql_query_client.query(query,query_options: {rules: :NONE})
+          Goo.sparql_query_client.query(query, query_options: {rules: :NONE})
               .each do |sol|
             id = sol[:id].to_s
             parent = sol[:parent].to_s
@@ -579,26 +580,26 @@ module Annotator
 
       def expand_mappings(annotations, ontologies)
         class_ids = []
-        annotations.each do |k,a|
+        annotations.each do |k, a|
           class_ids << a.annotatedClass.id.to_s
         end
         mappings = mappings_for_class_ids(class_ids)
         mappings.each do |mapping|
-          annotations.each do |k,a|
+          annotations.each do |k, a|
             mapped_term = mapping.classes
-                            .select { |c| c.id.to_s != a.annotatedClass.id.to_s }
-            if  mapped_term.length == mapping.classes.length ||
-                    mapped_term.length == 0
+                              .select { |c| c.id.to_s != a.annotatedClass.id.to_s }
+            if mapped_term.length == mapping.classes.length ||
+                mapped_term.length == 0
               next
             end
             mapped_term = mapped_term.first
             acronym = mapped_term.submission.ontology.acronym
 
             if ontologies.length == 0 ||
-               ontologies.include?(mapped_term.submission.ontology.id.to_s) ||
-               ontologies.include?(acronym)
-                a.add_mapping(mapped_term.id.to_s,
-                              mapped_term.submission.ontology.id.to_s)
+                ontologies.include?(mapped_term.submission.ontology.id.to_s) ||
+                ontologies.include?(acronym)
+              a.add_mapping(mapped_term.id.to_s,
+                            mapped_term.submission.ontology.id.to_s)
             end
           end
         end
@@ -684,7 +685,7 @@ module Annotator
           # always append them back to the original value
           semanticTypeCodes = get_semantic_type_codes(semanticTypes)
           semanticTypeCodes = (semanticTypeCodes.empty?) ? "" :
-                                  "#{DATA_TYPE_DELIM}#{semanticTypeCodes}"
+              "#{DATA_TYPE_DELIM}#{semanticTypeCodes}"
           matches = redis.hget(id, resourceId)
 
           if (matches.nil?)
@@ -727,7 +728,7 @@ module Annotator
       end
 
       def hierarchy_query(class_ids)
-        filter_ids = class_ids.map { |id| "?id = <#{id}>" } .join " || "
+        filter_ids = class_ids.map { |id| "?id = <#{id}>" }.join " || "
         query = <<eos
 SELECT DISTINCT ?id ?parent ?graph WHERE { GRAPH ?graph { ?id <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?parent . }
 FILTER (#{filter_ids})
@@ -735,7 +736,7 @@ FILTER (!isBlank(?parent))
 FILTER (?parent != <http://www.w3.org/2002/07/owl#Thing>)
 }
 eos
-       return query
+        return query
       end
     end
   end
