@@ -343,9 +343,9 @@ module Annotator
       ##########################################
       def annotate(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
-        expand_class_hierarchy = options[:expand_class_hierarchy] == true ? true : false
+        expand_class_hierarchy = options[:expand_class_hierarchy] ? true : false
         expand_hierarchy_levels = options[:expand_hierarchy_levels].is_a?(Integer) ? options[:expand_hierarchy_levels] : 0
-        expand_with_mappings = options[:expand_with_mappings] == true ? true : false
+        expand_with_mappings = options[:expand_with_mappings] ? true : false
 
         annotations = annotate_direct(text, options)
         return annotations.values if annotations.length == 0
@@ -365,44 +365,44 @@ module Annotator
       def annotate_direct(text, options={})
         ontologies = options[:ontologies].is_a?(Array) ? options[:ontologies] : []
         semantic_types = options[:semantic_types].is_a?(Array) ? options[:semantic_types] : []
-        use_semantic_types_hierarchy = options[:use_semantic_types_hierarchy] == true ? true : false
-        filter_integers = options[:filter_integers] == true ? true : false
+        use_semantic_types_hierarchy = options[:use_semantic_types_hierarchy] ? true : false
+        filter_integers = options[:filter_integers] ? true : false
         min_term_size = options[:min_term_size].is_a?(Integer) ? options[:min_term_size] : nil
-        whole_word_only = options[:whole_word_only] == false ? false : true
-        with_synonyms = options[:with_synonyms] == false ? false : true
-        longest_only = options[:longest_only] == true ? true : false
+        whole_word_only = !options[:whole_word_only] ? false : true
+        with_synonyms = !options[:with_synonyms] ? false : true
+        longest_only = options[:longest_only] ? true : false
         lemmatize = options[:lemmatize] == "true" ? true : false
 
-        if (lemmatize)
+        if lemmatize
           # Lunch Mgrep with the lemmatized dictionary
           client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_lem_host, Annotator.settings.mgrep_lem_port, Annotator.settings.mgrep_lem_alt_host, Annotator.settings.mgrep_lem_alt_port, @logger)
           # Lemmatize the input text
           temp = Tempfile.new("text")
           temp.puts "key \t"+text
           temp.close
-          tempLem = Tempfile.new("lem")
-          tempLem.close
-          wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+temp.path+" "+tempLem.path+" true")
-          if (!wasGood)
+          temp_lem = Tempfile.new("lem")
+          temp_lem.close
+          was_good = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+temp.path+" "+temp_lem.path+" true")
+          unless was_good
             raise Exception, "Lemmatizing the text failed."
           end
-          tempLem.open
-          line = tempLem.gets
-          regexIndexes = line.split("\t")[0]
-          textLem = line.split("\t")[1]
+          temp_lem.open
+          line = temp_lem.gets
+          regex_indexes = line.split("\t")[0]
+          text_lem = line.split("\t")[1]
           temp.close!
-          tempLem.close!
-          rawAnnotations = client.annotate(textLem, false, whole_word_only)
+          temp_lem.close!
+          raw_annotations = client.annotate(text_lem, false, whole_word_only)
         else
           client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
-          rawAnnotations = client.annotate(text, false, whole_word_only)
+          raw_annotations = client.annotate(text, false, whole_word_only)
         end
 
-        rawAnnotations.filter_integers() if filter_integers
-        rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
-        rawAnnotations.filter_stop_words(@stop_words)
+        raw_annotations.filter_integers if filter_integers
+        raw_annotations.filter_min_size(min_term_size) unless min_term_size.nil?
+        raw_annotations.filter_stop_words(@stop_words)
 
-        if (use_semantic_types_hierarchy)
+        if use_semantic_types_hierarchy
           semantic_types = expand_semantic_types_hierarchy(semantic_types)
         end
 
@@ -413,7 +413,7 @@ module Annotator
         cur_inst = redis_current_instance()
 
         redis.pipelined {
-          rawAnnotations.each do |ann|
+          raw_annotations.each do |ann|
             id = get_prefixed_id(cur_inst, ann.string_id)
             redis_data[id] = { future: redis.hgetall(id) }
           end
@@ -425,7 +425,7 @@ module Annotator
           end
         end
 
-        rawAnnotations.each do |ann|
+        raw_annotations.each do |ann|
           id = get_prefixed_id(cur_inst, ann.string_id)
           matches = redis_data[id][:future].value
 
@@ -449,7 +449,7 @@ module Annotator
               if (longest_only)
                 annotation = Annotation.new(key, ontResourceId)
                 if (lemmatize)
-                  annotation.add_annotation(convert_from(regexIndexes,ann.offset_from), convert_to(regexIndexes,ann.offset_to), typeAndOnt[0], ann.value)
+                  annotation.add_annotation(convert_from(regex_indexes,ann.offset_from), convert_to(regex_indexes,ann.offset_to), typeAndOnt[0], ann.value)
                 else
                   annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
                 end
@@ -461,8 +461,8 @@ module Annotator
                   allAnnotations[id_group] = Annotation.new(key, ontResourceId)
                 end
                 if (lemmatize)
-                  indexFrom = convert_from(regexIndexes,ann.offset_from)
-                  indexTo = convert_to(regexIndexes,ann.offset_to)
+                  indexFrom = convert_from(regex_indexes,ann.offset_from)
+                  indexTo = convert_to(regex_indexes,ann.offset_to)
                   if (indexFrom==0 || indexTo==0)
                     raise Exception, "Converting lemmatized index to original index failed."
                   end

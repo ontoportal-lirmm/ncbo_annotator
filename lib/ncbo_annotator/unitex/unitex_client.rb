@@ -75,9 +75,9 @@ module Annotator
         cont = true
         res = []
         while cont do
-          data = @socket.recv(1)
-          if data == "\n"
-            return res.join("")
+          data = @socket.read(1)
+          if data.empty?
+            return res.join('')
           end
           res << data
         end
