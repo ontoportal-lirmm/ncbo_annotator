@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/goo.git
-  revision: 5447337613a4320da4bc3d9a70255c3e83089021
+  revision: 9a2fe3146f660e5a9eae7e8cddc46fe059fc4253
   branch: lirmm
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 1daa9f18589542b770a1685deb0927cf7fd61c27
+  revision: ec444a1f84414a6f5d408b74c93d6f1924650968
   branch: lirmm
   specs:
     ontologies_linked_data (0.0.1)
@@ -106,7 +106,7 @@ GEM
     mysql2 (0.4.3)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.1.2)
+    oj (3.1.3)
     omni_logger (0.1.4)
       logger
     pony (1.11)
