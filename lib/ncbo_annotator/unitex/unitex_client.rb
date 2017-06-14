@@ -41,7 +41,7 @@ module Annotator
         rescue ArgumentError => e
           # NCBO-1230 - Annotation failure after repeated calls
           text = text.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
-          text = text.upcase.gsub("\n", " ")
+          text = text.gsub("\n", " ")
         end
 
         if text.strip.length == 0
@@ -87,7 +87,7 @@ module Annotator
         flags = "A"
         flags += longword ? "Y" : "N"
         flags += replace ? "Y" : "N"
-        message = flags + text + "\n"
+        message = flags + " " +text + "\n"
         message.encode("utf-8")
       end
 
