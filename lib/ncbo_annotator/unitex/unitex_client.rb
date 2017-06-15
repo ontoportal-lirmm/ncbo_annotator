@@ -35,7 +35,7 @@ module Annotator
         @socket.close
       end
       
-      def annotate(text, longword, replace=true)
+      def annotate(text, longword, replace=false)
         begin
           text = text.upcase.gsub("\n", " ")
         rescue ArgumentError => e
@@ -83,7 +83,7 @@ module Annotator
         Annotator::Unitex::AnnotatedText.new(text, annotations)
       end
 
-      def message(text, longword, replace=true)
+      def message(text, longword, replace=false)
         flags = "A"
         flags += longword ? "Y" : "N"
         flags += replace ? "Y" : "N"
