@@ -49,7 +49,7 @@ module Annotator
         def filter_stop_words(stop_words)
           return if stop_words.nil?
           return if stop_words.length == 0
-          filtered_anns = @annotations.select {|a| !stop_words.include?(a[-1]) }
+          filtered_anns = @annotations.select {|a| !stop_words.include?(a[3]) }
           @annotations = filtered_anns
         end
     end
