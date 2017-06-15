@@ -22,7 +22,7 @@ module Annotator
           a = @annotations[i]
           ofrom = a[1].to_i
           oto = a[2].to_i
-          value  = @text[ofrom..oto]
+          value  = @text[ofrom..oto-1]
           return Mgrep.annotation_struct.new(ofrom,oto,a[0],value)
         end
 
