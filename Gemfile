@@ -10,7 +10,7 @@ gem 'ruby-xxHash'
 gem 'pry', group: :development
 
 # NCBO gems (can be from a local dev path or from rubygems/git)
-gem 'goo', github: 'sifrproject/goo', branch: 'agroportal'
+gem 'goo', github: 'sifrproject/goo', branch: 'agroportal_debug'
 gem 'sparql-client', github: 'ncbo/sparql-client', branch: 'master'
 gem 'ontologies_linked_data', github: 'sifrproject/ontologies_linked_data', branch: 'agroportal'
 gem 'ncbo_resource_index', github: 'ncbo/resource_index'
