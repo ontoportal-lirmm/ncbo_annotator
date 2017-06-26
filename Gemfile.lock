@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/goo.git
-  revision: 47b4f702fa86559cc621a7d215d5ab747f124f90
+  revision: 8f125955d3991f7722154a71e11bf63885024ede
   branch: agroportal_debug
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: 98d7145674b2ee17c9bb2d9845de970242eb7725
+  revision: 1f77a361a5e592232bc0f3dbe6f76a41ce592c95
   branch: agroportal
   specs:
     ontologies_linked_data (0.0.1)
