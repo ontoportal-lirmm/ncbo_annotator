@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/sifrproject/ontologies_linked_data.git
-  revision: e1a4dff9f5f0046c2f6edd5f225ac2d04913e99d
+  revision: f0b80324f9717ba8658d3e4f2e4a1f3028862ec6
   branch: lirmm
   specs:
     ontologies_linked_data (0.0.1)
@@ -127,8 +127,9 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rsolr (1.1.2)
+    rsolr (2.0.2)
       builder (>= 2.1.2)
+      faraday
     ruby-xxHash (0.4.0.1)
     rubyzip (1.2.1)
     sequel (4.32.0)
