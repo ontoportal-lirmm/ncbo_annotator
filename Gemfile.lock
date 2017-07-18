@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 6203680cd914b4e92e5e74bf74bbf18d97ad01c0
+  revision: fba5c30e8c04a872570e84c60e0a771a83949e64
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -37,7 +37,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: 87f34062d236c87ea4ba7e0035a1e0726ac83abb
+  revision: 3f48307daad953f3fc297fab328c9b00beadb70a
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch (= 2.0.0)
@@ -89,14 +89,14 @@ GEM
     ffi (1.9.18)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.8.1)
+    i18n (0.8.6)
     json (2.1.0)
     json_pure (2.1.0)
     libxml-ruby (3.0.0)
     logger (1.2.8)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
-    mail (2.6.5)
+    mail (2.6.6)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
     mime-types (3.1)
@@ -105,10 +105,10 @@ GEM
     minitest (4.7.5)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    mysql2 (0.4.6)
+    mysql2 (0.4.8)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.0.9)
+    oj (3.3.2)
     omni_logger (0.1.4)
       logger
     pony (1.11)
@@ -118,8 +118,8 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (2.0.3)
-    rack-test (0.6.3)
-      rack (>= 1.0)
+    rack-test (0.7.0)
+      rack (>= 1.0, < 3)
     rake (10.5.0)
     rdf (1.0.8)
       addressable (>= 2.2)
@@ -134,7 +134,7 @@ GEM
       faraday
     ruby-xxHash (0.4.0.1)
     rubyzip (1.2.1)
-    sequel (4.46.0)
+    sequel (4.48.0)
     slop (3.6.0)
     systemu (2.6.5)
     thread_safe (0.3.6)
