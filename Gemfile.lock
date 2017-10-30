@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: e7fd1aca9d4d99f0789ce69fc074a804b346f774
+  revision: 59f145cdae84842977528d80be0c8cb13be94183
   branch: master
   specs:
     goo (0.0.2)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: 0852e6050c18893b00adeda267d7b1cd574c5904
+  revision: 33015eba86419aa3bb6fa5bc099ac4590a4ce85b
   branch: master
   specs:
     ontologies_linked_data (0.0.1)
@@ -37,7 +37,7 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/resource_index.git
-  revision: f1c3c0736ce4879444e1bcb432d8b8cb54904a65
+  revision: 7bf1e21c619bac49dff4479fa79783aa370e06bb
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch (= 2.0.0)
