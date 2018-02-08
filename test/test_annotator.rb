@@ -620,7 +620,7 @@ class TestAnnotator < TestCase
     process = LinkedData::Models::MappingProcess.new(
       :creator => user_creator, :name => "TEST Mapping Annotator")
     process.date = DateTime.now
-    process.relation = RDF::URI.new("http://bogus.relation.com/predicate")
+    process.relation = [RDF::URI.new("http://bogus.relation.com/predicate")]
     process.save
 
     4.times do |i|
