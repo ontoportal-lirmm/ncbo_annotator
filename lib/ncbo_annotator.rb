@@ -129,7 +129,7 @@ module Annotator
 
         all.each do |key, val|
           realKey = key.sub prefix_remove, ''
-          realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
+          realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ').rstrip
           outFile.puts("#{realKey}\t#{realVal}")
           outFile.flush
         end
