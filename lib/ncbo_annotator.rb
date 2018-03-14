@@ -131,6 +131,7 @@ module Annotator
           realKey = key.sub prefix_remove, ''
           realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
           outFile.puts("#{realKey}\t#{realVal}")
+          outFile.flush
         end
         outFile.close
         redis_mgrep_dict_refresh_timestamp()
