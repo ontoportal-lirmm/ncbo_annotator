@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/ncbo/goo.git
-  revision: d27959e8e095af2e33e6983ee837085ade3c333a
-  branch: master
+  revision: 949f138edac591c71ba0726ce318ee3392b3d21d
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/ontologies_linked_data.git
-  revision: dfc644727c9ffce4fbd3d1e0a8611db6ad4ded02
-  branch: master
+  revision: 1a244881f90f33c3b38c906de524c4bae072c3f3
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -50,8 +50,8 @@ GIT
 
 GIT
   remote: git://github.com/ncbo/sparql-client.git
-  revision: 83fa816bc2c9408876b79fc3c6f98416e9e30cec
-  branch: master
+  revision: 3b7e2b14c83a6ffde90c6f7e78c3b5767c2e3a4c
+  branch: staging
   specs:
     sparql-client (1.0.1)
       json_pure (>= 1.4)
@@ -111,7 +111,7 @@ GEM
     mysql2 (0.5.2)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.7.6)
+    oj (3.7.8)
     omni_logger (0.1.4)
       logger
     pony (1.12)
@@ -150,7 +150,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86_64-darwin-16
 
 DEPENDENCIES
   cube-ruby
@@ -166,4 +165,4 @@ DEPENDENCIES
   sparql-client!
 
 BUNDLED WITH
-   1.17.3
+   2.0.1
