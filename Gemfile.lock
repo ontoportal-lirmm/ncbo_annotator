@@ -114,7 +114,7 @@ GEM
     oj (3.7.8)
     omni_logger (0.1.4)
       logger
-    pony (1.12)
+    pony (1.13)
       mail (>= 2.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
