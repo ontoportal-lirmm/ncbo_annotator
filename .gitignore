@@ -23,6 +23,9 @@ config/config.rb
 # Ignore RubyMine editor files
 .idea
 
+# Ignore jEnv files
+.java-version
+
 *.swp
 
 .DS_Store
@@ -38,3 +41,4 @@ bin/mallet.jar
 bin/mallet-deps.jar
 bin/CogPOTerms
 
+create_permissions.log
