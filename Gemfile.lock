@@ -37,11 +37,11 @@ GIT
 
 GIT
   remote: https://github.com/ncbo/resource_index.git
-  revision: 4c38130a29ad05454229ec23fad1398f0928061d
+  revision: 24a7f14a6da4f4a0eaba1016ca5a378dfccd7441
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch (= 2.0.0)
-      mysql2
+      mysql2 (= 0.5.2)
       pony
       ref
       ruby-xxHash
@@ -109,7 +109,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.14.1)
     multipart-post (2.1.1)
-    mysql2 (0.5.3)
+    mysql2 (0.5.2)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
     oj (3.10.0)
