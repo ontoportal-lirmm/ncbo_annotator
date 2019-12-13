@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ncbo/goo.git
-  revision: f9c7ad52131475ca33acd8290e25195ed228f16a
-  branch: master
+  revision: e75cdef459e9b09ede770b3daeb6780858560a9c
+  branch: staging
   specs:
     goo (0.0.2)
       addressable (= 2.3.5)
@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: https://github.com/ncbo/ontologies_linked_data.git
-  revision: 545594632d21161fb0d4508b0cb3721dc853e717
-  branch: master
+  revision: d667b98341cf1683f2ecb5b9900e07105456e046
+  branch: staging
   specs:
     ontologies_linked_data (0.0.1)
       activesupport
@@ -37,11 +37,11 @@ GIT
 
 GIT
   remote: https://github.com/ncbo/resource_index.git
-  revision: 75e384e2563638cb91541082c9256f80b60b6ae9
+  revision: 24a7f14a6da4f4a0eaba1016ca5a378dfccd7441
   specs:
     ncbo_resource_index (0.0.1)
       elasticsearch (= 2.0.0)
-      mysql2
+      mysql2 (= 0.5.2)
       pony
       ref
       ruby-xxHash
@@ -69,7 +69,7 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
     bcrypt (3.1.13)
-    builder (3.2.3)
+    builder (3.2.4)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     cube-ruby (0.0.3)
@@ -93,10 +93,10 @@ GEM
       domain_name (~> 0.5)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    json (2.2.0)
+    json (2.3.0)
     json_pure (2.2.0)
     libxml-ruby (3.1.0)
-    logger (1.4.1)
+    logger (1.4.2)
     macaddr (1.7.2)
       systemu (~> 2.6.5)
     mail (2.7.1)
@@ -109,7 +109,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.14.1)
     multipart-post (2.1.1)
-    mysql2 (0.5.3)
+    mysql2 (0.5.2)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
     oj (3.10.0)
