@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/ncbo/ontologies_linked_data.git
-  revision: fd1a2ea1abde1fa2320a0bf5a7f3bbd7fa0c3049
+  revision: 5fb41c820d0f9c1859cbd99a6c5a24a8cb664828
   branch: staging
   specs:
     ontologies_linked_data (0.0.1)
@@ -94,7 +94,7 @@ GEM
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     json (2.3.0)
-    json_pure (2.2.0)
+    json_pure (2.3.0)
     libxml-ruby (3.1.0)
     logger (1.4.2)
     macaddr (1.7.2)
