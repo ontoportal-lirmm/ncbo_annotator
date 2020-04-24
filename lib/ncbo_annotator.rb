@@ -131,6 +131,7 @@ module Annotator
           realKey = key.sub prefix_remove, ''
           realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
           outFile.puts("#{realKey}\t#{realVal}")
+          outFile.flush
         end
         outFile.close
         # Create lemmatized dic file
@@ -163,13 +164,32 @@ module Annotator
 
         ontologies.each_index do |i|
           ont = ontologies[i]
-          last = ont.latest_submission(status: [:rdf])
 
-          if last.nil?
-            @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}")
-          else
-            @logger.info("Creating Annotator cache for #{ont.id.to_s} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
-            create_term_cache_for_submission(@logger, last, redis, redis_prefix)
+          begin
+            ont.bring(:submissions) if ont.bring?(:submissions)
+            last = ont.latest_submission(status: [:rdf])
+
+            # TODO: this code was added to deal with intermittent issues with 4store, where last
+            # was being returned as nil for no apparent reason!!!
+            j = 0
+            num_calls = 3
+
+            while last.nil? && j < num_calls do
+              j += 1
+              @logger.info("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s}. Retrying #{j} times...")
+              sleep(1)
+              last = ont.latest_submission(status: [:rdf])
+              @logger.info("Success getting latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s} after retrying #{j} times...") unless last.nil?
+            end
+
+            if last.nil?
+              @logger.error("Error: Cannot find latest submission with 'RDF' parsed status for ontology: #{ont.id.to_s} after retrying #{j} times...")
+            else
+              @logger.info("Creating Annotator cache for #{ont.id.to_s} (#{last.id.to_s}) - #{i + 1}/#{ontologies.length} ontologies")
+              create_term_cache_for_submission(@logger, last, redis, redis_prefix)
+            end
+          rescue Exception => e
+            @logger.error("Error: exception while creating Annotator cache for #{ont.id.to_s}: #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
           end
 
           remaining_ontologies -= 1
@@ -218,10 +238,15 @@ module Annotator
       end
 
       def create_term_cache_for_submission(logger, sub, redis=nil, redis_prefix=nil)
-        if (sub.nil?)
+        if sub.nil?
           logger.error("Error from Annotator.create_term_cache_for_submission: submission is nil")
           return
         end
+
+        multi_logger = LinkedData::Utils::MultiLogger.new(loggers: logger)
+        log_path = sub.parsing_log_path
+        logger1 = Logger.new(log_path)
+        multi_logger.add_logger(logger1)
 
         redis ||= redis()
         redis_prefix ||= redis_current_instance()
@@ -230,6 +255,7 @@ module Annotator
         size = 2500
         count_classes = 0
         status = LinkedData::Models::SubmissionStatus.find("ANNOTATOR").first
+        error_status = status.get_error_status
 
         begin
           #remove ANNOTATOR status before starting
@@ -237,8 +263,8 @@ module Annotator
           sub.remove_submission_status(status)
         rescue Exception => e
           msg = "Failed bring_remaining while caching classes for #{sub.id.to_s}"
-          logger.error(msg)
-          logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+          multi_logger.error(msg)
+          multi_logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
           return
         end
 
@@ -246,17 +272,19 @@ module Annotator
           time = Benchmark.realtime do
             sub.ontology.bring(:acronym) if sub.ontology.bring?(:acronym)
             ontResourceId = sub.ontology.id.to_s
-            logger.info("Caching classes of #{sub.ontology.acronym}")
+            multi_logger.info("Caching classes of #{sub.ontology.acronym}")
 
             paging = LinkedData::Models::Class.in(sub)
                 .include(:prefLabel, :synonym, :definition, :semanticType).page(page, size)
+            cls_count = sub.class_count(multi_logger)
+            paging.page_count_set(cls_count) unless cls_count < 0
 
             begin
               class_page = nil
               t0 = Time.now
               class_page = paging.all()
               count_classes += class_page.length
-              logger.info("Page #{page} of #{class_page.total_pages} classes retrieved in #{Time.now - t0} sec.")
+              multi_logger.info("Page #{page} of #{class_page.total_pages} - #{class_page.length} classes retrieved in #{Time.now - t0} sec.")
 
               t0 = Time.now
 
@@ -270,12 +298,37 @@ module Annotator
                   prefLabel = cls.prefLabel
                   synonyms = cls.synonym || []
                   semanticTypes = cls.semanticType || []
-                rescue Goo::Base::AttributeNotLoaded =>  e
-                  msg = "Error loading attributes for class #{cls.id.to_s}"
-                  backtrace = e.backtrace.join("\n\t")
-                  logger.error(msg)
-                  logger.error(backtrace)
-                  next
+                rescue Exception => e
+                  i = 0
+                  num_calls = 3
+                  prefLabel = nil
+                  synonyms = []
+                  semanticTypes = []
+
+                  while prefLabel.nil? && i < num_calls do
+                    i += 1
+                    multi_logger.error("Exception while loading attributes for #{resourceId}. Retrying #{i} times...")
+                    sleep(1)
+
+                    begin
+                      cls.bring(:prefLabel)
+                      cls.bring(:synonym)
+                      cls.bring(:semanticType)
+                      prefLabel = cls.prefLabel
+                      synonyms = cls.synonym || []
+                      semanticTypes = cls.semanticType || []
+                      multi_logger.info("Success getting attributes for #{resourceId} after retrying #{i} times...")
+                    rescue Exception => e1
+                      prefLabel = nil
+                      synonyms = []
+                      semanticTypes = []
+
+                      if i == num_calls
+                        multi_logger.error("Error loading attributes for class #{resourceId} after retrying #{i} times: #{e1.class}: #{e1.message}\n#{e1.backtrace.join("\n")}")
+                        next
+                      end
+                    end
+                  end
                 end
 
                 next if prefLabel.nil? # Skip classes with no prefLabel
@@ -297,7 +350,7 @@ module Annotator
                                   semanticTypes)
               end
 
-              logger.info("Page #{page} of #{class_page.total_pages} cached in Annotator in #{Time.now - t0} sec.")
+              multi_logger.info("Page #{page} of #{class_page.total_pages} cached in Annotator in #{Time.now - t0} sec.")
               page = class_page.next_page
 
               if page
@@ -309,21 +362,22 @@ module Annotator
           # update submission status for Annotator
           sub.add_submission_status(status)
           sub.save()
-          logger.info("Completed caching ontology: #{sub.ontology.acronym} (#{sub.id.to_s}) in #{time} sec. #{count_classes} classes.")
+          multi_logger.info("Completed caching ontology: #{sub.ontology.acronym} (#{sub.id.to_s}) in #{time} sec. #{count_classes} classes.")
         rescue Exception => e
           msg = "Failed caching classes for #{sub.ontology.acronym} (#{sub.id.to_s})"
-          logger.error(msg)
-          logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+          multi_logger.error(msg)
+          multi_logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
 
           begin
-            sub.add_submission_status(status.get_error_status())
+            sub.add_submission_status(error_status)
             sub.save()
           rescue Exception => e
-            msg = "Also, unable to add ERROR_ANNOTATOR status to #{sub.ontology.acronym} (#{sub.id.to_s})"
-            logger.error(msg)
-            logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
+            msg = "Also, unable to save ERROR_ANNOTATOR status to #{sub.ontology.acronym} (#{sub.id.to_s}). Status: #{status.id.to_s}. Error Status: #{error_status}."
+            multi_logger.error(msg)
+            multi_logger.error(e.message + "\n" + e.backtrace.join("\n\t"))
           end
         end
+        multi_logger.flush()
       end
 
       ##########################################
@@ -474,7 +528,7 @@ module Annotator
           end
         end
 
-        if (longest_only)
+        if longest_only
           flattenedAnnotations.sort! {|a, b| [a.annotations[0][:from], b.annotations[0][:to]] <=> [b.annotations[0][:from], a.annotations[0][:to]]}
           cur_min = 0;
           cur_max = 0;
@@ -484,7 +538,7 @@ module Annotator
             new_min = annotation.annotations[0][:from]
             new_max = annotation.annotations[0][:to]
 
-            if (new_max > cur_max || (cur_min == new_min && cur_max == new_max))
+            if new_max > cur_max || (cur_min == new_min && cur_max == new_max)
               flag = false
               cur_min = new_min
               cur_max = new_max
@@ -503,7 +557,7 @@ module Annotator
           end
         end
 
-        return allAnnotations
+        allAnnotations
       end
 
       def convert_from(regex, index)

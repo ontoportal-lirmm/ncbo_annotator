@@ -549,12 +549,14 @@ class TestAnnotator < TestCase
     assert annotations[0].annotations.length == 3
     assert annotations[0].hierarchy.length == 4
     hhh = annotations[0].hierarchy.sort {|x| x.distance }.map { |x| x.annotatedClass.id.to_s }
+    hhh.sort!
+
     assert hhh == [
       "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Resource",
       "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Information_Resource",
       "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Clinical_Care_Data",
       "http://bioontology.org/ontologies/BiomedicalResourceOntology.owl#Data_Resource"
-    ]
+    ].sort
 
     assert annotations[1].annotatedClass.id.to_s == "http://purl.obolibrary.org/obo/MCBCC_0000288#ChromosomalMutation"
     assert annotations[1].annotations.length == 2
