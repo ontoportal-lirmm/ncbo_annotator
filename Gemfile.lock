@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: https://github.com/sifrproject/goo.git
-  revision: 1f5c0e3fd2233b939d79a66198d23f0a3592cf57
+  revision: bf42c5c632cfc6475b38fc4e2694d2b8e65d32e4
   branch: virtual-appliance-3.0-merge
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: https://github.com/sifrproject/ontologies_linked_data.git
-  revision: bab73d04f52db17923cdae424323e238c9d9e77d
+  revision: a58959593db538f41f7b660d59a54698d3a3550f
   branch: virtual-appliance-3.0-merge
   specs:
     ontologies_linked_data (0.0.1)
@@ -93,8 +93,8 @@ GEM
       domain_name (~> 0.5)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    json (2.3.0)
-    json_pure (2.3.0)
+    json (2.3.1)
+    json_pure (2.3.1)
     libxml-ruby (3.2.0)
     logger (1.4.2)
     macaddr (1.7.2)
@@ -138,7 +138,7 @@ GEM
       faraday (>= 0.9.0)
     ruby-xxHash (0.4.0.1)
     rubyzip (2.3.0)
-    sequel (5.33.0)
+    sequel (5.34.0)
     systemu (2.6.5)
     thread_safe (0.3.6)
     typhoeus (1.4.0)
