@@ -115,7 +115,7 @@ module Annotator
         cur_inst = redis_current_instance()
         dict_holder = DICTHOLDER.call(cur_inst)
 
-        if (!redis.exists(dict_holder))
+        if (!redis.exists?(dict_holder))
           raise Exception, "Generating an mgrep dictionary file requires a fully populated term cache. Please re-generate the cache and then re-run the dictionary generation."
         end
 
