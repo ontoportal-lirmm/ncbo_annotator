@@ -126,7 +126,7 @@ GEM
     rake (10.5.0)
     rdf (1.0.8)
       addressable (>= 2.2)
-    redis (4.2.1)
+    redis (3.3.5)
     ref (2.0.0)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
@@ -163,7 +163,7 @@ DEPENDENCIES
   ontologies_linked_data!
   pry
   rake (~> 10.0)
-  redis
+  redis (~> 3.0)
   ruby-xxHash
   sparql-client!
 
