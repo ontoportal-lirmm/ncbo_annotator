@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: https://github.com/sifrproject/goo.git
-  revision: bf42c5c632cfc6475b38fc4e2694d2b8e65d32e4
+  revision: 09e8627a5a894f43eb4c9fd336a999da4a3015c3
   branch: virtual-appliance-3.0-merge
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: https://github.com/sifrproject/ontologies_linked_data.git
-  revision: 98460ee8708dd529cad075c6050ef247f4551103
+  revision: 683c5fc8aec555d21cb92486031f475a0103417a
   branch: virtual-appliance-3.0-merge
   specs:
     ontologies_linked_data (0.0.1)
@@ -107,7 +107,7 @@ GEM
     mime-types-data (3.2020.0512)
     mini_mime (1.0.2)
     minitest (4.7.5)
-    multi_json (1.14.1)
+    multi_json (1.15.0)
     multipart-post (2.1.1)
     mysql2 (0.5.2)
     net-http-persistent (2.9.4)
