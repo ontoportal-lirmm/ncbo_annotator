@@ -162,7 +162,7 @@ DEPENDENCIES
   ontologies_linked_data!
   pry
   rake (~> 10.0)
-  redis (~> 3.0)
+  redis
   ruby-xxHash
   sparql-client!
 

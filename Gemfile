@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 10.0'
-gem 'redis', '~> 3.0'
+gem 'redis'
 gem 'minitest', '~> 4.0'
 gem 'cube-ruby', require: "cube"
 gem 'ruby-xxHash'

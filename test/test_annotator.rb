@@ -58,13 +58,13 @@ class TestAnnotator < TestCase
       prefixedId = annotator.get_prefixed_id_from_value(cur_inst, prefLabel)
 
       if prefLabel.length > 2
-        assert @@redis.exists(prefixedId), "The entry: #{resourceId} (PrefLabel: #{prefLabel}, PrefixedId: #{prefixedId}) does not exist"
+        assert @@redis.exists?(prefixedId), "The entry: #{resourceId} (PrefLabel: #{prefLabel}, PrefixedId: #{prefixedId}) does not exist"
         assert @@redis.hexists(prefixedId, resourceId)
         assert @@redis.hexists(dict_holder, prefixedId)
         assert_equal @@redis.hget(dict_holder, prefixedId), prefLabel
         assert !@@redis.hget(prefixedId, resourceId).empty?
       else
-        assert !@@redis.exists(prefixedId)
+        assert !@@redis.exists?(prefixedId)
       end
     end
   end
@@ -94,8 +94,8 @@ class TestAnnotator < TestCase
     lines.each do |line|
       assert line.strip().split("\t")[1].length > 2
     end
-    assert @@redis.exists(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
-    assert @@redis.exists(Annotator::Models::NcboAnnotator::LAST_MGREP_RESTART_TIMESTAMP)
+    assert @@redis.exists?(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
+    assert @@redis.exists?(Annotator::Models::NcboAnnotator::LAST_MGREP_RESTART_TIMESTAMP)
     refresh_timestamp = @@redis.get(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
     assert refresh_timestamp > start_timestamp
   end
