@@ -22,8 +22,8 @@ GIT
       rdf (>= 1.0)
 
 GIT
-  remote: https://github.com/sifrproject/goo.git
-  revision: 34aa8878748aca41f94b65fd3ce28629d54f2d92
+  remote: https://github.com/ontoportal-lirmm/goo.git
+  revision: 819d8122422fe16c3934468ab1658863883ed629
   branch: virtual-appliance-3.0-merge
   specs:
     goo (0.0.2)
@@ -38,8 +38,8 @@ GIT
       uuid
 
 GIT
-  remote: https://github.com/sifrproject/ontologies_linked_data.git
-  revision: 0c7bc7c0da315a6dd2c37402b1e07d3f7b30a193
+  remote: https://github.com/ontoportal-lirmm/ontologies_linked_data.git
+  revision: 9df67f2181e04e3d6c4134952085e83f5070558b
   branch: virtual-appliance-3.0-merge
   specs:
     ontologies_linked_data (0.0.1)
@@ -68,10 +68,11 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    bcrypt (3.1.13)
+    bcrypt (3.1.15)
+    bigdecimal (2.0.0)
     builder (3.2.4)
     coderay (1.1.3)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.7)
     cube-ruby (0.0.3)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -112,7 +113,8 @@ GEM
     mysql2 (0.5.2)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.10.7)
+    oj (3.10.12)
+      bigdecimal (>= 1.0, < 3)
     omni_logger (0.1.4)
       logger
     pony (1.13.1)
@@ -138,7 +140,7 @@ GEM
       faraday (>= 0.9.0)
     ruby-xxHash (0.4.0.1)
     rubyzip (2.3.0)
-    sequel (5.34.0)
+    sequel (5.35.0)
     systemu (2.6.5)
     thread_safe (0.3.6)
     typhoeus (1.4.0)
