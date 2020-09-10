@@ -115,7 +115,7 @@ module Annotator
         cur_inst = redis_current_instance()
         dict_holder = DICTHOLDER.call(cur_inst)
 
-        if (!redis.exists?(dict_holder))
+        if !redis.exists?(dict_holder)
           raise Exception, "Generating an mgrep dictionary file requires a fully populated term cache. Please re-generate the cache and then re-run the dictionary generation."
         end
 
@@ -134,6 +134,16 @@ module Annotator
           outFile.flush
         end
         outFile.close
+        # Create lemmatized dic file
+        indexStop=Annotator.settings.mgrep_dictionary_file.length-5;
+        dicName=Annotator.settings.mgrep_dictionary_file[0..indexStop]
+        wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+dicName+".txt "+dicName+"-lem.txt false")
+        if (!wasGood)
+          raise Exception, "Generating lemmatized dictionary failed."
+        else
+          @logger.info("Lemmatized dictionary generated successfully!")
+        end
+        # Redis
         redis_mgrep_dict_refresh_timestamp()
       end
 
@@ -414,9 +424,32 @@ module Annotator
         whole_word_only = options[:whole_word_only] == false ? false : true
         with_synonyms = options[:with_synonyms] == false ? false : true
         longest_only = options[:longest_only] == true ? true : false
+        lemmatize = options[:lemmatize] == "true" ? true : false
 
-        client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
-        rawAnnotations = client.annotate(text, false, whole_word_only)
+        if (lemmatize)
+          # Lunch Mgrep with the lemmatized dictionary
+          client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_lem_host, Annotator.settings.mgrep_lem_port, Annotator.settings.mgrep_lem_alt_host, Annotator.settings.mgrep_lem_alt_port, @logger)
+          # Lemmatize the input text
+          temp = Tempfile.new("text")
+          temp.puts "key \t"+text
+          temp.close
+          tempLem = Tempfile.new("lem")
+          tempLem.close
+          wasGood = system( "java -jar "+Annotator.settings.lemmatizer_jar+"/Lemmatizer.jar "+temp.path+" "+tempLem.path+" true")
+          if (!wasGood)
+            raise Exception, "Lemmatizing the text failed."
+          end
+          tempLem.open
+          line = tempLem.gets
+          regexIndexes = line.split("\t")[0]
+          textLem = line.split("\t")[1]
+          temp.close!
+          tempLem.close!
+          rawAnnotations = client.annotate(textLem, false, whole_word_only)
+        else
+          client = Annotator::Mgrep::Client.new(Annotator.settings.mgrep_host, Annotator.settings.mgrep_port, Annotator.settings.mgrep_alt_host, Annotator.settings.mgrep_alt_port, @logger)
+          rawAnnotations = client.annotate(text, false, whole_word_only)
+        end
 
         rawAnnotations.filter_integers() if filter_integers
         rawAnnotations.filter_min_size(min_term_size) unless min_term_size.nil?
@@ -468,7 +501,11 @@ module Annotator
 
               if (longest_only)
                 annotation = Annotation.new(key, ontResourceId)
-                annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                if (lemmatize)
+                  annotation.add_annotation(convert_from(regexIndexes,ann.offset_from), convert_to(regexIndexes,ann.offset_to), typeAndOnt[0], ann.value)
+                else
+                  annotation.add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                end
                 flattenedAnnotations << annotation
               else
                 id_group = ontResourceId + key
@@ -476,7 +513,16 @@ module Annotator
                 unless allAnnotations.include?(id_group)
                   allAnnotations[id_group] = Annotation.new(key, ontResourceId)
                 end
-                allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                if (lemmatize)
+                  indexFrom = convert_from(regexIndexes,ann.offset_from)
+                  indexTo = convert_to(regexIndexes,ann.offset_to)
+                  if (indexFrom==0 || indexTo==0)
+                    raise Exception, "Converting lemmatized index to original index failed."
+                  end
+                  allAnnotations[id_group].add_annotation(indexFrom, indexTo, typeAndOnt[0], ann.value)
+                else
+                  allAnnotations[id_group].add_annotation(ann.offset_from, ann.offset_to, typeAndOnt[0], ann.value)
+                end
               end
             end
           end
@@ -512,6 +558,28 @@ module Annotator
         end
 
         allAnnotations
+      end
+
+      def convert_from(regex, index)
+        newIndex=0
+        regex.split("_").each do |regexConcept|
+          indexesFrom = regexConcept.split(":")[0]
+          if indexesFrom.split("-")[0].to_i == index
+            newIndex = indexesFrom.split("-")[1].to_i
+          end
+        end
+        return newIndex
+      end
+
+      def convert_to(regex, index)
+        newIndex=0
+        regex.split("_").each do |regexConcept|
+          indexesTo = regexConcept.split(":")[1]
+          if indexesTo.split("-")[0].to_i == index
+            newIndex = indexesTo.split("-")[1].to_i
+          end
+        end
+        return newIndex
       end
 
       def expand_hierarchies(annotations, levels, ontologies)
