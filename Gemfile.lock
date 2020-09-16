@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: https://github.com/ontoportal-lirmm/ontologies_linked_data.git
-  revision: d2461b99929c73f10615eb495bb1c4407c193872
+  revision: 31bd503f54b33f3887b877b4f1f55c1530abffc1
   branch: master
   specs:
     ontologies_linked_data (0.0.1)
