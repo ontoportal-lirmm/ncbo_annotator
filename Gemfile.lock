@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: https://github.com/ontoportal-lirmm/goo.git
-  revision: 7dee2100dc26273158ddc6f4c4bbecd9d64d903d
+  revision: ba3edcdd1e2f6ee630b3cca29e08cc209229186e
   branch: master
   specs:
     goo (0.0.2)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: https://github.com/ontoportal-lirmm/ontologies_linked_data.git
-  revision: e333490c62c0d442979cfccf7baeaf463a8ce5b8
+  revision: dea417e105be60619ce4c5f5b4bb4f4ae1d48447
   branch: master
   specs:
     ontologies_linked_data (0.0.1)
@@ -85,8 +85,9 @@ GEM
       multi_json
     ethon (0.12.0)
       ffi (>= 1.3.0)
-    faraday (1.0.1)
+    faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
+      ruby2_keywords
     ffi (1.9.21)
     http-accept (1.7.0)
     http-cookie (1.0.3)
@@ -112,7 +113,7 @@ GEM
     mysql2 (0.5.2)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    oj (3.10.14)
+    oj (3.10.15)
     omni_logger (0.1.4)
       logger
     pony (1.13.1)
@@ -137,6 +138,7 @@ GEM
       builder (>= 2.1.2)
       faraday (>= 0.9.0)
     ruby-xxHash (0.4.0.1)
+    ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
     sequel (5.37.0)
     systemu (2.6.5)
