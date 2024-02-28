@@ -1,0 +1,13 @@
+.bundle
+.git
+.gitignore
+.github
+.DS_Store
+vendor/bundle
+# Logs
+log/*
+# Temp files
+tmp/*
+# Editor temp files
+*.swp
+*.swo

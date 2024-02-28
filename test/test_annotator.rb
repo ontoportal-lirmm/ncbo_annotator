@@ -97,7 +97,7 @@ class TestAnnotator < TestCase
     assert @@redis.exists?(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
     assert @@redis.exists?(Annotator::Models::NcboAnnotator::LAST_MGREP_RESTART_TIMESTAMP)
     refresh_timestamp = @@redis.get(Annotator::Models::NcboAnnotator::MGREP_DICTIONARY_REFRESH_TIMESTAMP)
-    assert refresh_timestamp > start_timestamp
+    assert_operator refresh_timestamp, :>, start_timestamp
   end
 
   def test_mallet_recognizer
@@ -397,7 +397,7 @@ class TestAnnotator < TestCase
         expand_with_mappings: false,
         min_term_size: 10,
         whole_word_only: true,
-        with_synonyms: true
+        with_synonyms: false
     })
 
     direct = annotations
@@ -630,6 +630,7 @@ class TestAnnotator < TestCase
         class_id = terms_a[i]
         ont_acr = onts_a[i]
         sub = LinkedData::Models::Ontology.find(ont_acr).first.latest_submission
+        binding.pry if sub.nil?
         sub.bring(ontology: [:acronym])
         c = LinkedData::Models::Class.find(RDF::URI.new(class_id))
                                     .in(sub)

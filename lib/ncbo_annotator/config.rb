@@ -33,6 +33,7 @@ module Annotator
     @settings.annotator_redis_port       ||= 6379
     @settings.enable_recognizer_param    ||= false
     @settings.supported_recognizers      ||= [:mgrep] # :mgrep, :mallet
+    @settings.lemmatizer_jar             ||= 'lib/Lemmatizer'
     puts "(AN) >> Using ANN Redis instance at "+
       "#{@settings.annotator_redis_host}:#{@settings.annotator_redis_port}"
 

@@ -43,3 +43,5 @@ bin/mallet-deps.jar
 bin/CogPOTerms
 
 create_permissions.log
+
+test/data/dictionary-lem.txt

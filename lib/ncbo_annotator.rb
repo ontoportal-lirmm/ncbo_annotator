@@ -3,7 +3,7 @@
 # require 'sparql_http'
 # require 'ontologies_linked_data'
 # require_relative 'dictionary/generator'
-
+require 'uri'
 require 'zlib'
 require 'redis'
 require 'ontologies_linked_data'
@@ -122,16 +122,27 @@ module Annotator
         all = redis.hgetall(dict_holder)
         # Create dict file
         outFile = File.new(Annotator.settings.mgrep_dictionary_file, "w")
-
+        @logger.info("Generating a dictionary file using #{all.keys.length} key/value pairs.")
         prefix_remove = Regexp.new(/^#{IDPREFIX.call(cur_inst)}/)
         windows_linebreak_remove = Regexp.new(/\r\n/)
         special_remove = Regexp.new(/[\r\n\t]/)
 
-        all.each do |key, val|
-          realKey = key.sub prefix_remove, ''
-          realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
-          outFile.puts("#{realKey}\t#{realVal}")
-          outFile.flush
+        time = Benchmark.realtime do
+          total_generated = 0
+          info_step = 10000
+
+          all.each do |key, val|
+            realKey = key.sub prefix_remove, ''
+            realVal = val.gsub(windows_linebreak_remove, ' ').gsub(special_remove, ' ')
+            outFile.puts("#{realKey}\t#{realVal}")
+            outFile.flush
+
+            total_generated += 1
+            @logger.info("Generated #{total_generated} records. #{all.keys.length - total_generated} remaining...") if total_generated % info_step == 0
+          end
+
+          outFile.close
+          redis_mgrep_dict_refresh_timestamp()
         end
         outFile.close
         # Create lemmatized dic file
@@ -145,6 +156,8 @@ module Annotator
         end
         # Redis
         redis_mgrep_dict_refresh_timestamp()
+
+        @logger.info("Completed generating a dictionary file in #{(time/60).round(1)} minutes.")
       end
 
       def create_term_cache_from_ontologies(ontologies, delete_cache=false, redis_prefix=nil)
@@ -217,9 +230,9 @@ module Annotator
 
             while !class_keys.empty?
               # use expire instead of del to allow potential clients to finish using the data
-              redis.pipelined {
-                class_keys.each {|key| redis.expire(key, key_expire_time)}
-              }
+              redis.pipelined do |pipeline|
+                class_keys.each { |key| pipeline.expire(key, key_expire_time) }
+              end
               redis.ltrim(key_storage, CHUNK_SIZE + 1, -1) # Remove what we just deleted
               class_keys = redis.lrange(key_storage, 0, CHUNK_SIZE) # Get next chunk
             end
@@ -468,7 +481,7 @@ module Annotator
         redis.pipelined do |pipeline|
           rawAnnotations.each do |ann|
             id = get_prefixed_id(cur_inst, ann.string_id)
-            redis_data[id] = { future: pipeline.hgetall(id) }
+            redis_data[id] = {future: pipeline.hgetall(id)}
           end
         end
 
@@ -720,18 +733,20 @@ module Annotator
       def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
         begin
           # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
-          val.upcase!()
+          val = val.dup.upcase
         rescue ArgumentError => e
+          binding.pry
+          val = val.dup
           # NCBO-832 - SCTSPA Annotator Cache building error (UTF-8)
           val = val.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
-          val.upcase!()
+          val = val.upcase
         end
 
         # exclude single-character or empty/null values
         if (val.to_s.strip.length > 2)
-          id = get_prefixed_id_from_value(instance_prefix, val)
+          id = get_prefixed_id_from_value(instance_prefix, val.to_s)
           # populate dictionary structure
-          redis.hset(DICTHOLDER.call(instance_prefix), id, val)
+          redis.hset(DICTHOLDER.call(instance_prefix), id, val.to_s)
           entry = "#{label_type}#{LABEL_DELIM}#{ontResourceId}"
 
           # parse out semanticTypeCodes
@@ -781,6 +796,9 @@ module Annotator
       end
 
       def hierarchy_query(class_ids)
+        # mdorf, 12/14/2023: AllegroGraph throws a MalformedQuery exception
+        # if an ID is not of the proper URI format
+        class_ids.select! { |id| id =~ /\A#{URI::regexp}\z/ }
         filter_ids = class_ids.map { |id| "?id = <#{id}>" } .join " || "
         query = <<eos
 SELECT DISTINCT ?id ?parent ?graph WHERE { GRAPH ?graph { ?id <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?parent . }
