@@ -733,11 +733,13 @@ module Annotator
       def create_term_entry(redis, instance_prefix, ontResourceId, resourceId, label_type, val, semanticTypes)
         begin
           # NCBO-696 - Remove case-sensitive variations on terms in annotator dictionary
-          val.upcase!()
+          val = val.dup.upcase
         rescue ArgumentError => e
+          binding.pry
+          val = val.dup
           # NCBO-832 - SCTSPA Annotator Cache building error (UTF-8)
           val = val.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
-          val.upcase!()
+          val = val.upcase
         end
 
         # exclude single-character or empty/null values
