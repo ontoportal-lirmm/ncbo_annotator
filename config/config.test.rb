@@ -26,6 +26,7 @@ LinkedData.config do |config|
   config.goo_path_update            = GOO_PATH_UPDATE.to_s
   config.search_server_url          = SOLR_TERM_SEARCH_URL.to_s
   config.property_search_server_url = SOLR_PROP_SEARCH_URL.to_s
+  config.sparql_endpoint_url = "http:://sparql_endpoint.com"
 end
 Annotator.config do |config|
   config.mgrep_host            = MGREP_HOST.to_s
