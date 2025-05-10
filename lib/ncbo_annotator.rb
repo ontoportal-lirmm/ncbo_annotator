@@ -627,6 +627,8 @@ module Annotator
             id = sol[:id].to_s
             parent = sol[:parent].to_s
             ontology = sol[:graph].to_s
+            next unless ontology.include?("ontologies")
+            
             ontology = ontology[0..ontology.index("submissions")-2]
             id_group = ontology + id
 
